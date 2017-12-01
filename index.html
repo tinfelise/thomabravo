@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Thoma Bravo | SailPoint Investment</title>
+	<meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
+	<link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<header></header>
+	<main>
+		<section>
+			<img class='logo' src='./images/sailpoint-logo.png' alt='SailPoint'>
+			<div class='data'>
+				<h1 id='current_price'></h1>
+				<div><span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span></div>
+				<button onclick="get_stock_price('SAIL')">Reload</button>
+			</div>
+			<div class='loader'>
+				<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				     width="40px" height="40px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+				  <path  d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+				    <animateTransform attributeType="xml"
+				      attributeName="transform"
+				      type="rotate"
+				      from="0 25 25"
+				      to="360 25 25"
+				      dur="0.6s"
+				      repeatCount="indefinite"/>
+				    </path>
+				  </svg>
+			</div>
+		</section>
+		<section></section>
+	</main>
+	<footer></footer>
+	<!-- Libraries -->
+	<script src="https://use.fontawesome.com/1727fd84aa.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+
+</body>
+</html>
+
+<script>
+	var today = moment().format('YYYY-MM-DD');
+	var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+
+	stock_data = {};
+	var current_price;
+	var yesterdays_close;
+	
+	function get_stock_price (ticker) {
+		var alphavantage_key = 'B67FR48WBLNMCCHH';
+		var path = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker +
+		'&apikey=' + alphavantage_key;
+		var settings = {
+			url: path,
+			beforeSend: function () {
+				console.log('Fetching stock data...')
+			},
+			success: function (data) {
+				parse_stock_data(data);				
+			}
+		};
+		$.ajax(settings)
+	};
+
+	function parse_stock_data (data) {
+		stock_data = data['Time Series (Daily)'];
+
+		var close = '4. close';
+		var todays_data = stock_data[today];
+		var yesterdays_data = stock_data[yesterday];
+
+		current_price = todays_data[close];
+		yesterdays_close = yesterdays_data[close];
+		
+		console.log('Current: ' + current_price);
+		console.log('Yesterday\'s close: ' + yesterdays_close);
+
+		do_the_math(current_price, yesterdays_close)
+	};
+
+	function percentange_change (current, previous) {
+		var diff = current - previous;
+		var percentage_change = diff/previous;
+			percentage_change = numeral(percentage_change).format('%0.00');
+		return percentage_change;
+	};
+
+	function do_the_math (current_price, price_yesterday) {
+		var compared_to_yesterday = numeral(current_price - price_yesterday).format('0,0.00');
+		var compared_to_yesterday_perc = percentange_change(current_price,price_yesterday);
+		console.log(compared_to_yesterday + ' ' + compared_to_yesterday_perc);
+
+		$('main').addClass('loaded')
+		$('#current_price').html( numeral(current_price).format('$0,0.00') );
+		$('#compared_to_yesterday').html(compared_to_yesterday);
+		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
+	};
+
+	// do_the_math(15.33, 14.71);
+	get_stock_price('SAIL');
+
+</script>
