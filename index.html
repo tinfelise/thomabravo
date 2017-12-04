@@ -44,7 +44,13 @@
 
 <script>
 	var today = moment().format('YYYY-MM-DD');
+	var day_of_week = moment().format('E');
 	var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+	if (day_of_week > 5) {
+		var offset = day_of_week - 5;
+		today = moment(today).subtract(offset, 'days').format('YYYY-MM-DD');
+		yesterday = moment(yesterday).subtract(offset, 'days').format('YYYY-MM-DD');
+	}
 
 	stock_data = {};
 	var current_price;
