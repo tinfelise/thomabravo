@@ -8,7 +8,7 @@
 <body>
 	<header></header>
 	<main>
-		<section>
+		<section id='stockData'>
 			<img class='logo' src='./images/sailpoint-logo.png' alt='SailPoint'>
 			<div class='data'>
 				<h1 id='current_price'></h1>
@@ -65,11 +65,20 @@
 			beforeSend: function () {
 				console.log('Fetching stock data...')
 			},
+			error: function () {
+				no_data();
+			},
 			success: function (data) {
 				parse_stock_data(data);				
 			}
 		};
 		$.ajax(settings)
+	};
+
+	function no_data () {
+		console.log('AlphaVantage did not return data.');
+		$('main').addClass('loaded');
+		$('#stockData .data').html('<h1>Data unavailable</h1><span>Please try again later</span>');
 	};
 
 	function parse_stock_data (data) {
