@@ -84,10 +84,10 @@
 	function parse_stock_data (data) {
 		stock_data = data['Time Series (Daily)'];
 
-		var close = '4. close';
 		var todays_data = stock_data[today];
 		var yesterdays_data = stock_data[yesterday];
 
+		var close = '4. close';
 		current_price = todays_data[close];
 		yesterdays_close = yesterdays_data[close];
 		
