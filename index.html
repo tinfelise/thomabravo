@@ -18,6 +18,7 @@
 		<section id='stockData'>
 			<img class='logo' src='./images/sailpoint-logo.png' alt='SailPoint'>
 			<div class='data'>
+				<span id='ticker'></span>
 				<h1 id='current_price'></h1>
 				<div><span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span></div>
 				<button onclick="get_stock_price('SAIL')">Reload</button>
@@ -39,7 +40,9 @@
 		</section>
 		<section></section>
 	</main>
-	<footer></footer>
+	<footer>
+		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
+	</footer>
 	<!-- Libraries -->
 	<script src="https://use.fontawesome.com/1727fd84aa.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -70,7 +73,10 @@
 		var settings = {
 			url: path,
 			beforeSend: function () {
-				console.log('Fetching stock data...')
+				console.log('Fetching stock data from...')
+				console.log(path);
+				$('#ticker').html(ticker);
+				// $('#AlphaVantage').attr('href', path);
 			},
 			error: function () {
 				no_data();
