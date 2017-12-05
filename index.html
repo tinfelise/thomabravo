@@ -23,6 +23,8 @@
 				<span id='ticker'></span>
 				<h1 id='current_price'></h1>
 				<div><span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span></div>
+				<div id='market_cap'></div>
+				<div id='enterprise_value'></div>
 				<button onclick="reload()">Reload</button>
 			</div>
 			<div class='loader'>
@@ -40,7 +42,12 @@
 				  </svg>
 			</div>
 		</section>
-		<section></section>
+		<section id='ownership'>
+			<img class='logo' src='./images/thoma_bravo-logo.png' alt='Thoma Bravo'>
+			<div id='TB_shares'></div>
+			<div id='TB_shares_value'></div>
+		</section>
+		<section id='returns'></section>
 	</main>
 	<footer>
 		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
@@ -158,6 +165,60 @@
 		'2019': 270
 	};
 	var net_debt = -30.4295;
+
+	function get_TB_ownership (shares) {
+		$('#TB_shares').html('<span>' + numeral(shares).format('0.0a') + '</span> Thoma Bravo Shares');
+		var TB_shares_value = shares * current_price;
+		$('#TB_shares_value').html('<span>' + numeral(TB_shares_value).format('$0.0a') + '</span> Value');
+	};
+	function add_realizations (realizations) {
+		var total_sold = 0;
+		for (i in realizations) {
+			var realization = realizations[i];
+			var shares = realization.shares;
+			total_sold += shares;
+		};
+		var current_TB_shares = (TB_preIPO_shares - total_sold) * million;
+		get_TB_ownership(current_TB_shares);
+	};
+	function get_revenue_multiples (enterprise_value) {
+		for (i in revenues) {
+			var multiple = enterprise_value / (revenues[i] * million);
+			var html = '<div class="multiple">';
+				html += '<span>' + numeral(multiple).format('0.00') + 'x' + '</span>';
+				html += ' ' + i + ' Revenues</div>'
+			$('#enterprise_value').append(html);
+		};
+	};
+	function get_enterprise_value (market_cap) {
+		var enterprise_value = market_cap + (net_debt * million);
+		$('#enterprise_value').html(numeral('<span>' + enterprise_value).format('($0.00a)') + '</span> Enterprise Value');
+		get_revenue_multiples(enterprise_value);
+	};
+	function get_market_cap (RSUs) {
+		var fdso = 0;
+		for (i in share_count_build) {
+			fdso += share_count_build[i];
+		};
+		fdso += RSUs;
+		var market_cap = fdso * current_price * million;
+		$('#market_cap').html('<span>' + numeral(market_cap).format('($0.00a)') + '</span> Market Cap');
+		get_enterprise_value(market_cap);
+	};
+	function dilute_shares(options) {
+		var RSUs_Options = 0;
+		for (issuance in options_build) {
+			var strike_price = options_build[issuance].strike;
+			var shares = options_build[issuance].shares;
+			var diluted = 0;
+			if (current_price > strike_price) {
+				diluted = (current_price - strike_price)/current_price*shares;
+			};
+			RSUs_Options += diluted;
+		};
+		get_market_cap(RSUs_Options);
+	};
+
 	function do_the_math (current_price, price_yesterday) {
 		var compared_to_yesterday = numeral(current_price - price_yesterday).format('0,0.00');
 		var compared_to_yesterday_perc = percentange_change(current_price,price_yesterday);
@@ -166,6 +227,9 @@
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
 		$('#compared_to_yesterday').html(compared_to_yesterday);
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
+
+		dilute_shares(options_build);
+		add_realizations(realizations);
 	};
 
 	// do_the_math(15.33, 14.71);
