@@ -62,16 +62,17 @@
 </html>
 
 <script>
-	var today = moment().format('YYYY-MM-DD');
-	var day_of_week = moment().format('E');
-	var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
-	if (day_of_week > 5) {
-		var offset = day_of_week - 5;
-		today = moment(today).subtract(offset, 'days').format('YYYY-MM-DD');
-		yesterday = moment(yesterday).subtract(offset, 'days').format('YYYY-MM-DD');
-	} else if (day_of_week == 1) {
-		yesterday = moment(yesterday).subtract(2, 'days').format('YYYY-MM-DD');
-	}
+	// var today = moment().format('YYYY-MM-DD');
+	// var day_of_week = moment().format('E');
+	// var yesterday = moment().subtract(1, 'days').format('YYYY-MM-DD');
+	// if (day_of_week > 5) {
+	// 	var offset = day_of_week - 5;
+	// 	today = moment(today).subtract(offset, 'days').format('YYYY-MM-DD');
+	// 	yesterday = moment(yesterday).subtract(offset, 'days').format('YYYY-MM-DD');
+	// } else if (day_of_week == 1) {
+	// 	yesterday = moment(yesterday).subtract(2, 'days').format('YYYY-MM-DD');
+	// };
+
 	var million = 1000000;
 
 	var stock_data = {};
@@ -109,11 +110,27 @@
 		$('#stockData .data').html('<h1>Data unavailable</h1><span>Please try again later</span>');
 	};
 
+	function previous_market_day(date, date_format) {
+		var day_before = moment(date, date_format).subtract(1, 'days');
+		var day_of_week = moment(day_before).format('E');
+		if (day_of_week > 5) {
+			var offset = day_of_week - 5;
+			day_before = moment(day_before, date_format).subtract(offset, 'days');
+		};
+		return moment(day_before).format('YYYY-MM-DD');
+	};
+
 	function parse_stock_data (data) {
+		var meta_data = data['Meta Data'];
+		var last_updated = '3. Last Refreshed';
+			last_updated = meta_data[last_updated];
+			console.log('As of ' + last_updated);
 		stock_data = data['Time Series (Daily)'];
 
-		var todays_data = stock_data[today];
-		var yesterdays_data = stock_data[yesterday];
+		var previous = previous_market_day(last_updated, 'YYYY-MM-DD');
+
+		var todays_data = stock_data[last_updated];
+		var yesterdays_data = stock_data[previous];
 
 		var close = '4. close';
 		current_price = todays_data[close];
