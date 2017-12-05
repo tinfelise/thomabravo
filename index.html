@@ -91,6 +91,10 @@
 		};
 		$.ajax(settings)
 	};
+	function reload () {
+		$('main').removeClass('loaded');
+		get_stock_price('SAIL');
+	};
 
 	function no_data () {
 		console.log('AlphaVantage did not return data.');
