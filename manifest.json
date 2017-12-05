@@ -1,0 +1,13 @@
+{
+    "name": "SailPoint Returns",
+    "icons": [
+        {
+            "src": "/android-chrome-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#052365",
+    "background_color": "#052365",
+    "display": "standalone"
+}
