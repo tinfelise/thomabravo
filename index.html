@@ -139,7 +139,7 @@
 		do_the_math(current_price, yesterdays_close);
 	};
 
-	function percentange_change (current, previous) {
+	function percentage_change (current, previous) {
 		var diff = current - previous;
 		var percentage_change = diff/previous;
 			percentage_change = numeral(percentage_change).format('%0.00');
@@ -238,7 +238,7 @@
 
 	function do_the_math (current_price, price_yesterday) {
 		var compared_to_yesterday = numeral(current_price - price_yesterday).format('0,0.00');
-		var compared_to_yesterday_perc = percentange_change(current_price,price_yesterday);
+		var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 
 		$('main').addClass('loaded')
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
