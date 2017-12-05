@@ -65,10 +65,10 @@
 	} else if (day_of_week == 1) {
 		yesterday = moment(yesterday).subtract(2, 'days').format('YYYY-MM-DD');
 	}
+	var million = 1000000;
 
-	stock_data = {};
-	var current_price;
-	var yesterdays_close;
+	var stock_data = {};
+	var current_price, yesterdays_close;
 	
 	function get_stock_price (ticker) {
 		var alphavantage_key = 'B67FR48WBLNMCCHH';
