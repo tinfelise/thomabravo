@@ -166,12 +166,12 @@
 		'Greenshoe Shares': 1.5
 	};
 
-	var realizations = [
+	var postIPO_realizations = [
 		{
 			'event':'Sold @ IPO',
 			'date': '11/22/17',
 			'shares':  6.5,
-			// 'stock_price': 14.59
+			'stock_price': 12*(1-.07)
 		}
 	];
 
@@ -246,7 +246,7 @@
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
 
 		dilute_shares(options_build);
-		add_realizations(realizations);
+		add_realizations(postIPO_realizations);
 	};
 
 	// do_the_math(15.33, 14.71);
