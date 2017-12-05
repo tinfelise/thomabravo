@@ -111,9 +111,6 @@
 		var close = '4. close';
 		current_price = todays_data[close];
 		yesterdays_close = yesterdays_data[close];
-		
-		console.log('Current: ' + current_price);
-		console.log('Yesterday\'s close: ' + yesterdays_close);
 
 		do_the_math(current_price, yesterdays_close)
 	};
@@ -128,7 +125,6 @@
 	function do_the_math (current_price, price_yesterday) {
 		var compared_to_yesterday = numeral(current_price - price_yesterday).format('0,0.00');
 		var compared_to_yesterday_perc = percentange_change(current_price,price_yesterday);
-		console.log(compared_to_yesterday + ' ' + compared_to_yesterday_perc);
 
 		$('main').addClass('loaded')
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
