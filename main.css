@@ -95,6 +95,9 @@ section:nth-of-type(n+2) {
 .loaded section:nth-of-type(n+2) {
 	visibility: visible;
 }
+.thomaBravo {
+	background-color:#004972;
+}
 
 
 @media only screen and (max-width: 700px) {
