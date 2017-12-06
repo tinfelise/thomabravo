@@ -31,7 +31,9 @@
 				
 				<h1 id='current_price'></h1>
 				<div>
-					<span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span>
+					<span id='compared_to_yesterday'></span> 
+					<span id='compared_to_yesterday_perc'></span> 
+					<span id='previous_weekday'></span>
 				</div>
 				<div id='market_cap'></div>
 				<div id='enterprise_value'></div>
@@ -156,6 +158,14 @@
 		$('#updated').html(html);
 	};
 	// display_update_time(test_date,test_time,test_open);
+	function previous_day_of_week (date) {
+		var days_ago = moment(date).diff(moment(), 'days');
+		var weekday = 'yesterday';
+		if (days_ago != -1) {
+			weekday = moment(date).format('dddd');
+		};
+		$('#previous_weekday').html(weekday);
+	};
 
 	function parse_stock_data (data) {
 		var meta_data = data['Meta Data'];
@@ -176,6 +186,7 @@
 		stock_data = data['Time Series (Daily)'];
 
 		var previous = previous_market_day(last_updated_date, 'YYYY-MM-DD');
+		previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 
 		var todays_data = stock_data[last_updated_date];
 		var yesterdays_data = stock_data[previous];
