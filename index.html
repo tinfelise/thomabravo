@@ -48,7 +48,12 @@
 			<div id='TB_shares'></div>
 			<div id='TB_shares_value'></div>
 		</section>
-		<section id='returns'></section>
+		<section id='returns'>
+			<h1 id='IRR'></h1>
+			<div id='realized'></div>
+			<div id='unrealized'></div>
+			<div id='total_gains'></div>
+		</section>
 	</main>
 	<footer>
 		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
@@ -80,6 +85,9 @@
 
 	var stock_data = {};
 	var current_price, yesterdays_close;
+
+	var realized, unrealized;
+	var all_realizations = [];
 	
 	function get_stock_price (ticker) {
 		var alphavantage_key = 'B67FR48WBLNMCCHH';
@@ -102,8 +110,12 @@
 		};
 		$.ajax(settings)
 	};
+	function reset () {
+		all_realizations = [];
+	};
 	function reload () {
 		$('main').removeClass('loaded');
+		reset();
 		get_stock_price('SAIL');
 	};
 
@@ -211,13 +223,149 @@
 	};
 	var net_debt = -30.4295;
 
-	function get_TB_ownership (shares) {
+	var purchase = {
+		'event':'Purchase',
+		'date': '9/8/14',
+		'amount': -200
+	}
+	var preIPO_realizations = [
+		{
+			'event':'Transaction Fees',
+			'date': '11/12/14',
+			'amount': 0.030899
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '1/15/15',
+			'amount': 0.125
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '4/1/15',
+			'amount': 0.1875
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '7/1/15',
+			'amount': 0.1875
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '10/1/15',
+			'amount': 0.1875
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '12/16/15',
+			'amount': 0.1875
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '3/31/16',
+			'amount': 0.25
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '6/17/16',
+			'amount': 0.25
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '9/29/16',
+			'amount': 0.25
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '12/30/16',
+			'amount': 0.25
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '4/11/17',
+			'amount': 0.3125
+		},
+		{
+			'event':'Realization',
+			'date': '6/29/17',
+			'amount': 44.90071809
+		},
+		{
+			'event':'Transaction Fees',
+			'date': '7/6/17',
+			'amount': 0.3125
+		}
+	];
 
+	function get_IRR (realizations) {
+		var amounts = [];
+		var dates = [];
+		for (i in realizations) {
+			amounts[i] = realizations[i].amount * million;
+			var date = moment(realizations[i].date, 'MM/DD/YY');
+			var year = moment(date).format('YYYY');
+			var month = moment(date).format('MM');
+			var day = moment(date).format('DD');
+			dates[i] = new Date(year, month, day);
+		};
+		var XIRR = finance.XIRR(amounts, dates) / 100;
+		$('#IRR').html( '<span>' + numeral(XIRR).format('0,0[.]0%') + '</span> IRR' );
+	};
+	function order_events (events, format) {
+		events = events.sort(function (a, b) {
+	    	return moment(a.date, format).format('x')
+	    		.localeCompare(
+	    			moment(b.date, format).format('x')
+				);
+		});
+	};
+	function add_new_realizations (array) {
+		for (obj in array) {
+			all_realizations.push(array[obj]);
+		};
+		order_events(all_realizations, 'MM/DD/YY');
+	};
+	function calc_MoM (gains) {
+		return gains / (-purchase.amount * million);
+	};
+	function calc_unrealized(share_value) {
+		unrealized = share_value;
+		var IPO_mark = {
+			'event': 'IPO Mark',
+			'date': moment().format('MM/DD/YY'),
+			'amount': (share_value / million)
+		};
+		add_new_realizations([IPO_mark,purchase]);
+		get_IRR(all_realizations);
+	};
+	function calc_realized(realizations) {
+		realized = 0;
+		for (i in realizations) {
+			realized += realizations[i].amount * million;
+		};
+	};
+	function compile_realizations () {
+		// all_realizations.length = [];
+		for (i in preIPO_realizations) {
+			var realization = preIPO_realizations[i];
+			all_realizations.push(realization);
+		};
+		for (i in postIPO_realizations) {
+			var realization = postIPO_realizations[i];
+			var obj = {};
+				obj.event = realization.event;
+				obj.date = realization.date;
+				obj.amount = realization.shares * realization.stock_price;
+			all_realizations.push(obj);
+		};
+		calc_realized(all_realizations);
+	};
+	function get_TB_shares_value (shares) {
 		$('#TB_shares').html('<span>' + numeral(shares).format('0.0a') + '</span> Thoma Bravo Shares');
 		var TB_shares_value = shares * current_price;
-		$('#TB_shares_value').html('<span>' + numeral(TB_shares_value).format('$0.0a') + '</span> Value');
+		$('#TB_shares_value').html('<span>' + numeral(TB_shares_value).format('$0.0a') + '</span> Value');;
+		calc_unrealized(TB_shares_value);
 	};
-	function add_realizations (realizations) {
+	function get_TB_ownership (realizations) {
 		var total_sold = 0;
 		for (i in realizations) {
 			var realization = realizations[i];
@@ -225,7 +373,23 @@
 			total_sold += shares;
 		};
 		var current_TB_shares = (TB_preIPO_shares - total_sold) * million;
-		get_TB_ownership(current_TB_shares);
+		get_TB_shares_value(current_TB_shares);
+	};
+	function total_gains_MoM (realizations) {
+		compile_realizations();
+		get_TB_ownership(realizations);
+		
+		var total_gains = realized + unrealized;
+		var total_MoM = calc_MoM(total_gains);
+
+		$('#realized').html('<h3><span>' + numeral(realized).format('$0,0[.]0a') + '</span> Realized</h3>');
+		$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
+
+		$('#unrealized').html('<h3><span>' + numeral(unrealized).format('$0,0[.]0a') + '</span> Unrealized</h3>');
+		$('#unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
+
+		$('#total_gains').html('<h3><span>' + numeral(total_gains).format('$0,0[.]0a') + '</span> Total Gains</h3>');
+		$('#total_gains').append('<div class="MoM"><span>' + numeral( calc_MoM(total_gains) ).format('0[.]00') + 'x</span> MoM</div>');
 	};
 	function get_revenue_multiples (enterprise_value) {
 		for (i in revenues) {
@@ -275,7 +439,7 @@
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
 
 		dilute_shares(options_build);
-		add_realizations(postIPO_realizations);
+		total_gains_MoM(postIPO_realizations);
 	};
 
 	// do_the_math(15.33, 14.71);
