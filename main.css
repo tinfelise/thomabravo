@@ -70,6 +70,21 @@ body {
 	max-width:700px;
 	box-shadow: 0px 0px 5em 0px rgba(0,0,0,0.1);
 }
+header {
+	display:flex;
+	justify-content: space-between;
+}
+header > div {
+	visibility: hidden;
+	text-align: right;
+}
+#ticker {
+	font-weight:bold;
+}
+#updated {
+	display: block;
+	font-size:.75em;
+}
 main {}
 section:nth-of-type(n+2) {
 	visibility: hidden;
@@ -91,6 +106,9 @@ section:nth-of-type(n+2) {
 }
 .loaded .loader {
 	display:none;
+}
+.loaded header > div {
+	visibility: visible;
 }
 .loaded section:nth-of-type(n+2) {
 	visibility: visible;

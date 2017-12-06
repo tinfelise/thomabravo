@@ -13,20 +13,28 @@
 	<meta name="theme-color" content="#052365">
 </head>
 <body>
-	<header></header>
+	<header>
+		<a href='https://finance.yahoo.com/quote/sail' target='blank_'>
+			<img class='logo' src='./images/sailpoint-logo.png' alt='SailPoint'>
+		</a>
+		<div>
+			<span id='ticker'></span>
+			<button onclick="reload()">
+				<i class="fa fa-refresh" aria-hidden="true"></i>
+			</button>
+			<span id='updated'></span>
+		</div>
+	</header>
 	<main>
 		<section id='stockData'>
-			<a href='https://finance.yahoo.com/quote/sail' target='blank_'>
-				<img class='logo' src='./images/sailpoint-logo.png' alt='SailPoint'>
-			</a>
 			<div class='data'>
-				<span id='ticker'></span>
+				
 				<h1 id='current_price'></h1>
-				<span id='updated'></span>
-				<div><span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span></div>
+				<div>
+					<span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span>
+				</div>
 				<div id='market_cap'></div>
 				<div id='enterprise_value'></div>
-				<button onclick="reload()">Reload</button>
 			</div>
 			<div class='loader'>
 				<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -114,7 +122,7 @@
 		all_realizations = [];
 	};
 	function reload () {
-		$('main').removeClass('loaded');
+		$('body').removeClass('loaded');
 		reset();
 		get_stock_price('SAIL');
 	};
@@ -433,7 +441,7 @@
 		var compared_to_yesterday = numeral(current_price - price_yesterday).format('0,0.00');
 		var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 
-		$('main').addClass('loaded')
+		$('body').addClass('loaded')
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
 		$('#compared_to_yesterday').html(compared_to_yesterday);
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
