@@ -94,7 +94,7 @@
 	var million = 1000000;
 
 	var stock_data = {};
-	var current_price, yesterdays_close;
+	var current_price, previous_close;
 
 	var realized, unrealized;
 	var all_realizations = [];
@@ -193,9 +193,9 @@
 
 		var close = '4. close';
 		current_price = todays_data[close];
-		yesterdays_close = yesterdays_data[close];
+		previous_close = yesterdays_data[close];
 
-		do_the_math(current_price, yesterdays_close);
+		do_the_math(current_price, previous_close);
 	};
 
 	function percentage_change (current, previous) {
