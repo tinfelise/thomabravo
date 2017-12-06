@@ -122,14 +122,22 @@
 
 	function parse_stock_data (data) {
 		var meta_data = data['Meta Data'];
+		var markets_open = false;
 		var last_updated = '3. Last Refreshed';
 			last_updated = meta_data[last_updated];
-			console.log('As of ' + last_updated);
+		console.log('As of ' + last_updated);
+
+		var last_updated_date = last_updated;
+		if ( last_updated.split(' ').length > 1 ) {
+			markets_open = true;
+			last_updated_date = last_updated.split(' ')[0];
+			var last_updated_time = last_updated.split(' ')[1];
+		};
 		stock_data = data['Time Series (Daily)'];
 
-		var previous = previous_market_day(last_updated, 'YYYY-MM-DD');
+		var previous = previous_market_day(last_updated_date, 'YYYY-MM-DD');
 
-		var todays_data = stock_data[last_updated];
+		var todays_data = stock_data[last_updated_date];
 		var yesterdays_data = stock_data[previous];
 
 		var close = '4. close';
