@@ -88,6 +88,12 @@ header > div {
 	font-size:.75em;
 }
 main {}
+section {
+	padding-bottom:2em;
+}
+section:last-of-type {
+	padding-bottom:0;
+}
 section:nth-of-type(n+2) {
 	visibility: hidden;
 }
