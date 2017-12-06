@@ -96,6 +96,9 @@ section:nth-of-type(n+2) {
 /*.loader {
 	background-image: url('http://samherbert.net/svg-loaders/svg-loaders/audio.svg');
 }*/
+.loader {
+	text-align:center;
+}
 .loader svg {
 	fill:rgba(255,95,90,.75);;
 }
