@@ -60,9 +60,18 @@
 		</section>
 		<section id='returns'>
 			<h1 id='IRR'></h1>
-			<div id='realized'></div>
-			<div id='unrealized'></div>
-			<div id='total_gains'></div>
+			<div>
+				<span>Realized</span>
+				<div id='realized'></div>	
+			</div>
+			<div>
+				<span>Unrealized</span>
+				<div id='unrealized'></div>
+			</div>
+			<div>
+				<span>Total Gains</span>
+				<div id='total_gains'></div>
+			</div>
 		</section>
 	</main>
 	<footer>
@@ -401,13 +410,13 @@
 		var total_gains = realized + unrealized;
 		var total_MoM = calc_MoM(total_gains);
 
-		$('#realized').html('<h3><span>' + numeral(realized).format('$0,0[.]0a') + '</span> Realized</h3>');
+		$('#realized').html('<h3>' + numeral(realized).format('$0,0[.]0a') + '</h3>');
 		$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#unrealized').html('<h3><span>' + numeral(unrealized).format('$0,0[.]0a') + '</span> Unrealized</h3>');
+		$('#unrealized').html('<h3>' + numeral(unrealized).format('$0,0[.]0a') + '</h3>');
 		$('#unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#total_gains').html('<h3><span>' + numeral(total_gains).format('$0,0[.]0a') + '</span> Total Gains</h3>');
+		$('#total_gains').html('<h3>' + numeral(total_gains).format('$0,0[.]0a') + '</h3>');
 		$('#total_gains').append('<div class="MoM"><span>' + numeral( calc_MoM(total_gains) ).format('0[.]00') + 'x</span> MoM</div>');
 	};
 	function get_revenue_multiples (enterprise_value) {
