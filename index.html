@@ -169,7 +169,7 @@
 	// display_update_time(test_date,test_time,test_open);
 	function previous_day_of_week (date) {
 		var days_ago = moment(date).diff(moment(), 'days');
-		var weekday = 'yesterday';
+		var weekday = 'Yesterday';
 		if (days_ago != -1) {
 			weekday = moment(date).format('dddd');
 		};
