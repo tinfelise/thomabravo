@@ -449,7 +449,7 @@
 	};
 
 	function do_the_math (current_price, price_yesterday) {
-		var compared_to_yesterday = numeral(current_price - price_yesterday).format('0,0.00');
+		var compared_to_yesterday = numeral(current_price - price_yesterday).format('$0,0[.]00');
 		var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 
 		$('body').addClass('loaded')
