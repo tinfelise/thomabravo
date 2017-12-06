@@ -22,6 +22,7 @@
 			<div class='data'>
 				<span id='ticker'></span>
 				<h1 id='current_price'></h1>
+				<span id='updated'></span>
 				<div><span id='compared_to_yesterday'></span> <span id='compared_to_yesterday_perc'></span></div>
 				<div id='market_cap'></div>
 				<div id='enterprise_value'></div>
@@ -119,6 +120,20 @@
 		};
 		return moment(day_before).format('YYYY-MM-DD');
 	};
+	// var test_date = '2017-12-1';
+	// var test_time = '8:30:25 PM';
+	// var test_open = false;
+	function display_update_time (date, time, open) {
+		var html = 'As of ';
+		if (open) {
+			var date_time = date + ' ' + time;
+			html += moment(date_time, 'YYYY-MM-DD LTS').format('h:mmA');
+		} else {
+			html += 'closing ' + moment(date, 'YYYY-MM-DD').format('MMM. Do');
+		};
+		$('#updated').html(html);
+	};
+	// display_update_time(test_date,test_time,test_open);
 
 	function parse_stock_data (data) {
 		var meta_data = data['Meta Data'];
@@ -133,6 +148,9 @@
 			last_updated_date = last_updated.split(' ')[0];
 			var last_updated_time = last_updated.split(' ')[1];
 		};
+
+		display_update_time(last_updated_date, last_updated_time, markets_open);
+
 		stock_data = data['Time Series (Daily)'];
 
 		var previous = previous_market_day(last_updated_date, 'YYYY-MM-DD');
@@ -192,6 +210,7 @@
 	var net_debt = -30.4295;
 
 	function get_TB_ownership (shares) {
+
 		$('#TB_shares').html('<span>' + numeral(shares).format('0.0a') + '</span> Thoma Bravo Shares');
 		var TB_shares_value = shares * current_price;
 		$('#TB_shares_value').html('<span>' + numeral(TB_shares_value).format('$0.0a') + '</span> Value');
