@@ -121,6 +121,11 @@ section:nth-of-type(n+2) {
 	background-color:#004972;
 }
 
+#returns > div {
+	display:inline-block;
+	width:32%;
+}
+
 
 @media only screen and (max-width: 700px) {
 	body {
