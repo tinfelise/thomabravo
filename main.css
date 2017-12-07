@@ -110,6 +110,8 @@ section {
 section:last-of-type {
 	padding-bottom:0;
 }
+h1 {
+	font-size:2em;
 }
 .logo {
 	height:2em;
