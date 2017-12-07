@@ -76,9 +76,18 @@ header {
 	justify-content: space-between;
 	align-items: center;
 }
-header > div {
+header a {
+	flex-grow: 1;
+}
+header > div,
+header > button {
 	visibility: hidden;
+	opacity: 0;
 	text-align: right;
+}
+header button {
+	font-size:2em;
+	padding-left:.5em;
 }
 #ticker {
 	font-weight:bold;
@@ -88,14 +97,19 @@ header > div {
 	font-size:.75em;
 }
 main {}
+header *,
 section {
+	transition: visibility .5s linear, opacity 1s linear, max-height .5s ease-in-out;
+}
+section {
+	visibility: hidden;
+	opacity: 0;
+	max-height:1em;
 	padding-bottom:2em;
 }
 section:last-of-type {
 	padding-bottom:0;
 }
-section:nth-of-type(n+2) {
-	visibility: hidden;
 }
 .logo {
 	height:2em;
@@ -108,21 +122,31 @@ section:nth-of-type(n+2) {
 }
 .loader svg {
 	fill:rgba(255,95,90,.75);;
+	margin: 5em 0;
+	transition: margin 1s 1s ease;
+	-webkit-transition: margin 1s 1s ease;
 }
-.data {
+/*.data {
 	display:none;
 }
 .loaded .data {
 	display:block;
-}
+}*/
 .loaded .loader {
 	display:none;
 }
-.loaded header > div {
-	visibility: visible;
+.loaded .loader svg {
+	margin:0;
 }
-.loaded section:nth-of-type(n+2) {
+.loaded header > div,
+.loaded header > button {
 	visibility: visible;
+	opacity: 1;
+}
+.loaded section {
+	visibility: visible;
+	opacity: 1;
+	max-height:1000em;
 }
 .thomaBravo {
 	background-color:#004972;
