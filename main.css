@@ -128,12 +128,6 @@ h1 {
 	transition: margin 1s 1s ease;
 	-webkit-transition: margin 1s 1s ease;
 }
-/*.data {
-	display:none;
-}
-.loaded .data {
-	display:block;
-}*/
 .loaded .loader {
 	display:none;
 }
