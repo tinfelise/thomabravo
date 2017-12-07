@@ -170,11 +170,11 @@
 	};
 	function previous_day_of_week (date) {
 		var days_ago = moment(date).diff(moment(), 'days');
-		var weekday = 'Yesterday';
+		var weekday = 'yesterday';
 		if (days_ago != -1) {
 			weekday = moment(date).format('dddd');
 		};
-		$('#previous_weekday').html(weekday);
+		$('#previous_weekday').html('from ' + weekday);
 	};
 
 	function parse_stock_data (data) {
@@ -329,7 +329,7 @@
 	};
 	function get_enterprise_value (market_cap) {
 		var enterprise_value = market_cap + (net_debt * million);
-		$('#enterprise_value').html(numeral('<span>' + enterprise_value).format('($0.00a)') + '</span> Enterprise Value');
+		$('#enterprise_value').html(numeral('<span>' + enterprise_value).format('($0.00a)') + '</span> <span>Enterprise Value</span>');
 		get_revenue_multiples(enterprise_value);
 	};
 	function get_market_cap (RSUs) {
@@ -339,7 +339,7 @@
 		};
 		fdso += RSUs;
 		var market_cap = fdso * current_price * million;
-		$('#market_cap').html('<span>' + numeral(market_cap).format('($0.00a)') + '</span> Market Cap');
+		$('#market_cap').html('<span>' + numeral(market_cap).format('($0.00a)') + '</span> <span>Market Cap</span>');
 		get_enterprise_value(market_cap);
 	};
 	function dilute_shares(options) {
@@ -357,12 +357,17 @@
 	};
 
 	function do_the_math (current_price, price_yesterday) {
-		var compared_to_yesterday = numeral(current_price - price_yesterday).format('$0,0[.]00');
+		var compared_to_yesterday = current_price - price_yesterday;
+		var stock_class = 'up';
+		if (compared_to_yesterday < 0) {
+			stock_class = 'down';
+		};
 		var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 
 		$('body').addClass('loaded');
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
-		$('#compared_to_yesterday').html(compared_to_yesterday);
+		$('#price_changes').addClass(stock_class);
+		$('#compared_to_yesterday').html( numeral(compared_to_yesterday).format('$0,0[.]00') );
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
 
 		dilute_shares(options_build);

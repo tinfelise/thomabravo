@@ -151,6 +151,43 @@ section:last-of-type {
 .thomaBravo {
 	background-color:#004972;
 }
+.data div span {
+	white-space: nowrap;
+}
+#price_changes {
+	margin-bottom:1em;
+}
+.up {
+	color:#008489;
+}
+.up:before {
+	content:'\f062';
+	font-family: FontAwesome;
+}
+.down {
+	color:red;
+}
+.down:before {
+	content:'\f063';
+	font-family: FontAwesome;
+}
+
+#market_cap,
+#enterprise_value,
+#revenues .multiple {
+	display:inline-block;
+	width:49%;
+	padding: 0 1em;
+	text-align:center;
+}
+#market_cap,
+#enterprise_value {
+	margin-bottom:1em;
+}
+#market_cap,
+#revenues .multiple:first-of-type {
+	border-right:1px solid grey;
+}
 
 #returns {
 	display:flex;
