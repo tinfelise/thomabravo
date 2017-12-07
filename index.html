@@ -56,6 +56,7 @@
 		<section id='ownership'>
 			<img class='logo' src='./images/thoma_bravo-logo.png' alt='Thoma Bravo'>
 			<div id='TB_shares'></div>
+			<div id='TB_shares_perc'></div>
 			<div id='TB_shares_value'></div>
 		</section>
 		<section id='returns'>
@@ -109,6 +110,8 @@
 
 	var realized, unrealized;
 	var all_realizations = [];
+
+	var current_TB_shares, fdso;
 	
 	function get_stock_price (ticker) {
 		var alphavantage_key = 'B67FR48WBLNMCCHH';
@@ -279,8 +282,14 @@
 		};
 		calc_realized(all_realizations);
 	};
+
+	function get_TB_shares_perc (TB_shares, total_shares) {
+		var TB_shares_perc = TB_shares / (total_shares * million);
+		var html = '<span>' + numeral(TB_shares_perc).format('0[.]0%') + '</span> Stake';
+		$('#TB_shares_perc').html(html);
+	};
 	function get_TB_shares_value (shares) {
-		$('#TB_shares').html('<span>' + numeral(shares).format('0.0a') + '</span> Thoma Bravo Shares');
+		$('#TB_shares').html('<span>' + numeral(shares).format('0.0a') + '</span> Shares');
 		var TB_shares_value = shares * current_price;
 		$('#TB_shares_value').html('<span>' + numeral(TB_shares_value).format('$0.0a') + '</span> Value');;
 		calc_unrealized(TB_shares_value);
@@ -292,7 +301,7 @@
 			var shares = realization.shares;
 			total_sold += shares;
 		};
-		var current_TB_shares = (TB_preIPO_shares - total_sold) * million;
+		current_TB_shares = (TB_preIPO_shares - total_sold) * million;
 		get_TB_shares_value(current_TB_shares);
 	};
 	function total_gains_MoM (realizations) {
@@ -326,7 +335,7 @@
 		get_revenue_multiples(enterprise_value);
 	};
 	function get_market_cap (RSUs) {
-		var fdso = 0;
+		fdso = 0;
 		for (i in share_count_build) {
 			fdso += share_count_build[i];
 		};
@@ -360,6 +369,7 @@
 
 		dilute_shares(options_build);
 		total_gains_MoM(postIPO_realizations);
+		get_TB_shares_perc(current_TB_shares, fdso);
 	};
 
 	// do_the_math(15.33, 14.71);
