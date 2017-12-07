@@ -147,11 +147,28 @@ h1 {
 .thomaBravo {
 	background-color:#004972;
 }
-.data div span {
+
+#stockData {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+}
+#stockData div > span {
 	white-space: nowrap;
 }
+#current_price {
+	width: 50%;
+	text-align: center;
+}
 #price_changes {
-	margin-bottom:1em;
+	/*text-align: center;*/
+	width: 50%;
+	display: flex;
+	align-items: flex-end;
+}
+#price_changes > div {
+	display:inline-block;
+	text-align: left;
 }
 .up {
 	color:#008489;
@@ -159,6 +176,8 @@ h1 {
 .up:before {
 	content:'\f062';
 	font-family: FontAwesome;
+	font-size: 2em;
+	padding-right: .25em;
 }
 .down {
 	color:red;
@@ -166,6 +185,11 @@ h1 {
 .down:before {
 	content:'\f063';
 	font-family: FontAwesome;
+	font-size: 2em;
+	padding-right: .25em;
+}
+#previous_weekday {
+	display: block;
 }
 
 #market_cap,
@@ -184,6 +208,27 @@ h1 {
 #revenues .multiple:first-of-type {
 	border-right:1px solid grey;
 }
+#revenues {
+	flex-grow: 1;
+}
+
+#ownership {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+#ownership > div {
+	font-size:1.5em;
+}
+#ownership > div span:last-of-type {
+	font-size:.5em;
+	text-transform: uppercase;
+	color:rgba(0,0,0,.5);
+	display: block;
+}
+#TB_shares_value {
+	display:none;
+}
 
 #returns {
 	display:flex;
@@ -193,6 +238,7 @@ h1 {
 }
 #returns h1 {
 	width:100%;
+	margin-top:0;
 }
 #returns > div {
 	/*display:inline-block;*/
