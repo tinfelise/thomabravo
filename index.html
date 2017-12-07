@@ -158,9 +158,6 @@
 		};
 		return moment(day_before).format('YYYY-MM-DD');
 	};
-	// var test_date = '2017-12-1';
-	// var test_time = '8:30:25 PM';
-	// var test_open = false;
 	function display_update_time (date, time, open) {
 		var html = 'As of ';
 		if (open) {
@@ -171,7 +168,6 @@
 		};
 		$('#updated').html(html);
 	};
-	// display_update_time(test_date,test_time,test_open);
 	function previous_day_of_week (date) {
 		var days_ago = moment(date).diff(moment(), 'days');
 		var weekday = 'Yesterday';
@@ -193,6 +189,7 @@
 			markets_open = true;
 			last_updated_date = last_updated.split(' ')[0];
 			var last_updated_time = last_updated.split(' ')[1];
+				last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
 		};
 
 		display_update_time(last_updated_date, last_updated_time, markets_open);
