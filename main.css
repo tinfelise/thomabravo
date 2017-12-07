@@ -5,7 +5,7 @@ html {
 	margin:0;
 	padding:0;
 	font-family: 'Quicksand', Arial,  Helvetica, sans-serif;
-	font-size:16px;
+	font-size:18px;
 	color:#2e343b;
 	color: rgba(0,0,0,.75);
 	/*background-color: #fafafa;*/
@@ -215,6 +215,9 @@ h1 {
 
 
 @media only screen and (max-width: 700px) {
+	html {
+		font-size:16px;
+	}
 	body {
 		margin:0;
 		padding: 2em 1em;
