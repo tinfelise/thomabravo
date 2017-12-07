@@ -318,13 +318,14 @@
 		$('#total_gains').append('<div class="MoM"><span>' + numeral( calc_MoM(total_gains) ).format('0[.]00') + 'x</span> MoM</div>');
 	};
 	function get_revenue_multiples (enterprise_value) {
+		var html = '';
 		for (i in revenues) {
 			var multiple = enterprise_value / (revenues[i] * million);
-			var html = '<div class="multiple">';
+			html += '<div class="multiple">';
 				html += '<span>' + numeral(multiple).format('0.00') + 'x' + '</span>';
-				html += ' ' + i + ' Revenues</div>'
-			$('#enterprise_value').append(html);
+				html += ' <span>' + i + ' Revenues</span></div>'
 		};
+		$('#revenues').html(html);
 	};
 	function get_enterprise_value (market_cap) {
 		var enterprise_value = market_cap + (net_debt * million);
