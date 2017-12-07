@@ -121,7 +121,7 @@ section:last-of-type {
 	text-align:center;
 }
 .loader svg {
-	fill:rgba(255,95,90,.75);;
+	fill:rgba(255,95,90,.75);
 	margin: 5em 0;
 	transition: margin 1s 1s ease;
 	-webkit-transition: margin 1s 1s ease;
