@@ -110,8 +110,20 @@ section {
 section:last-of-type {
 	padding-bottom:0;
 }
+h1,
+h2,
+h3 {
+	/*font-family: -apple-system-headline, sans-serif*/
+	font-weight:300;
+}
 h1 {
 	font-size:2em;
+}
+h2 {
+	font-size:1.5em;
+}
+h3 {
+	font-size:1.25em;
 }
 .logo {
 	height:2em;
@@ -190,6 +202,8 @@ h1 {
 }
 #previous_weekday {
 	display: block;
+	text-transform: uppercase;
+	font-size: .75em;
 }
 
 #market_cap,
@@ -220,11 +234,11 @@ h1 {
 #ownership > div {
 	font-size:1.5em;
 }
-#ownership > div span:last-of-type {
-	font-size:.5em;
+#stockData h3 span,
+#ownership h3 span {
+	font-size:.75em;
 	text-transform: uppercase;
 	color:rgba(0,0,0,.5);
-	display: block;
 }
 #TB_shares_value {
 	display:none;
@@ -236,7 +250,7 @@ h1 {
 	align-items: center;
 	flex-wrap: wrap;
 }
-#returns h1 {
+#returns h3 {
 	width:100%;
 	margin-top:0;
 }
@@ -244,7 +258,7 @@ h1 {
 	/*display:inline-block;*/
 	/*width:32%;*/
 }
-#returns h3 {
+#returns h2 {
 	margin:0;
 }
 #returns > div > span {
@@ -266,6 +280,11 @@ h1 {
 		padding: 2em 1em;
 		padding-left: env(safe-area-inset-left);
     	padding-right: env(safe-area-inset-right);
+	}
+	#stockData h3 span, 
+	#ownership h3 span {
+		display: block;
+		font-size:.5em;
 	}
 }
 
