@@ -8,7 +8,7 @@ html {
 	font-size:18px;
 	color:#2e343b;
 	color: rgba(0,0,0,.75);
-	/*background-color: #fafafa;*/
+	font-weight:200;
 }
 *, 
 *:before, 
@@ -220,7 +220,7 @@ h3 {
 }
 #market_cap,
 #revenues .multiple:first-of-type {
-	border-right:1px solid grey;
+	border-right:1px solid rgba(0,0,0,.25);
 }
 #revenues {
 	flex-grow: 1;
