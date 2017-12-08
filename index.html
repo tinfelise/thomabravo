@@ -155,7 +155,12 @@
 			var date_time = date + ' ' + time;
 			html += moment(date_time, 'YYYY-MM-DD LTS').format('h:mmA');
 		} else {
-			html += 'closing ' + moment(date, 'YYYY-MM-DD').format('MMM. Do');
+			var exchange_open = moment('9:30 AM -05:00', 'LT Z');
+			var exchange_close = moment('4:00 PM -05:00', 'LT Z');
+			if ( moment().isBetween(exchange_open, exchange_close) == false ) {
+				html += 'closing ';
+			}
+			html += moment(date, 'YYYY-MM-DD').format('MMM. Do');
 		};
 		$('#updated').html(html);
 	};
