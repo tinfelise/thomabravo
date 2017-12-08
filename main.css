@@ -13,7 +13,7 @@ html {
 *, 
 *:before, 
 *:after {
-	box-sizing: inherit;
+	box-sizing: inherit !important;
 }
 input, 
 label,
@@ -44,7 +44,6 @@ a, button {
 	font-size:1em;
 	text-decoration: none;
 	white-space: nowrap;
-	/*color:#FF5F5A;*/
 	color:rgba(255,95,90,.75);
 	font-weight:bold;
 	border:none;
@@ -133,9 +132,6 @@ h3 span:last-of-type {
 .logo {
 	height:2em;
 }
-/*.loader {
-	background-image: url('http://samherbert.net/svg-loaders/svg-loaders/audio.svg');
-}*/
 .loader {
 	text-align:center;
 }
@@ -179,32 +175,16 @@ h3 span:last-of-type {
 	width: 100%;
 	align-items: baseline;
 }
-#current_price {
-	/*width: 50%;*/
-	/*text-align: center;*/
-}
+#current_price {}
 #price_changes {
-	/*text-align: center;*/
-	/*width: 50%;*/
 	display: flex;
 	align-items: inherit;
 }
-/*#price_changes > div {
-	display:inline-block;
-	text-align: left;
-}*/
 #price_changes:before {
 	font-family: FontAwesome;
 	font-size: 2em;
-	padding: 0 .25em;
+	padding: 0 .5em;
 }
-/*#price_changes h3 span {
-	font-size:inherit;
-	color:inherit;
-}
-#price_changes h3 span:last-of-type {
-	font-size:.75em;
-}*/
 .up,
 .up h3 {
 	color:#008489;
@@ -221,9 +201,6 @@ h3 span:last-of-type {
 }
 #previous_weekday {
 	color:inherit;
-	/*display: block;*/
-	/*text-transform: uppercase;*/
-	/*font-size: .75em;*/
 }
 
 #market_cap,
@@ -267,10 +244,6 @@ h3 span:last-of-type {
 #returns h3 {
 	width:100%;
 	margin-top:0;
-}
-#returns > div {
-	/*display:inline-block;*/
-	/*width:32%;*/
 }
 #returns h2 {
 	margin:0;
