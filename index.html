@@ -224,7 +224,7 @@
 			dates[i] = new Date(year, month, day);
 		};
 		var XIRR = finance.XIRR(amounts, dates) / 100;
-		$('#IRR').html( '<span>' + numeral(XIRR).format('0,0[.]0%') + '</span> IRR' );
+		$('#IRR').html( numeral(XIRR).format('0,0[.]0%') + ' <span>IRR</span>' );
 	};
 	function order_events (events, format) {
 		events = events.sort(function (a, b) {
@@ -278,13 +278,12 @@
 
 	function get_TB_shares_perc (TB_shares, total_shares) {
 		var TB_shares_perc = TB_shares / (total_shares * million);
-		var html = '<span>' + numeral(TB_shares_perc).format('0[.]0%') + '</span> <span>Stake</span>';
+		var html = numeral(TB_shares_perc).format('0[.]0%') + ' <span>Stake</span>';
 		$('#TB_shares_perc').html(html);
 	};
 	function get_TB_shares_value (shares) {
-		$('#TB_shares').html('<span>' + numeral(shares).format('0.0a') + '</span> <span>Shares</span>');
 		var TB_shares_value = shares * current_price;
-		$('#TB_shares_value').html('<span>' + numeral(TB_shares_value).format('$0.0a') + '</span> <span>Value</span>');;
+		$('#TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
 		calc_unrealized(TB_shares_value);
 	};
 	function get_TB_ownership (realizations) {
@@ -304,28 +303,29 @@
 		var total_gains = realized + unrealized;
 		var total_MoM = calc_MoM(total_gains);
 
-		$('#realized').html('<h3>' + numeral(realized).format('$0,0[.]0a') + '</h3>');
+		$('#realized').html('<h2>' + numeral(realized).format('$0,0[.]0a') + '</h2>');
 		$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#unrealized').html('<h3>' + numeral(unrealized).format('$0,0[.]0a') + '</h3>');
+		$('#unrealized').html('<h2>' + numeral(unrealized).format('$0,0[.]0a') + '</h2>');
 		$('#unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#total_gains').html('<h3>' + numeral(total_gains).format('$0,0[.]0a') + '</h3>');
+		$('#total_gains').html('<h2>' + numeral(total_gains).format('$0,0[.]0a') + '</h2>');
 		$('#total_gains').append('<div class="MoM"><span>' + numeral( calc_MoM(total_gains) ).format('0[.]00') + 'x</span> MoM</div>');
 	};
 	function get_revenue_multiples (enterprise_value) {
 		var html = '';
 		for (i in revenues) {
 			var multiple = enterprise_value / (revenues[i] * million);
-			html += '<div class="multiple">';
-				html += '<span>' + numeral(multiple).format('0.00') + 'x' + '</span>';
-				html += ' <span>' + i + ' Revenues</span></div>'
+			html += '<h3 class="multiple">'
+					+ numeral(multiple).format('0.00') + 'x'
+					+ ' <span>' + i + ' Revenues</span>'
+					+ '</h3>';
 		};
 		$('#revenues').html(html);
 	};
 	function get_enterprise_value (market_cap) {
 		var enterprise_value = market_cap + (net_debt * million);
-		$('#enterprise_value').html(numeral('<span>' + enterprise_value).format('($0.00a)') + '</span> <span>Enterprise Value</span>');
+		$('#enterprise_value').html(numeral(enterprise_value).format('($0.00a)') + ' <span>Enterprise Value</span>');
 		get_revenue_multiples(enterprise_value);
 	};
 	function get_market_cap (RSUs) {
@@ -335,7 +335,7 @@
 		};
 		fdso += RSUs;
 		var market_cap = fdso * current_price * million;
-		$('#market_cap').html('<span>' + numeral(market_cap).format('($0.00a)') + '</span> <span>Market Cap</span>');
+		$('#market_cap').html(numeral(market_cap).format('($0.00a)') + ' <span>Market Cap</span>');
 		get_enterprise_value(market_cap);
 	};
 	function dilute_shares(options) {
