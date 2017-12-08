@@ -117,13 +117,18 @@ h3 {
 	font-weight:300;
 }
 h1 {
-	font-size:2em;
+	font-size:2.5em;
 }
 h2 {
 	font-size:1.5em;
 }
 h3 {
 	font-size:1.25em;
+}
+h3 span:last-of-type {
+	font-size:.75em;
+	text-transform: uppercase;
+	color:rgba(0,0,0,.5);
 }
 .logo {
 	height:2em;
@@ -168,42 +173,57 @@ h3 {
 #stockData div > span {
 	white-space: nowrap;
 }
+#stockData > div:first-of-type {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	align-items: baseline;
+}
 #current_price {
-	width: 50%;
-	text-align: center;
+	/*width: 50%;*/
+	/*text-align: center;*/
 }
 #price_changes {
 	/*text-align: center;*/
-	width: 50%;
+	/*width: 50%;*/
 	display: flex;
-	align-items: flex-end;
+	align-items: inherit;
 }
-#price_changes > div {
+/*#price_changes > div {
 	display:inline-block;
 	text-align: left;
+}*/
+#price_changes:before {
+	font-family: FontAwesome;
+	font-size: 2em;
+	padding: 0 .25em;
 }
-.up {
+/*#price_changes h3 span {
+	font-size:inherit;
+	color:inherit;
+}
+#price_changes h3 span:last-of-type {
+	font-size:.75em;
+}*/
+.up,
+.up h3 {
 	color:#008489;
 }
 .up:before {
-	content:'\f062';
-	font-family: FontAwesome;
-	font-size: 2em;
-	padding-right: .25em;
+	content:'\f201';
 }
-.down {
+.down,
+.down h3 {
 	color:red;
 }
 .down:before {
-	content:'\f063';
-	font-family: FontAwesome;
-	font-size: 2em;
-	padding-right: .25em;
+	content:'\f1fe';
 }
 #previous_weekday {
-	display: block;
-	text-transform: uppercase;
-	font-size: .75em;
+	color:inherit;
+	/*display: block;*/
+	/*text-transform: uppercase;*/
+	/*font-size: .75em;*/
 }
 
 #market_cap,
@@ -233,12 +253,6 @@ h3 {
 }
 #ownership > div {
 	font-size:1.5em;
-}
-#stockData h3 span,
-#ownership h3 span {
-	font-size:.75em;
-	text-transform: uppercase;
-	color:rgba(0,0,0,.5);
 }
 #TB_shares_value {
 	display:none;
@@ -281,10 +295,12 @@ h3 {
 		padding-left: env(safe-area-inset-left);
     	padding-right: env(safe-area-inset-right);
 	}
-	#stockData h3 span, 
-	#ownership h3 span {
+	h3 span:last-of-type {
 		display: block;
 		font-size:.5em;
+	}
+	#stockData > div:first-of-type {
+		align-items:center;
 	}
 }
 
