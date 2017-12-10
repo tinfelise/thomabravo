@@ -140,6 +140,7 @@ h3 span:last-of-type {
 	margin: 5em 0;
 	transition: margin 1s 1s ease;
 	-webkit-transition: margin 1s 1s ease;
+	height:3em;
 }
 .loaded .loader {
 	display:none;
