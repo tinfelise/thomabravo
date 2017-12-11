@@ -48,6 +48,7 @@ a, button {
 	font-weight:bold;
 	border:none;
 	padding:0;
+	background-color: inherit;
 }
 a:hover,
 button:hover {
