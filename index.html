@@ -3,7 +3,12 @@
 <head>
 	<title>SailPoint Returns | A Thoma Bravo Investment</title>
 	<meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
-	<link rel="stylesheet" href="main.css">
+	
+	<!-- <script type="text/javascript">
+		window.FontAwesomeConfig = { searchPseudoElements: true }
+	</script> -->
+    <link rel="stylesheet" href="main.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
 	<!-- Favicons -->
 	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -33,7 +38,7 @@
 			<span id='updated'></span>
 		</div>
 		<button onclick="reload()">
-			<i class="fa fa-refresh" aria-hidden="true"></i>
+			<i class="fas fa-sync"></i>
 		</button>
 	</header>
 	<main>
@@ -93,7 +98,7 @@
 		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
 	</footer>
 	<!-- Libraries -->
-	<script src="https://use.fontawesome.com/1727fd84aa.js"></script>
+	<!-- <script src="https://use.fontawesome.com/1727fd84aa.js"></script> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
@@ -200,7 +205,6 @@
 			var last_updated_time = last_updated.split(' ')[1];
 				last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
 		};
-
 		display_update_time(last_updated_date, last_updated_time, markets_open);
 
 		stock_data = data['Time Series (Daily)'];
@@ -369,14 +373,20 @@
 	function do_the_math (current_price, price_yesterday) {
 		var compared_to_yesterday = current_price - price_yesterday;
 		var stock_class = 'up';
+		var icon = 'fa-chart-line';
 		if (compared_to_yesterday < 0) {
 			stock_class = 'down';
+			icon = 'fa-chart-area';
 		};
+
 		var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 
 		$('body').addClass('loaded');
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
 		$('#price_changes').addClass(stock_class);
+		$('#price_changes svg').remove();
+		$('#price_changes').prepend('<i class="fas ' + icon + '"></i>');
+		
 		$('#compared_to_yesterday').html( numeral(compared_to_yesterday).format('$0,0[.]00') );
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
 

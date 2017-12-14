@@ -175,31 +175,22 @@ h3 span:last-of-type {
 	display: flex;
 	justify-content: center;
 	width: 100%;
-	align-items: baseline;
+	align-items: center;
 }
 #current_price {}
 #price_changes {
 	display: flex;
 	align-items: inherit;
 }
-#price_changes:before {
-	font-family: FontAwesome;
-	font-size: 2em;
-	padding: 0 .5em;
+#price_changes svg {
+	font-size:2.5em;
+	margin: 0 .5em;
 }
-.up,
-.up h3 {
+.up {
 	color:#008489;
 }
-.up:before {
-	content:'\f201';
-}
-.down,
-.down h3 {
+.down {
 	color:red;
-}
-.down:before {
-	content:'\f1fe';
 }
 #previous_weekday {
 	color:inherit;
