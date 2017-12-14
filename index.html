@@ -395,6 +395,41 @@
 		get_TB_shares_perc(current_TB_shares, fdso);
 	};
 
+	// Tests
+	function fullscreen() {
+		$('main').addClass('fullscreen');
+	};
+
+	function check_for_tests (obj) {
+		var test = obj.test;
+		if (test) {
+			console.log('Test:' + test)
+			var input = test.split('(')[1];
+			if (input) {
+				input = input.split(')')[0];
+				console.log('with input(s): ' + input);
+			};
+			test = test.split('(')[0];
+			window[test](input);
+		};
+	};
+
+	function parseURLs() {
+		var currentURL = window.location.href;
+			currentURL = currentURL.split('?')[1];
+		if (currentURL) {
+			currentURL = currentURL.split('&');
+		};
+		var parameters = {};
+		for (i in currentURL) {
+			var key = currentURL[i].split('=')[0];
+			var val = currentURL[i].split('=')[1];
+			parameters[key] = val;
+		};
+		check_for_tests(parameters);
+	};
+	parseURLs();
+
 	// display_update_time('2017-12-11', undefined , true);
 	// previous_day_of_week(moment('2017-12-08', 'YYYY-MM-DD'));
 	// do_the_math(15.33, 14.71);
