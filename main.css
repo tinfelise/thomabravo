@@ -284,6 +284,7 @@ h3 span:last-of-type {
 		padding: 2em 1em;
 		padding-left: env(safe-area-inset-left);
     	padding-right: env(safe-area-inset-right);
+    	box-shadow:none;
 	}
 	header button {
 		padding-left: .25em;
@@ -295,7 +296,7 @@ h3 span:last-of-type {
 	#stockData > div:first-of-type {
 		align-items:center;
 	}
-	.fullscreen {
+	/*.fullscreen {
 		height:100vh;
 	}
 	.fullscreen main {
@@ -305,7 +306,7 @@ h3 span:last-of-type {
 	}
 	.fullscreen section {
 		width:100%;
-	}
+	}*/
 }
 
 @supports(padding: max(0px)) {
