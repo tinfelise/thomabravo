@@ -79,6 +79,7 @@ header {
 }
 header a {
 	flex-grow: 1;
+	line-height: 0;
 }
 header > div,
 header > button {
@@ -283,6 +284,9 @@ h3 span:last-of-type {
 		padding: 2em 1em;
 		padding-left: env(safe-area-inset-left);
     	padding-right: env(safe-area-inset-right);
+	}
+	header button {
+		padding-left: .25em;
 	}
 	h3 span:last-of-type {
 		display: block;
