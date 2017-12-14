@@ -99,7 +99,11 @@ header button {
 main {}
 header *,
 section {
-	transition: visibility .5s linear, opacity 1s linear, max-height .5s ease-in-out;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
 }
 section {
 	visibility: hidden;
@@ -135,20 +139,38 @@ h3 span:last-of-type {
 }
 .loader {
 	text-align:center;
+	/*min-height:10em;*/
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+	max-height: 100em;
+	
 }
 .loader svg {
 	fill:rgba(255,95,90,.75);
 	margin: 5em 0;
-	transition: margin 1s 1s ease;
-	-webkit-transition: margin 1s 1s ease;
-	height:3em;
+	-webkit-transition: all .5s ease;
+	-moz-transition: all .5s ease;
+	-ms-transition: all .5s ease;
+	-o-transition: all .5s ease;
+	transition: all .5s ease;
+	max-height:3em;
 }
 .loaded .loader {
-	display:none;
+	max-height:0;
 }
 .loaded .loader svg {
-	margin:0;
+	/*display:none;*/
+	min-height: 0;
+	visibility: hidden;
+	max-height: 0;
+	opacity: 0;
 }
+/*.loaded .loader svg {
+	margin:0;
+}*/
 .loaded header > div,
 .loaded header > button {
 	visibility: visible;
