@@ -225,7 +225,7 @@
 	function percentage_change (current, previous) {
 		var diff = current - previous;
 		var percentage_change = diff/previous;
-			percentage_change = numeral(percentage_change).format('%0.00');
+			percentage_change = numeral(percentage_change).format('0.0%');
 		return percentage_change;
 	};
 
@@ -295,7 +295,7 @@
 
 	function get_TB_shares_perc (TB_shares, total_shares) {
 		var TB_shares_perc = TB_shares / (total_shares * million);
-		var html = numeral(TB_shares_perc).format('0[.]0%') + ' <span>Stake</span>';
+		var html = numeral(TB_shares_perc).format('0.0%') + ' <span>Stake</span>';
 		$('#TB_shares_perc').html(html);
 	};
 	function get_TB_shares_value (shares) {
@@ -321,13 +321,13 @@
 		var total_gains = realized + unrealized;
 		var total_MoM = calc_MoM(total_gains);
 
-		$('#realized').html('<h2>' + numeral(realized).format('$0,0[.]0a') + '</h2>');
+		$('#realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
 		$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#unrealized').html('<h2>' + numeral(unrealized).format('$0,0[.]0a') + '</h2>');
+		$('#unrealized').html('<h2>' + numeral(unrealized).format('$0,0.0a') + '</h2>');
 		$('#unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#total_gains').html('<h2>' + numeral(total_gains).format('$0,0[.]0a') + '</h2>');
+		$('#total_gains').html('<h2>' + numeral(total_gains).format('$0,0.0a') + '</h2>');
 		$('#total_gains').append('<div class="MoM"><span>' + numeral( calc_MoM(total_gains) ).format('0[.]00') + 'x</span> MoM</div>');
 	};
 	function get_revenue_multiples (enterprise_value) {
