@@ -101,6 +101,7 @@
 	<!-- <script src="https://use.fontawesome.com/1727fd84aa.js"></script> -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="https://cdn.rawgit.com/kodie/moment-holiday/v1.2.0/moment-holiday.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/financejs@4.1.0/finance.js"></script>
 	<!-- Javascript -->
@@ -158,13 +159,39 @@
 		$('#stockData .data').html('<h1>Data unavailable</h1><span>Please try again later</span>');
 	};
 
-	function previous_market_day(date, date_format) {
-		var day_before = moment(date, date_format).subtract(1, 'days');
-		var day_of_week = moment(day_before).format('E');
+	function previous_weekday (date) {
+		var day = date;
+		var day_of_week = moment(date).format('E');
 		if (day_of_week > 5) {
 			var offset = day_of_week - 5;
-			day_before = moment(day_before, date_format).subtract(offset, 'days');
+			day = moment(date).subtract(offset, 'days');
 		};
+		return day;
+	};
+	function check_holiday (date) {
+		var new_date = date;
+		var is_today_holiday = moment(date).isHoliday();
+		var is_yesterday_holiday = moment(date).subtract(1, 'days').isHoliday();
+		
+		if (is_today_holiday && is_yesterday_holiday) {
+			new_date = moment(date).subtract(2, 'days');
+		} else if (is_today_holiday) {
+			new_date = moment(date).subtract(1, 'days');
+		};
+
+		new_date = previous_weekday(new_date);
+		return new_date;
+	};
+
+	function previous_market_day(date, date_format) {
+		var day_before = moment(date, date_format).subtract(1, 'days');
+		// var day_of_week = moment(day_before).format('E');
+		// if (day_of_week > 5) {
+		// 	var offset = day_of_week - 5;
+		// 	day_before = moment(day_before, date_format).subtract(offset, 'days');
+		// };
+		day_before = previous_weekday(day_before);
+		day_before = check_holiday(day_before);
 		return moment(day_before).format('YYYY-MM-DD');
 	};
 	function display_update_time (date, time, open) {
