@@ -79,7 +79,6 @@
 			<h3 id='IRR'></h3>
 		</section>
 		<section id='returns'>
-			
 			<div>
 				<span>Realized</span>
 				<div id='realized'></div>	
@@ -90,8 +89,11 @@
 			</div>
 			<div>
 				<span>Total Returns</span>
-				<div id='total_gains'></div>
+				<div id='total_returns'></div>
 			</div>
+		</section>
+		<section id='total_gain'>
+			<h2><span> Total Gain</span></h2>
 		</section>
 	</main>
 	<footer>
@@ -345,8 +347,9 @@
 		compile_realizations();
 		get_TB_ownership(realizations);
 		
-		var total_gains = realized + unrealized;
-		var total_MoM = calc_MoM(total_gains);
+		var total_returns = realized + unrealized;
+		var total_MoM = calc_MoM(total_returns);
+		var total_gain = total_returns - (-purchase.amount * million);
 
 		$('#realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
 		$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
@@ -354,8 +357,10 @@
 		$('#unrealized').html('<h2>' + numeral(unrealized).format('$0,0.0a') + '</h2>');
 		$('#unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-		$('#total_gains').html('<h2>' + numeral(total_gains).format('$0,0.0a') + '</h2>');
-		$('#total_gains').append('<div class="MoM"><span>' + numeral( calc_MoM(total_gains) ).format('0[.]00') + 'x</span> MoM</div>');
+		$('#total_returns').html('<h2>' + numeral(total_returns).format('$0,0.0a') + '</h2>');
+		$('#total_returns').append('<div class="MoM"><span>' + numeral( calc_MoM(total_returns) ).format('0[.]00') + 'x</span> MoM</div>');
+
+		$('#total_gain h2').prepend( numeral(total_gain).format('$0,0.0a') );
 	};
 	function get_revenue_multiples (enterprise_value) {
 		var html = '';

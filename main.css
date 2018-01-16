@@ -257,6 +257,7 @@ h3 span:last-of-type {
 	justify-content: space-between;
 	align-items: center;
 	flex-wrap: wrap;
+	padding-bottom:0;
 }
 #returns h3 {
 	width:100%;
@@ -272,6 +273,19 @@ h3 span:last-of-type {
 }
 .MoM {
 	color:rgba(0,0,0,.5);
+}
+
+#total_gain h2 {
+	text-align:center;
+	padding-top:1em;
+	margin-top:1em;
+	margin-bottom:0;
+	border-top: 1px solid rgba(0,0,0,.25)
+}
+#total_gain h2 span {
+	font-size:.75em;
+	text-transform: uppercase;
+	color: rgba(0,0,0,.5);
 }
 
 
