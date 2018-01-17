@@ -385,9 +385,9 @@
 	};
 	function dilute_shares(options) {
 		var RSUs_Options = 0;
-		for (issuance in options_build) {
-			var strike_price = options_build[issuance].strike;
-			var shares = options_build[issuance].shares;
+		for (issuance in options) {
+			var strike_price = options[issuance].strike;
+			var shares = options[issuance].shares;
 			var diluted = 0;
 			if (current_price > strike_price) {
 				diluted = (current_price - strike_price)/current_price*shares;
