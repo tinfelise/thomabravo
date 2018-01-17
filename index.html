@@ -185,17 +185,6 @@
 		return new_date;
 	};
 
-	function previous_market_day(date, date_format) {
-		var day_before = moment(date, date_format).subtract(1, 'days');
-		// var day_of_week = moment(day_before).format('E');
-		// if (day_of_week > 5) {
-		// 	var offset = day_of_week - 5;
-		// 	day_before = moment(day_before, date_format).subtract(offset, 'days');
-		// };
-		day_before = previous_weekday(day_before);
-		day_before = check_holiday(day_before);
-		return moment(day_before).format('YYYY-MM-DD');
-	};
 	function display_update_time (date, time, open) {
 		var html = 'As of ';
 		if (open) {
@@ -210,6 +199,12 @@
 			html += moment(date, 'YYYY-MM-DD').format('MMM. Do');
 		};
 		$('#updated').html(html);
+	};
+	function previous_market_day(date, date_format) {
+		var day_before = moment(date, date_format).subtract(1, 'days');
+		day_before = previous_weekday(day_before);
+		day_before = check_holiday(day_before);
+		return moment(day_before).format('YYYY-MM-DD');
 	};
 	function previous_day_of_week (date) {
 		var days_ago = moment(date).diff(moment(), 'days');
