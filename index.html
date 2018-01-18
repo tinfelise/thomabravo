@@ -426,9 +426,14 @@
 	function dummy_data () {
 		current_price = 15.33;
 		previous_closing_price = 14.71;
+		var today = moment().format('YYYY-MM-DD');
+		var time = moment().format('h:mmA');
+		var open = true;
+		var previous = previous_market_day(today, 'YYYY-MM-DD');
+
 		$('#ticker').html('SAIL');
-		display_update_time('2017-12-11', undefined , true);
-		display_previous_day_of_week(moment('2017-12-08', 'YYYY-MM-DD'));
+		display_update_time(today, time, open);
+		display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 		do_the_math(current_price, previous_closing_price);
 	};
 
