@@ -424,10 +424,12 @@
 	// 	$('body').addClass('fullscreen');
 	// };
 	function dummy_data () {
+		current_price = 15.33;
+		previous_closing_price = 14.71;
 		$('#ticker').html('SAIL');
 		display_update_time('2017-12-11', undefined , true);
 		display_previous_day_of_week(moment('2017-12-08', 'YYYY-MM-DD'));
-		do_the_math(15.33, 14.71);
+		do_the_math(current_price, previous_closing_price);
 	};
 
 	function check_for_tests (obj) {
@@ -462,7 +464,5 @@
 		check_for_tests(parameters);
 	};
 	parseURLs();
-
-	// dummy_data();
 
 </script>
