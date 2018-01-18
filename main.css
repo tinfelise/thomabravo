@@ -287,6 +287,10 @@ h3 span:last-of-type {
 	text-transform: uppercase;
 	color: rgba(0,0,0,.5);
 }
+.disclaimer {
+	text-align:center;
+	font-size:.35em;
+}
 
 
 @media only screen and (max-width: 700px) {

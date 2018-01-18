@@ -425,15 +425,17 @@
 	// function fullscreen() {
 	// 	$('body').addClass('fullscreen');
 	// };
-	function dummy_data () {
-		current_price = 15.33;
-		previous_closing_price = 14.71;
+	function dummy_data (current, last, message) {
+		current_price = current;
+		previous_closing_price = last;
 		var today = moment().format('YYYY-MM-DD');
 		var time = moment().format('h:mmA');
 		var open = true;
 		var previous = previous_market_day(today, 'YYYY-MM-DD');
 
 		$('#ticker').html('SAIL');
+		$('header button').hide();
+		$('html').append('<div class="disclaimer">' + decodeURIComponent(message) + '</div>');
 		display_update_time(today, time, open);
 		display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 		do_the_math(current_price, previous_closing_price);
