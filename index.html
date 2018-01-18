@@ -118,7 +118,7 @@
 	var million = 1000000;
 
 	var stock_data = {};
-	var current_price, previous_close;
+	var current_price, previous_closing_price;
 
 	var realized, unrealized;
 	var all_realizations = [];
@@ -206,7 +206,7 @@
 		day_before = check_holiday(day_before);
 		return moment(day_before).format('YYYY-MM-DD');
 	};
-	function previous_day_of_week (date) {
+	function display_previous_day_of_week (date) {
 		var days_ago = moment(date).diff(moment(), 'days');
 		var weekday = 'yesterday';
 		if (days_ago != -1) {
@@ -229,21 +229,20 @@
 			var last_updated_time = last_updated.split(' ')[1];
 				last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
 		};
-		display_update_time(last_updated_date, last_updated_time, markets_open);
-
-		stock_data = data['Time Series (Daily)'];
 
 		var previous = previous_market_day(last_updated_date, 'YYYY-MM-DD');
-		previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 
+		stock_data = data['Time Series (Daily)'];
 		var todays_data = stock_data[last_updated_date];
 		var yesterdays_data = stock_data[previous];
 
 		var close = '4. close';
 		current_price = todays_data[close];
-		previous_close = yesterdays_data[close];
+		previous_closing_price = yesterdays_data[close];
 
-		do_the_math(current_price, previous_close);
+		display_update_time(last_updated_date, last_updated_time, markets_open);
+		display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
+		do_the_math(current_price, previous_closing_price);
 	};
 
 	function percentage_change (current, previous) {
@@ -405,15 +404,13 @@
 			stock_class = 'down';
 			icon = 'fa-chart-area';
 		};
-
 		var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 
 		$('body').addClass('loaded');
 		$('#current_price').html( numeral(current_price).format('$0,0.00') );
 		$('#price_changes').addClass(stock_class);
 		$('#price_changes svg').remove();
-		$('#price_changes').prepend('<i class="fas ' + icon + '"></i>');
-		
+		$('#price_changes').prepend('<i class="fas ' + icon + '"></i>');		
 		$('#compared_to_yesterday').html( numeral(compared_to_yesterday).format('$0,0[.]00') );
 		$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
 
