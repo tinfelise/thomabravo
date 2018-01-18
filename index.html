@@ -435,10 +435,10 @@
 
 		$('#ticker').html('SAIL');
 		$('header button').hide();
-		$('html').append('<div class="disclaimer">' + decodeURIComponent(message) + '</div>');
 		display_update_time(today, time, open);
 		display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 		do_the_math(current_price, previous_closing_price);
+		$('html').append('<div class="disclaimer">' + decodeURIComponent(message) + '</div>');
 	};
 
 	function check_for_tests (obj) {
