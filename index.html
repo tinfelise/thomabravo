@@ -446,10 +446,11 @@
 			var input = test.split('(')[1];
 			if (input) {
 				input = input.split(')')[0];
+				input = input.split(',');
 				console.log('with input(s): ' + input);
 			};
 			test = test.split('(')[0];
-			window[test](input);
+			window[test].apply(null,input);
 		};
 		if (test != 'dummy_data') {
 			get_stock_price('SAIL');
