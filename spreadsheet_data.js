@@ -30,10 +30,10 @@ var postIPO_realizations = [
 var TB_preIPO_shares = 56.8170170175447;
 
 var revenues = {
-	'2018': 216.083759525813,
-	'2019': 270
+	'2018': 224.0,
+	'2019': 276.2
 };
-var net_debt = -30.4295;
+var net_debt = -47.7;
 
 var purchase = {
 	'event':'Purchase',
