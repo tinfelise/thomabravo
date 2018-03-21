@@ -2,20 +2,25 @@ var options_build = [
 	{
 		'tranche': 1,
 		'strike': 0,
-		'shares': 0.825,
+		'shares': 0.897284,
 	},
 	{
 		'tranche': 2,
-		'strike': 2.67242,
-		'shares': 2.462434,
+		'strike': 5.43,
+		'shares': 0.916826,
+	},
+	{
+		'tranche': 3,
+		'strike': 0.0517,
+		'shares': 2.242,
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 50.8951089662646,
-	'Pref-Shares': 20.4993953808417,
-	'IPO Shares': 14.3,
-	'Greenshoe Shares': 1.5
+	'Basic Shares': 87.20512,
+	'Pref-Shares': 0,
+	'IPO Shares': 0,
+	'Greenshoe Shares': 0
 };
 
 var postIPO_realizations = [
@@ -27,7 +32,7 @@ var postIPO_realizations = [
 	}
 ];
 
-var TB_preIPO_shares = 56.8170170175447;
+var TB_preIPO_shares = 56.723354;
 
 var revenues = {
 	'2018': 224.0,
@@ -105,5 +110,25 @@ var preIPO_realizations = [
 		'event':'Transaction Fees',
 		'date': '7/6/17',
 		'amount': 0.3125
-	}
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '10/6/17',
+		'amount': 0.3125
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '1/9/18',
+		'amount': 159647/1000000
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '1/17/18',
+		'amount': 9289/1000000
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '3/14/18',
+		'amount': 12667/1000000
+	},
 ];
