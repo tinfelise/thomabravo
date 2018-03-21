@@ -23,7 +23,7 @@ var postIPO_realizations = [
 		'event':'Sold @ IPO',
 		'date': '11/22/17',
 		'shares':  6.5,
-		'stock_price': 12*(1-.07)
+		'amount': 72.540013
 	}
 ];
 

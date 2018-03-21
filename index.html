@@ -312,7 +312,7 @@
 			var obj = {};
 				obj.event = realization.event;
 				obj.date = realization.date;
-				obj.amount = realization.shares * realization.stock_price;
+				obj.amount = realization.amount;
 			all_realizations.push(obj);
 		};
 		calc_realized(all_realizations);
