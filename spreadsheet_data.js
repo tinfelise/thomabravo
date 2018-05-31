@@ -29,14 +29,20 @@ var postIPO_realizations = [
 		'date': '11/22/17',
 		'shares':  6.5,
 		'amount': 72.540013
+	},
+	{
+		'event':'Sold @ Follow-On',
+		'date': '5/15/18',
+		'shares':  20.4792,
+		'amount': 444.65463
 	}
 ];
 
 var TB_preIPO_shares = 56.817016;
 
 var revenues = {
-	'2018': 224.0,
-	'2019': 276.2
+	'2018': 227.5 ,
+	'2019': 279.7 
 };
 var net_debt = -47.7;
 
@@ -131,4 +137,24 @@ var preIPO_realizations = [
 		'date': '3/14/18',
 		'amount': 12667/1000000
 	},
+	{
+		'event':'Transaction Fees',
+		'date': '3/26/18',
+		'amount': 6333/1000000
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '4/27/18',
+		'amount': 6333/1000000
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '5/15/18',
+		'amount': 6333/1000000
+	},
+	{
+		'event':'Follow-On Realization',
+		'date': '5/15/18',
+		'amount': 444.65463
+	}
 ];
