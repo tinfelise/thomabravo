@@ -151,10 +151,5 @@ var preIPO_realizations = [
 		'event':'Transaction Fees',
 		'date': '5/15/18',
 		'amount': 6333/1000000
-	},
-	{
-		'event':'Follow-On Realization',
-		'date': '5/15/18',
-		'amount': 444.65463
 	}
 ];
