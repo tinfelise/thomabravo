@@ -155,6 +155,7 @@
 		$('body').removeClass('loaded');
 		reset();
 		get_stock_price(ticker);
+		play_sound(sound);
 	};
 
 	function no_data () {
@@ -476,5 +477,11 @@
 		check_for_tests(parameters);
 	};
 	parseURLs();
+
+	function play_sound(clip) {
+		var audioElement = document.createElement('audio');
+	    audioElement.setAttribute('src', clip);
+	    audioElement.play();
+	}
 
 </script>

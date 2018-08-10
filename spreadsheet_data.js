@@ -1,4 +1,5 @@
 var ticker = 'SAIL';
+var sound = 'sail.mp3';
 
 var options_build = [
 	{
