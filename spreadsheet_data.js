@@ -1,3 +1,5 @@
+var ticker = 'SAIL';
+
 var options_build = [
 	{
 		'tranche': 1,
