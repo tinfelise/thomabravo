@@ -44,7 +44,7 @@ var postIPO_realizations = [
 	}
 ];
 
-var TB_preIPO_shares = 56.817016;
+var TB_preIPO_shares = 56.723354;
 
 var revenues = {
 	'2018': 234.82,
