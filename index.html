@@ -425,7 +425,7 @@
 	// function fullscreen() {
 	// 	$('body').addClass('fullscreen');
 	// };
-	function dummy_data (current, last, message) {
+	function dummy_data (tick, current, last, message) {
 		current_price = current;
 		previous_closing_price = last;
 		var today = moment().format('YYYY-MM-DD');
@@ -433,7 +433,7 @@
 		var open = true;
 		var previous = previous_market_day(today, 'YYYY-MM-DD');
 
-		$('#ticker').html('SAIL');
+		$('#ticker').html(tick);
 		$('header button').hide();
 		display_update_time(today, time, open);
 		display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
@@ -457,7 +457,7 @@
 			window[test].apply(null,input);
 		};
 		if (test != 'dummy_data') {
-			get_stock_price('SAIL');
+			get_stock_price(ticker);
 		};
 	};
 
