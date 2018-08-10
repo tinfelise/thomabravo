@@ -309,11 +309,11 @@
 		};
 		for (i in postIPO_realizations) {
 			var realization = postIPO_realizations[i];
-			var obj = {};
-				obj.event = realization.event;
-				obj.date = realization.date;
-				obj.amount = realization.amount;
-			all_realizations.push(obj);
+			// var obj = {};
+			// 	obj.event = realization.event;
+			// 	obj.date = realization.date;
+			// 	obj.amount = realization.amount;
+			all_realizations.push(realization);
 		};
 		calc_realized(all_realizations);
 	};
