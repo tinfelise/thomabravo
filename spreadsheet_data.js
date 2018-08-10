@@ -158,16 +158,16 @@ var preIPO_realizations = [
 		'date': '5/15/18',
 		'amount': 6333/1000000
 	},
-	{
-		'event':'First Follow-On Realization',
-		'date': '5/24/18',
-		'amount': 444.65463
-	},
-	{
-		'event':'GP Distribution',
-		'date': '6/8/18',
-		'amount': 91.391666
-	},
+	// {
+	// 	'event':'First Follow-On Realization',
+	// 	'date': '5/24/18',
+	// 	'amount': 444.65463
+	// },
+	// {
+	// 	'event':'GP Distribution',
+	// 	'date': '6/8/18',
+	// 	'amount': 91.391666
+	// },
 	{
 		'event':'Transaction Fees',
 		'date': '7/13/18',
