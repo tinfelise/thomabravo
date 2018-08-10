@@ -2,22 +2,22 @@ var options_build = [
 	{
 		'tranche': 1,
 		'strike': 0,
-		'shares': 0.897284,
+		'shares': 1.245609,
 	},
 	{
 		'tranche': 2,
-		'strike': 5.43,
-		'shares': 0.916826,
+		'strike': 6.11,
+		'shares': 3.102936,
 	},
 	{
 		'tranche': 3,
 		'strike': 0.0517,
-		'shares': 2.242,
+		'shares': 0.994173,
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 87.20512,
+	'Basic Shares': 87.638578,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
@@ -35,16 +35,22 @@ var postIPO_realizations = [
 		'date': '5/15/18',
 		'shares':  20.4792,
 		'amount': 444.65463
+	},
+	{
+		'event':'GP Distribution',
+		'date': '6/8/18',
+		'shares': (56.817016 - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356),
+		'amount': 91.391666
 	}
 ];
 
 var TB_preIPO_shares = 56.817016;
 
 var revenues = {
-	'2018': 227.5 ,
-	'2019': 279.7 
+	'2018': 234.82,
+	'2019': 287.7
 };
-var net_debt = -47.7;
+var net_debt = -71.929;
 
 var purchase = {
 	'event':'Purchase',
@@ -151,5 +157,25 @@ var preIPO_realizations = [
 		'event':'Transaction Fees',
 		'date': '5/15/18',
 		'amount': 6333/1000000
+	},
+	{
+		'event':'First Follow-On Realization',
+		'date': '5/24/18',
+		'amount': 444.65463
+	},
+	{
+		'event':'GP Distribution',
+		'date': '6/8/18',
+		'amount': 91.391666
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '7/13/18',
+		'amount': 0.006333
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '7/13/18',
+		'amount': 0.007472
 	}
 ];
