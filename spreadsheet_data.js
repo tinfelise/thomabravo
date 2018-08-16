@@ -34,8 +34,8 @@ var postIPO_realizations = [
 		'amount': 72.540013
 	},
 	{
-		'event':'Sold @ Follow-On',
-		'date': '5/15/18',
+		'event':'First Follow-On Realization',
+		'date': '5/24/18',
 		'shares':  20.4792,
 		'amount': 444.65463
 	},
