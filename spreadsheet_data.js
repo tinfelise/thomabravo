@@ -50,7 +50,7 @@ var postIPO_realizations = [
 	{
 		'event':'Second Follow-On Realization',
 		'date': '8/16/18',
-		'shares': 19.809501000,
+		'shares': 19.809501,
 		'amount': 545.1005516875
 	}
 ];
