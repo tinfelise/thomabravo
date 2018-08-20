@@ -26,6 +26,8 @@ var share_count_build = {
 	'Greenshoe Shares': 0
 };
 
+var TB_preIPO_shares = 56.723354;
+
 var postIPO_realizations = [
 	{
 		'event':'Sold @ IPO',
@@ -42,7 +44,7 @@ var postIPO_realizations = [
 	{
 		'event':'GP Distribution',
 		'date': '6/8/18',
-		'shares': (56.817016 - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356),
+		'shares': (TB_preIPO_shares - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356),
 		'amount': 91.391666
 	},
 	{
@@ -52,8 +54,6 @@ var postIPO_realizations = [
 		'amount': 545.1005516875
 	}
 ];
-
-var TB_preIPO_shares = 56.723354;
 
 var revenues = {
 	'2018': 234.82,
