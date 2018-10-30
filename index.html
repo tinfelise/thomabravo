@@ -37,7 +37,7 @@
 			<span id='ticker'></span>
 			<span id='updated'></span>
 		</div>
-		<button onclick="reload()">
+		<button onclick="reload(sound)">
 			<i class="fas fa-sync"></i>
 		</button>
 	</header>
@@ -151,11 +151,13 @@
 	function reset () {
 		all_realizations = [];
 	};
-	function reload () {
+	function reload (clip) {
 		$('body').removeClass('loaded');
 		reset();
 		get_stock_price(ticker);
-		play_sound(sound);
+		if (clip) {
+			play_sound(clip);
+		};
 	};
 
 	function no_data () {
