@@ -501,4 +501,13 @@
 		}
 	};
 
+	var refreshInterval;
+
+	function refresh(time) {
+		refreshInterval = setInterval(reload, time); 
+	};
+	function stopRefreshing() {
+      clearInterval(refreshInterval);
+    }
+
 </script>
