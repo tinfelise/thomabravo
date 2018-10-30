@@ -292,9 +292,15 @@ h3 span:last-of-type {
 	text-transform: uppercase;
 	color: rgba(0,0,0,.5);
 }
+footer {
+	text-align:right;
+}
 .disclaimer {
 	text-align:center;
 	font-size:.35em;
+}
+.fullscreen .present {
+	display:none;
 }
 
 
@@ -320,6 +326,8 @@ h3 span:last-of-type {
 	#stockData > div:first-of-type {
 		align-items:center;
 	}
+	.present {
+		display:none;
 	}
 }
 

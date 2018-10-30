@@ -100,6 +100,9 @@
 	</main>
 	<footer>
 		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
+		<button class='present' onclick="toggleFullScreen()">
+			<i class="fas fa-expand"></i> <span>Present</span>
+		</button>
 	</footer>
 	<!-- Libraries -->
 	<!-- <script src="https://use.fontawesome.com/1727fd84aa.js"></script> -->
@@ -495,9 +498,22 @@
 
 		if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
 			requestFullScreen.call(docEl);
+			$('html').addClass('fullscreen');
 		}
 		else {
 			cancelFullScreen.call(doc);
+			// $('html').removeClass('fullscreen');
+		}
+	};
+	if (document.addEventListener) {
+		document.addEventListener('webkitfullscreenchange', exitFullscreen, false);
+		document.addEventListener('mozfullscreenchange', exitFullscreen, false);
+		document.addEventListener('fullscreenchange', exitFullscreen, false);
+		document.addEventListener('MSFullscreenChange', exitFullscreen, false);
+	};
+	function exitFullscreen() {
+		if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
+			$('html').removeClass('fullscreen');
 		}
 	};
 
