@@ -168,7 +168,7 @@ function add_new_realizations (array) {
 	order_events(all_realizations, 'MM/DD/YY');
 };
 function calc_MoM (gains) {
-	return gains / (-purchase.amount * million);
+	return gains / (-TB_initial_purchase_price * million);
 };
 function calc_unrealized(share_value) {
 	unrealized = share_value;
@@ -177,30 +177,19 @@ function calc_unrealized(share_value) {
 		'date': moment().format('MM/DD/YY'),
 		'amount': (share_value / million)
 	};
-	add_new_realizations([IPO_mark, purchase]);
+	add_new_realizations(transactions);
+	add_new_realizations([IPO_mark]);
 	get_IRR(all_realizations);
 };
-function calc_realized(realizations) {
+
+function sum_realizations (all_transactions) {
 	realized = 0;
-	for (i in realizations) {
-		realized += realizations[i].amount * million;
+	for (i in all_transactions) {
+		var value = all_transactions[i].amount
+		if (value > 0) {
+			realized += value * million;
+		};
 	};
-};
-function compile_realizations () {
-	// all_realizations.length = [];
-	for (i in preIPO_realizations) {
-		var realization = preIPO_realizations[i];
-		all_realizations.push(realization);
-	};
-	for (i in postIPO_realizations) {
-		var realization = postIPO_realizations[i];
-		// var obj = {};
-		// 	obj.event = realization.event;
-		// 	obj.date = realization.date;
-		// 	obj.amount = realization.amount;
-		all_realizations.push(realization);
-	};
-	calc_realized(all_realizations);
 };
 
 function get_TB_shares_perc (TB_shares, total_shares) {
@@ -214,23 +203,24 @@ function get_TB_shares_value (shares) {
 	$('#TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
 	calc_unrealized(TB_shares_value);
 };
-function get_TB_ownership (realizations) {
-	var total_sold = 0;
-	for (i in realizations) {
-		var realization = realizations[i];
-		var shares = realization.shares;
-		total_sold += shares;
+function get_TB_ownership (all_transactions) {
+	var total_shares = 0;
+	for (i in all_transactions) {
+		var shares = all_transactions[i].shares;
+		if (shares) {
+			total_shares += shares;
+		};
 	};
-	current_TB_shares = (TB_preIPO_shares - total_sold) * million;
+	current_TB_shares = total_shares * million;
 	get_TB_shares_value(current_TB_shares);
 };
 function total_gains_MoM (realizations) {
-	compile_realizations();
-	get_TB_ownership(realizations);
+	sum_realizations(transactions);
+	get_TB_ownership(transactions);
 	
 	var total_returns = realized + unrealized;
 	var total_MoM = calc_MoM(total_returns);
-	var total_gain = total_returns - (-purchase.amount * million);
+	var total_gain = total_returns - (-TB_initial_purchase_price * million);
 
 	$('#realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
 	$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
@@ -302,7 +292,7 @@ function do_the_math (current_price, price_yesterday) {
 	$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
 
 	dilute_shares(options_build);
-	total_gains_MoM(postIPO_realizations);
+	total_gains_MoM(transactions);
 	get_TB_shares_perc(current_TB_shares, share_count_build["Basic Shares"]);
 };
 

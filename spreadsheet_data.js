@@ -26,47 +26,22 @@ var share_count_build = {
 	'Greenshoe Shares': 0
 };
 
-var TB_preIPO_shares = 56.723354;
-
-var postIPO_realizations = [
-	{
-		'event':'Sold @ IPO',
-		'date': '11/22/17',
-		'shares':  6.5,
-		'amount': 72.540013
-	},
-	{
-		'event':'First Follow-On Realization',
-		'date': '5/24/18',
-		'shares':  20.4792,
-		'amount': 444.65463
-	},
-	{
-		'event':'GP Distribution',
-		'date': '6/8/18',
-		'shares': (TB_preIPO_shares - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356),
-		'amount': 91.391666
-	},
-	{
-		'event':'Second Follow-On Realization',
-		'date': '8/16/18',
-		'shares': 19.809501,
-		'amount': 545.1005516875
-	}
-];
-
 var revenues = {
 	'2018': 234.82,
 	'2019': 287.7
 };
 var net_debt = -71.929;
 
-var purchase = {
-	'event':'Purchase',
-	'date': '9/8/14',
-	'amount': -200
-}
-var preIPO_realizations = [
+var TB_preIPO_shares = 56.723354;
+var TB_initial_purchase_price = -200;
+
+var transactions = [
+	{
+		'event':'Purchase',
+		'date': '9/8/14',
+		'amount': TB_initial_purchase_price,
+		'shares': TB_preIPO_shares
+	},
 	{
 		'event':'Transaction Fees',
 		'date': '11/12/14',
@@ -125,7 +100,8 @@ var preIPO_realizations = [
 	{
 		'event':'Realization',
 		'date': '6/29/17',
-		'amount': 44.90071809
+		'amount': 44.90071809,
+		'shares': 0
 	},
 	{
 		'event':'Transaction Fees',
@@ -136,6 +112,12 @@ var preIPO_realizations = [
 		'event':'Transaction Fees',
 		'date': '10/6/17',
 		'amount': 0.3125
+	},
+	{
+		'event':'Sold @ IPO',
+		'date': '11/22/17',
+		'amount': 72.540013,
+		'shares':  -6.5
 	},
 	{
 		'event':'Transaction Fees',
@@ -167,16 +149,18 @@ var preIPO_realizations = [
 		'date': '5/15/18',
 		'amount': 6333/1000000
 	},
-	// {
-	// 	'event':'First Follow-On Realization',
-	// 	'date': '5/24/18',
-	// 	'amount': 444.65463
-	// },
-	// {
-	// 	'event':'GP Distribution',
-	// 	'date': '6/8/18',
-	// 	'amount': 91.391666
-	// },
+	{
+		'event':'First Follow-On Realization',
+		'date': '5/24/18',
+		'amount': 444.65463,
+		'shares':  -20.4792
+	},
+	{
+		'event':'GP Distribution',
+		'date': '6/8/18',
+		'amount': 91.391666,
+		'shares': -((TB_preIPO_shares - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356))
+	},
 	{
 		'event':'Transaction Fees',
 		'date': '7/13/18',
@@ -186,5 +170,11 @@ var preIPO_realizations = [
 		'event':'Transaction Fees',
 		'date': '7/13/18',
 		'amount': 0.007472
+	},
+	{
+		'event':'Second Follow-On Realization',
+		'date': '8/16/18',
+		'amount': 545.1005516875,
+		'shares': -19.809501
 	}
 ];
