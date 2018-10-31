@@ -175,9 +175,6 @@ h3 span:last-of-type {
 	max-height: 0;
 	opacity: 0;
 }
-/*.loaded .loader svg {
-	margin:0;
-}*/
 .loaded header > div,
 .loaded header > button {
 	visibility: visible;
