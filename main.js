@@ -4,10 +4,10 @@ var million = 1000000;
 var stock_data = {};
 var current_price, previous_closing_price;
 
-var realized, unrealized;
+var investment, realized, unrealized;
 var all_realizations = [];
 
-var current_TB_shares, fdso;
+var current_shares, fdso;
 
 function get_stock_price (ticker) {
 	var alphavantage_key = 'B67FR48WBLNMCCHH';
@@ -168,7 +168,7 @@ function add_new_realizations (array) {
 	order_events(all_realizations, 'MM/DD/YY');
 };
 function calc_MoM (gains) {
-	return gains / (-TB_initial_purchase_price * million);
+	return gains / investment;
 };
 function calc_unrealized(share_value) {
 	unrealized = share_value;
@@ -182,16 +182,6 @@ function calc_unrealized(share_value) {
 	get_IRR(all_realizations);
 };
 
-function sum_realizations (all_transactions) {
-	realized = 0;
-	for (i in all_transactions) {
-		var value = all_transactions[i].amount
-		if (value > 0) {
-			realized += value * million;
-		};
-	};
-};
-
 function get_TB_shares_perc (TB_shares, total_shares) {
 	var TB_shares_perc = TB_shares / (total_shares * million);
 	var html = numeral(TB_shares_perc).format('0.0%') + ' <span>Stake</span>';
@@ -203,24 +193,31 @@ function get_TB_shares_value (shares) {
 	$('#TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
 	calc_unrealized(TB_shares_value);
 };
-function get_TB_ownership (all_transactions) {
-	var total_shares = 0;
+function sum_transactions (all_transactions) {
+	realized = 0;
+	investment = 0;
+	current_shares = 0;
 	for (i in all_transactions) {
+		var value = all_transactions[i].amount
+		if (value > 0) {
+			realized += value * million;
+		} else {
+			investment += -value * million;
+		};
+
 		var shares = all_transactions[i].shares;
 		if (shares) {
-			total_shares += shares;
+			current_shares += shares * million;
 		};
 	};
-	current_TB_shares = total_shares * million;
-	get_TB_shares_value(current_TB_shares);
+	get_TB_shares_value(current_shares);
 };
 function total_gains_MoM (realizations) {
-	sum_realizations(transactions);
-	get_TB_ownership(transactions);
+	sum_transactions(transactions);
 	
 	var total_returns = realized + unrealized;
 	var total_MoM = calc_MoM(total_returns);
-	var total_gain = total_returns - (-TB_initial_purchase_price * million);
+	var total_gain = total_returns - investment;
 
 	$('#realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
 	$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
@@ -293,7 +290,7 @@ function do_the_math (current_price, price_yesterday) {
 
 	dilute_shares(options_build);
 	total_gains_MoM(transactions);
-	get_TB_shares_perc(current_TB_shares, share_count_build["Basic Shares"]);
+	get_TB_shares_perc(current_shares, share_count_build["Basic Shares"]);
 };
 
 // Tests
