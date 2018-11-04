@@ -116,7 +116,8 @@ section {
 	visibility: hidden;
 	opacity: 0;
 	max-height:1em;
-	padding-bottom:2em;
+	padding-bottom:1em;
+	flex-wrap:wrap;
 }
 section:last-of-type {
 	padding-bottom:0;
@@ -244,9 +245,7 @@ h3 span:last-of-type {
 	justify-content: space-between;
 	align-items: center;
 }
-#ownership > div {
-	font-size:1.5em;
-}
+#ownership > div {}
 #TB_shares_value {
 	display:none;
 }
