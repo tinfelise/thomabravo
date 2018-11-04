@@ -33,7 +33,6 @@ var revenues = {
 var net_debt = -71.929;
 
 var TB_preIPO_shares = 56.723354;
-
 var transactions = [
 	{
 		'event':'Purchase',
