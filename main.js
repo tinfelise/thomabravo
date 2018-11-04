@@ -184,9 +184,13 @@ function calc_unrealized(share_value) {
 };
 
 function get_TB_shares_perc (TB_shares, total_shares) {
-	var TB_shares_perc = TB_shares / (total_shares * million);
-	var html = numeral(TB_shares_perc).format('0.0%') + ' <span>Stake</span>';
-	$('#TB_shares_perc').html(html);
+	var perc_stake = TB_shares / (total_shares * million);
+	var stake_html = numeral(perc_stake).format('0.0%') + ' <span>Stake</span>';
+	$('#TB_perc_stake').html(stake_html);
+
+	var perc_realized = 1 - ( TB_shares/ (TB_preIPO_shares * million) );
+	var perc_realized_html = numeral(perc_realized).format('0.0%') + ' <span>Realized</span>';
+	$('#TB_perc_shares_realized').html(perc_realized_html);
 };
 function get_TB_shares_value (shares) {
 	$('#TB_shares').html( numeral(shares).format('0.0a') + ' <span>Shares</span>' );
