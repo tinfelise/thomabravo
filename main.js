@@ -179,6 +179,7 @@ function calc_unrealized(share_value) {
 	};
 	add_new_realizations(transactions);
 	add_new_realizations([IPO_mark]);
+	order_events(all_realizations, 'MM/DD/YY');
 	get_IRR(all_realizations);
 };
 
@@ -230,16 +231,32 @@ function total_gains_MoM (realizations) {
 
 	$('#total_gain label').html( numeral(total_gain).format('$0,0.0a') );
 };
+function create_revenue_multiple (enterprise_value, amount, year, type) {
+	var multiple = enterprise_value / (amount * million);
+	var output = '<h3 class="multiple">'
+		+ numeral(multiple).format('0.00') + 'x'
+		+ ' <span>' + year + ' ' + type +'</span>'
+		+ '</h3>';
+	return output;
+};
 function get_revenue_multiples (enterprise_value) {
 	var html = '';
-	for (i in revenues) {
-		var multiple = enterprise_value / (revenues[i] * million);
-		html += '<h3 class="multiple">'
-				+ numeral(multiple).format('0.00') + 'x'
-				+ ' <span>' + i + ' Revenues</span>'
-				+ '</h3>';
+	// why doesn'ts if (revenues) work?!?
+	if (typeof revenues !== 'undefined') {
+		for (i in revenues) {
+			html += create_revenue_multiple (enterprise_value, revenues[i], i, 'Revenues');
+		};
+	} else if (ebitdas) {
+		for (i in ebitdas) {
+			html += create_revenue_multiple (enterprise_value, ebitdas[i], i, 'EBITDA');
+		};
 	};
-	$('#revenues').html(html);
+	if (typeof uFCF !== 'undefined') {
+		for (i in uFCF) {
+			html += create_revenue_multiple (enterprise_value, uFCF[i], i, 'uFCF');
+		};
+	};
+	$('#revenues_multiples').html(html);
 };
 function get_enterprise_value (market_cap) {
 	var enterprise_value = market_cap + (net_debt * million);

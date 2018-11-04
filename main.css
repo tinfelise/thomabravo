@@ -221,7 +221,7 @@ h3 span:last-of-type {
 
 #market_cap,
 #enterprise_value,
-#revenues .multiple {
+#revenues_multiples .multiple {
 	display:inline-block;
 	width:49%;
 	padding: 0 1em;
@@ -232,10 +232,10 @@ h3 span:last-of-type {
 	margin-bottom:1em;
 }
 #market_cap,
-#revenues .multiple:first-of-type {
+#revenues_multiples .multiple:first-of-type {
 	border-right:1px solid rgba(0,0,0,.25);
 }
-#revenues {
+#revenues_multiples {
 	flex-grow: 1;
 }
 
