@@ -1,23 +1,16 @@
 h1 {
 	margin-top:0;
 }
-.selectors a {
-	align-items: flex-start;
-    display: inline-block;
-    text-align:center;
+.selectors button {
     width:49%;
 	height:9em;
-	line-height:10em;
 }
-.selectors a img {
-	padding:5em auto;
-}
-.selectors a:hover {
+.selectors button:hover {
 	box-shadow: 0 0 13px 0 #e0e0e0;
 }
 
 @media only screen and (max-width: 700px) {
-	.selectors a {
+	.selectors button {
 		width:100%;
 	}
 }
