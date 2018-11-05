@@ -383,6 +383,7 @@ function toggleFullScreen() {
 	if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
 		requestFullScreen.call(docEl);
 		$('html').addClass('fullscreen');
+		auto_refresh(60);
 	}
 	else {
 		cancelFullScreen.call(doc);
@@ -397,14 +398,15 @@ if (document.addEventListener) {
 function exitFullscreen() {
 	if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
 		$('html').removeClass('fullscreen');
+		stop_refreshing();
 	}
 };
 
-var refreshInterval;
-
-function refresh(time) {
-	refreshInterval = setInterval(reload, time); 
+var refresh_interval;
+function auto_refresh(seconds) {
+	var time = seconds * 1000;
+	refresh_interval = setInterval(reload, time); 
 };
-function stopRefreshing() {
-	clearInterval(refreshInterval);
+function stop_refreshing() {
+	clearInterval(refresh_interval);
 }
