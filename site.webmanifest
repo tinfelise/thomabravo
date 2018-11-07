@@ -1,5 +1,5 @@
 {
-    "name": "TB IPOs",
+    "name": "Thoma Bravo Current Public Investments",
     "short_name": "TB IPOs",
     "icons": [
         {
@@ -13,6 +13,7 @@
             "type": "image/png"
         }
     ],
+    "start_url": "index.html",
     "theme_color": "#33528f",
     "background_color": "#33528f",
     "display": "standalone"
