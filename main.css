@@ -285,6 +285,13 @@ h3 span:last-of-type {
 	text-transform: uppercase;
 	color: rgba(0,0,0,.5);
 }
+
+footer {
+	text-align:center;
+}
+footer .back {
+	padding-top:2em;
+}
 footer .present {
 	position: fixed;
 	bottom: 1em;
@@ -294,7 +301,7 @@ footer .present {
 	text-align:center;
 	font-size:.35em;
 }
-.fullscreen footer .present {
+.fullscreen footer button {
 	display:none;
 }
 
