@@ -111,6 +111,7 @@
 	</main>
 	<footer>
 		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
+		<button onclick="history.back()">SEE ALL INVESTMENTS</button>
 		<button class='present' onclick="toggleFullScreen()">
 			<!-- <i class="fas fa-expand"></i> <span>Present</span> -->
 		</button>
@@ -124,6 +125,9 @@
 	<!-- Javascript -->
 	<script src="spreadsheet_data.js"></script>
 	<script src="../main.js"></script>
+	<script>
+		$("body").append(history.length);
+	</script>
 
 </body>
 </html>
