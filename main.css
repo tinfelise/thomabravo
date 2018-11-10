@@ -294,13 +294,15 @@ h3 span:last-of-type {
 footer {
 	text-align:center;
 }
-footer .back {
-	display:inline-block;
-	padding-top:2em;
-}
+footer .back,
 footer .present {
 	position: fixed;
 	bottom: 1em;
+}
+footer .back {
+	left: 1em;
+}
+footer .present {
 	right: 1em;
 }
 .disclaimer {
