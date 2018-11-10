@@ -105,17 +105,21 @@ header button {
 }
 main {}
 header *,
-section {
+section,
+footer {
 	-webkit-transition: all .5s ease;
 	-moz-transition: all .5s ease;
 	-ms-transition: all .5s ease;
 	-o-transition: all .5s ease;
 	transition: all .5s ease;
 }
-section {
+section,
+footer {
 	visibility: hidden;
 	opacity: 0;
 	max-height:1em;
+}
+section {
 	padding-bottom:1em;
 	flex-wrap:wrap;
 }
@@ -178,7 +182,8 @@ h3 span:last-of-type {
 	visibility: visible;
 	opacity: 1;
 }
-.loaded section {
+.loaded section,
+.loaded footer {
 	visibility: visible;
 	opacity: 1;
 	max-height:1000em;
@@ -290,6 +295,7 @@ footer {
 	text-align:center;
 }
 footer .back {
+	display:inline-block;
 	padding-top:2em;
 }
 footer .present {
@@ -301,7 +307,8 @@ footer .present {
 	text-align:center;
 	font-size:.35em;
 }
-.fullscreen button {
+.fullscreen button,
+.fullscreen footer a {
 	display:none;
 }
 
