@@ -1,3 +1,6 @@
+main {
+	padding: 0 2rem 2rem;
+}
 .selectors {
 	display: flex;
 	flex-wrap: wrap;
@@ -20,7 +23,21 @@ h1 {
 }
 
 @media only screen and (max-width: 700px) {
+	html {
+		background: #fff;
+	}
 	.selectors a {
 		width:100%;
+	}
+}
+
+@supports(padding: max(0px)) {
+	@media only screen and (max-width: 700px) {
+		header,
+		main,
+		footer {
+			padding-left: max(1em, env(safe-area-inset-left));
+			padding-right: max(1em, env(safe-area-inset-right));
+		}
 	}
 }

@@ -1,4 +1,5 @@
 #ownership > div {
 	width:100%;
-	text-align: center;
+	/*text-align: center;*/
+	padding-top:1.25rem;
 }
