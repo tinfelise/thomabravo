@@ -16,5 +16,9 @@
     "start_url": "index.html",
     "theme_color": "#33528f",
     "background_color": "#33528f",
-    "display": "standalone"
+    "display": "standalone",
+    "scope": [
+        "/sailpoint/",
+        "/solarwinds/"
+    ]
 }
