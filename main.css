@@ -322,7 +322,7 @@ footer .present {
 	}
 	body {
 		margin:0;
-		padding: 2em 1em;
+		padding: 2em 1em 3em;
 		padding-left: env(safe-area-inset-left);
     	padding-right: env(safe-area-inset-right);
     	box-shadow:none;
