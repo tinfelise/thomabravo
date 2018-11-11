@@ -262,6 +262,9 @@ h3 span:last-of-type {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	position: relative;
+	padding-top: 2em;
+	overflow: hidden;
 }
 #ownership > div {
 	line-height: 0;
@@ -271,6 +274,18 @@ h3 span:last-of-type {
 }
 #TB_shares_value {
 	display:none;
+}
+#ownership::before {
+	content: '';
+	display: block;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 2em 700px 0 0;
+	border-color: #fff #33528F transparent transparent;
+	position: absolute;
+	top: 0;
+	left: 0;
 }
 
 #returns {
