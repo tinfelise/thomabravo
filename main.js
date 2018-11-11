@@ -185,7 +185,7 @@ function calc_unrealized(share_value) {
 
 function get_TB_shares_perc (TB_shares, total_shares) {
 	var perc_stake = TB_shares / (total_shares * million);
-	var stake_html = numeral(perc_stake).format('0.0%') + ' <span>Stake</span>';
+	var stake_html = numeral(perc_stake).format('0.0%') + ' <span>FDSO</span>';
 	$('#TB_perc_stake').html(stake_html);
 
 	var perc_realized = 1 - ( TB_shares/ (TB_preIPO_shares * million) );
@@ -311,7 +311,7 @@ function do_the_math (current_price, price_yesterday) {
 
 	dilute_shares(options_build);
 	total_gains_MoM(transactions);
-	get_TB_shares_perc(current_shares, share_count_build["Basic Shares"]);
+	get_TB_shares_perc(current_shares, fdso);
 };
 
 // Tests
