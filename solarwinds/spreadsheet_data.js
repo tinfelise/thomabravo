@@ -5,30 +5,40 @@ var options_build = [
 	{
 		'tranche': 1,
 		'strike': 0,
-		'shares': 7.797767,
+		'shares': 5.042534
 	},
 	{
 		'tranche': 2,
-		'strike': 1.66,
-		'shares': 3.702233,
+		'strike': 1.65,
+		'shares': 3.1843
+	},
+	{
+		'tranche': 3,
+		'strike': 0,
+		'shares': 0
+	},
+	{
+		'tranche': 4,
+		'strike': 0,
+		'shares': 7.342878
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 302.144446725891,
+	'Basic Shares': 309.943622,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var ebitdas = {
-	'2018': 398.3,
-	'2019': 445.4
+	'2018': 402.7,
+	'2019': 451.8
 };
 var uFCF = {
-	'2019': 400
+	'2019': 406.62
 };
-var net_debt = 1669.8125;
+var net_debt = 1672.94;
 
 var TB_preIPO_shares = 112.129322730121;
 var transactions = [
