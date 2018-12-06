@@ -48,30 +48,6 @@ function no_data () {
 	$('#stockData .data').html('<h1>Data unavailable</h1><span>Please try again later</span>');
 };
 
-function previous_weekday (date) {
-	var day = date;
-	var day_of_week = moment(date).format('E');
-	if (day_of_week > 5) {
-		var offset = day_of_week - 5;
-		day = moment(date).subtract(offset, 'days');
-	};
-	return day;
-};
-function check_holiday (date) {
-	var new_date = date;
-	var is_today_holiday = moment(date).isHoliday();
-	var is_yesterday_holiday = moment(date).subtract(1, 'days').isHoliday();
-	
-	if (is_today_holiday && is_yesterday_holiday) {
-		new_date = moment(date).subtract(2, 'days');
-	} else if (is_today_holiday) {
-		new_date = moment(date).subtract(1, 'days');
-	};
-
-	new_date = previous_weekday(new_date);
-	return new_date;
-};
-
 function display_update_time (date, time, open) {
 	var html = 'As of ';
 	if (open) {
@@ -86,12 +62,6 @@ function display_update_time (date, time, open) {
 		html += moment(date, 'YYYY-MM-DD').format('MMM. Do');
 	};
 	$('#updated').html(html);
-};
-function previous_market_day(date, date_format) {
-	var day_before = moment(date, date_format).subtract(1, 'days');
-	day_before = previous_weekday(day_before);
-	day_before = check_holiday(day_before);
-	return moment(day_before).format('YYYY-MM-DD');
 };
 function display_previous_day_of_week (date) {
 	var days_ago = moment(date).diff(moment(), 'days');
@@ -117,10 +87,10 @@ function parse_stock_data (data) {
 			last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
 	};
 
-	var previous = previous_market_day(last_updated_date, 'YYYY-MM-DD');
-
 	stock_data = data['Time Series (Daily)'];
 	var todays_data = stock_data[last_updated_date];
+
+	var previous = Object.keys(stock_data)[1];
 	var yesterdays_data = stock_data[previous];
 
 	var close = '4. close';
