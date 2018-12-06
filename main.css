@@ -46,6 +46,7 @@ button:focus {
 }
 a, button {
 	font-family: 'Quicksand', Arial,  Helvetica, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 	font-size:1em;
 	text-decoration: none;
 	white-space: nowrap;
