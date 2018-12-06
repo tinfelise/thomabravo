@@ -174,5 +174,17 @@ var transactions = [
 		'date': '8/16/18',
 		'amount': 545.1005516875,
 		'shares': -19.809501
+	},
+	{
+		'event':'Block Trade',
+		'date': '12/3/18',
+		'amount': 4.862812*25.5,
+		'shares': -4.862812
+	},
+	{
+		'event':'GP Distribution',
+		'date': '12/3/18',
+		'amount': -0.83696*25.5,
+		'shares': -0.83696
 	}
 ];
