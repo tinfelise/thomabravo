@@ -4,8 +4,7 @@ html {
 	-webkit-text-size-adjust: 100%; 
 	margin:0;
 	padding:0;
-	font-family: 'Quicksand', Helvetica, sans-serif;
-	font-family: -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Quicksand', Helvetica, sans-serif;
 	font-size:18px;
 	color:#2e343b;
 	color: rgba(0,0,0,.75);
@@ -45,8 +44,7 @@ button:focus {
     outline: none;
 }
 a, button {
-	font-family: 'Quicksand', Arial,  Helvetica, sans-serif;
-	font-family: -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
+	font-family: -apple-system, BlinkMacSystemFont, 'Quicksand', Helvetica, sans-serif;
 	font-size:1em;
 	text-decoration: none;
 	white-space: nowrap;
