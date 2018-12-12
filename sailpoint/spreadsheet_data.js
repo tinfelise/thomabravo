@@ -184,7 +184,7 @@ var transactions = [
 	{
 		'event':'GP Distribution',
 		'date': '12/3/18',
-		'amount': -0.83696*25.5,
+		'amount': 0.83696*25.5,
 		'shares': -0.83696
 	},
 	{
