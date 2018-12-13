@@ -157,7 +157,8 @@ var transactions = [
 		'event':'GP Distribution',
 		'date': '6/8/18',
 		'amount': 91.391666,
-		'shares': -((TB_preIPO_shares - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356))
+		// 'shares': -((TB_preIPO_shares - 6.5 - 20.4792) - (16.427743 + 8.81734 + 0.38356))
+		'shares': -4.115511
 	},
 	{
 		'event':'Transaction Fees',
