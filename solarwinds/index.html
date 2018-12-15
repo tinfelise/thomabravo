@@ -80,6 +80,16 @@
 			<h3 id='market_cap'></h3>
 			<h3 id='enterprise_value'></h3>
 			<div id='revenues_multiples'></div>
+			<form id='MoM_targets' oninput='get_target_price(MoM_range.value, target, price_required)'>
+				<!-- <label for='MoM_range'>Targets</label> -->
+				<span>
+					<output name='target' for='MoM_range'>1.75</output>x <span>MoM</span>
+				</span>
+				<input type='range' name='MoM_range' min='1' max='2.5' value='1.75' step='.25'>
+				<span>
+					<output name='price_required' for='MoM_range'>$16.87</output> <span>Target Price</span>
+				</span>
+			</form>
 		</section>
 		<section id='ownership' class='thoma'>
 			<div>

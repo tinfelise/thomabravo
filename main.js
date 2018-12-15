@@ -284,6 +284,14 @@ function do_the_math (current_price, price_yesterday) {
 	get_TB_shares_perc(current_shares, fdso);
 };
 
+function get_target_price (target_MoM, label, output) {
+	label.value = target_MoM;
+	var equity = target_MoM * investment;
+	var trading_value = equity - realized;
+	var target_price = trading_value / current_shares;
+	output.value = numeral(target_price).format('$0.00');
+};
+
 // Tests
 function dummy_data (tick, current, last, message) {
 	current_price = current;
