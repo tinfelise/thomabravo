@@ -61,51 +61,51 @@ var transactions = [
 	{
 		'event':'Transaction Fees',
 		'date': '6/30/16',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '9/30/16',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '12/31/16',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '3/31/17',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '6/30/17',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '9/30/17',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '12/31/17',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '3/31/18',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '6/30/18',
-		'amount': 1.3
+		'amount': 1.25
 	},
 	{
 		'event':'Transaction Fees',
 		'date': '9/30/18',
-		'amount': 1.3
+		'amount': 1.25
 	}
 ];
