@@ -313,27 +313,6 @@ h3 span:last-of-type {
 	flex-grow: 1;
 }
 
-#MoM_targets {
-	display:flex;
-	width:100%;
-	padding:.5em 0;
-}
-#MoM_targets > span {
-	width:20%;
-}
-#MoM_targets > span:first-of-type {
-	text-align: right;
-}
-#MoM_targets > span span {
-	display:block;
-	color: rgba(0,0,0,.5);
-}
-#MoM_targets input {
-	margin:0 1rem;
-	width: unset;
-	flex-grow: 1;
-}
-
 .thoma {
 	background: #33528F;
 	color:rgba(255, 255, 255, .75);
@@ -405,6 +384,27 @@ h3 span:last-of-type {
 #total_gain h2 span {
 	font-size:.75em;
 	text-transform: uppercase;
+}
+
+#MoM_targets {
+	display:flex;
+	width:100%;
+	padding:.5em 0;
+}
+#MoM_targets > span {
+	width:20%;
+}
+#MoM_targets > span:first-of-type {
+	text-align: right;
+}
+#MoM_targets > span span {
+	display:block;
+	color: rgba(255, 255, 255, .5);
+}
+#MoM_targets input {
+	margin:0 1rem;
+	width: unset;
+	flex-grow: 1;
 }
 
 footer {
