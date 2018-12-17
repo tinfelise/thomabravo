@@ -322,6 +322,24 @@ h3 span:last-of-type {
 .thoma h3 span:last-of-type {
 	color: rgba(255, 255, 255, .5);
 }
+.thoma input[type=range]::-webkit-slider-runnable-track {
+	background: #fff;
+}
+.thoma input[type=range]::-moz-range-track {
+	background: #fff;
+}
+.thoma input[type=range]::-ms-track {
+	background: #fff;
+}
+.thoma input[type=range]:focus::-webkit-slider-runnable-track {
+	background: #fff;
+}
+.thoma input[type=range]::-webkit-slider-thumb {
+	background: #fff
+}
+.thoma input[type=range]::-moz-range-thumb {
+	background: #fff
+}
 #ownership {
 	display: flex;
 	justify-content: space-between;
@@ -386,6 +404,10 @@ h3 span:last-of-type {
 #total_gain h2 span {
 	font-size:.75em;
 	text-transform: uppercase;
+}
+#total_gain p {
+	text-align: center;
+	margin-bottom: 0;
 }
 
 #MoM_targets {
