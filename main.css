@@ -93,7 +93,7 @@ input[type=range]::-moz-range-track {
 	cursor: pointer;
 	animate: 0.2s;
 	box-shadow: none;
-	background: #fff;
+	background: #33528F;
 	border-radius: none;
 	border: none;
 }
