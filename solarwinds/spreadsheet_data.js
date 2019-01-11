@@ -5,7 +5,7 @@ var options_build = [
 	{
 		'tranche': 1,
 		'strike': 0,
-		'shares': 5.042534
+		'shares': 0
 	},
 	{
 		'tranche': 2,
