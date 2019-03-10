@@ -4,7 +4,7 @@ html {
 	-webkit-text-size-adjust: 100%; 
 	margin:0;
 	padding:0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Quicksand', Helvetica, sans-serif;
+	font-family: 'Akkurat', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 	font-size:18px;
 	color:#2e343b;
 	color: rgba(0,0,0,.75);
@@ -44,11 +44,12 @@ button:focus {
     outline: none;
 }
 a, button {
-	font-family: -apple-system, BlinkMacSystemFont, 'Quicksand', Helvetica, sans-serif;
+	font-family: 'Akkurat', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif;
 	font-size:1em;
 	text-decoration: none;
 	white-space: nowrap;
-	color:rgba(255,95,90,.75);
+	/*color:rgba(255,95,90,.75);*/
+	color: #17d980;
 	font-weight:bold;
 	border:none;
 	padding:0;
@@ -56,11 +57,13 @@ a, button {
 }
 a:hover,
 button:hover {
-	color:rgba(255,95,90,.95);
+	/*color:rgba(255,95,90,.95);*/
+	color: #64d488
 }
 a:active,
 button:active {
-	color:rgba(255,95,90,.75);
+	/*color:rgba(255,95,90,.75);*/
+	color: #1d2a36;
 }
 h1 span,
 h2 span,
@@ -229,7 +232,7 @@ h3 span:last-of-type {
 	
 }
 .loader svg {
-	fill:rgba(255,95,90,.75);
+	fill: rgb(23, 217, 128);
 	margin: 5em 0;
 	-webkit-transition: all .5s ease;
 	-moz-transition: all .5s ease;
@@ -286,7 +289,7 @@ h3 span:last-of-type {
 	margin: 0 .5em;
 }
 .up {
-	color:#008489;
+	color:#17d980;
 }
 .down {
 	color:red;
@@ -319,7 +322,7 @@ h3 span:last-of-type {
 }
 
 .thoma {
-	background: #33528F;
+	background: rgb(29, 42, 54);
 	color:rgba(255, 255, 255, .75);
 }
 .thoma h3 span:last-of-type {
@@ -367,7 +370,7 @@ h3 span:last-of-type {
 	height: 0;
 	border-style: solid;
 	border-width: 2em 700px 0 0;
-	border-color: #fff #33528F transparent transparent;
+	border-color: #fff rgb(29, 42, 54) transparent transparent;
 	position: absolute;
 	top: 0;
 	left: 0;
