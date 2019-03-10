@@ -9,8 +9,8 @@ var options_build = [
 	},
 	{
 		'tranche': 2,
-		'strike': 1.65,
-		'shares': 3.1843
+		'strike': 1.62,
+		'shares': 3.1148
 	},
 	{
 		'tranche': 3,
@@ -20,12 +20,12 @@ var options_build = [
 	{
 		'tranche': 4,
 		'strike': 0,
-		'shares': 7.342878
+		'shares': 6.277466
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 309.943622,
+	'Basic Shares': 309.942574,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
@@ -40,7 +40,7 @@ var uFCF = {
 	'2019': 407,
 	'2020': 455
 };
-var net_debt = 1672.94;
+var net_debt = 1904.072-382.62;
 
 var TB_preIPO_shares = 112.129322730121;
 var transactions = [
