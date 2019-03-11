@@ -459,7 +459,7 @@ footer {
 	html {
 		font-size:16px;
 		align-items: flex-start;
-		background: #33528F;
+		background: rgb(29, 42, 54);
 	}
 	body {
 		margin:0;
