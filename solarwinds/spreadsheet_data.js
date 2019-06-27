@@ -114,5 +114,11 @@ var transactions = [
 		'event':'Transaction Fees',
 		'date': '9/30/18',
 		'amount': 1.25
+	},
+	{
+		'event':'First Follow On',
+		'date': '5/22/19',
+		'amount': 6.10887 * 17.42,
+		'shares': -6.10887
 	}
 ];
