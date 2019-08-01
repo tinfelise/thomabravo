@@ -14,8 +14,8 @@
         }
     ],
     "start_url": "index.html",
-    "theme_color": "#33528f",
-    "background_color": "#33528f",
+    "theme_color": "#2e343b",
+    "background_color": "#2e343b",
     "display": "standalone",
     "scope": [
         "/sailpoint/",
