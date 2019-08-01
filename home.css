@@ -10,7 +10,13 @@ h1 {
 	width:100%;
 	margin-top:0;
 }
-.selectors a {
+h2 {
+	padding-bottom: .5rem;
+    border-bottom: 5px solid #17d980;
+    margin: 2em auto;
+}
+.selectors a,
+.selectors div {
     width:50%;
 	height:9em;
 	display: flex;
@@ -26,7 +32,8 @@ h1 {
 	html {
 		background: #fff;
 	}
-	.selectors a {
+	.selectors a,
+	.selectors div {
 		width:100%;
 	}
 }

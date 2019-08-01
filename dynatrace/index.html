@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-108916837-2"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-108916837-2');
+	</script>
+
+	<title>Dynatrace Returns | A Thoma Bravo Investment</title>
+	<!-- Styles -->
+	<meta name='viewport' content='width=device-width, initial-scale=1, viewport-fit=cover'>
+    <link rel="stylesheet" href="../main.css">
+    <link rel="stylesheet" href="dynatrace.css">
+	<script defer src="https://use.fontawesome.com/releases/v5.0.0/js/all.js"></script>
+	<link href="//db.onlinewebfonts.com/c/cf3327022417d4ff7f54f0963c4f41ea?family=Akkurat" rel="stylesheet" type="text/css"/>
+
+	
+	<!-- Favicons -->
+	<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+	<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+	<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+	<link rel="manifest" href="site.webmanifest">
+	<link rel="mask-icon" href="safari-pinned-tab.svg" color="#eea239">
+	<meta name="apple-mobile-web-app-title" content="SolarWinds">
+	<meta name="application-name" content="SolarWinds">
+	<meta name="msapplication-TileColor" content="#ffffff">
+	<meta name="theme-color" content="#ffffff">
+
+	<!-- Additional iOS Web App Titles -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="white-translucent">
+	<link rel="apple-touch-startup-image" href="../images/thoma_bravo-logo.png">
+
+	<!-- Facebook Open Graph -->
+	<meta property="og:image" content="https://tinfelise.github.io/thomabravo/solarwinds/images/sharing.jpg">
+
+</head>
+<body>
+	<header>
+		<a href='https://finance.yahoo.com/quote/swi' target='blank_'>
+			<img class='logo' src='./images/dynatrace-vector-logo.svg' alt='Dynatrace'>
+		</a>
+		<div>
+			<span id='ticker'></span>
+			<span id='updated'></span>
+		</div>
+		<button onclick="reload(sound)">
+			<i class="fas fa-sync"></i>
+		</button>
+	</header>
+	<main>
+		<div class='loader'>
+			<svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 50 50" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+				<path  d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+					<animateTransform 
+						attributeType="xml"
+						attributeName="transform"
+						type="rotate"
+						from="0 25 25"
+						to="360 25 25"
+						dur="0.6s"
+						repeatCount="indefinite"
+					/>
+				</path>
+			</svg>
+		</div>
+		<section id='stockData'>
+			<div>
+				<h1 id='current_price'></h1>
+				<div id='price_changes'>
+					<h3>
+						<span id='compared_to_yesterday'></span> 
+						<span id='compared_to_yesterday_perc'></span> 
+						<span id='previous_weekday'></span>
+					</h3>
+				</div>
+			</div>
+			<h3 id='market_cap'></h3>
+			<h3 id='enterprise_value'></h3>
+			<div id='revenues_multiples'></div>
+		</section>
+		<section id='ownership' class='thoma'>
+			<div>
+				<img class='logo' src='../images/white-logo.svg' alt='Thoma Bravo'>
+			</div>
+			<h3 id='TB_shares'></h3>
+			<h3 id='TB_perc_stake'></h3>
+			<h3 id='TB_shares_value'></h3>
+			<h3 id='TB_perc_shares_realized'></h3>
+			<h3 id='IRR'></h3>
+		</section>
+		<section id='returns' class='thoma'>
+			<div>
+				<span>Realized</span>
+				<div id='realized'></div>	
+			</div>
+			<div>
+				<span>Unrealized</span>
+				<div id='unrealized'></div>
+			</div>
+			<div>
+				<span>Total Returns</span>
+				<div id='total_returns'></div>
+			</div>
+		</section>
+		<section id='total_gain' class='thoma'>
+			<h2><label></label><span> Total Gain</span></h2>
+			<p>Illustrative Share Price To Achieve MoM</p>
+			<form id='MoM_targets' oninput='get_target_price(MoM_range.value, target, price_required)'>
+				<span>
+					<output name='target' for='MoM_range'>2.25</output>x <span>MoM</span>
+				</span>
+				<input type='range' name='MoM_range' min='1.5' max='3' value='2.25' step='.25'>
+				<span>
+					<output name='price_required' for='MoM_range'>$16.87</output> <span>Target Price</span>
+				</span>
+			</form>
+		</section>
+	</main>
+	<footer>
+		<!-- <a id='AlphaVantage' target='blank_'>See raw data</a> -->
+		<a href='../index.html' class='back'>
+			<i class="fas fa-chevron-left"></i> 
+			<span>Other Deals</span>
+		</a>
+		<button class='present' onclick="toggleFullScreen()">
+			<i class="fas fa-expand"></i> <span>Present</span>
+		</button>
+	</footer>
+	<!-- Libraries -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+	<script src="https://cdn.rawgit.com/kodie/moment-holiday/v1.2.0/moment-holiday.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/financejs@4.1.0/finance.js"></script>
+	<!-- Javascript -->
+	<script src="spreadsheet_data.js"></script>
+	<script src="../main.js"></script>
+</body>
+</html>
