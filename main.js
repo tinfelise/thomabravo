@@ -11,7 +11,7 @@ var current_shares, fdso;
 
 function get_stock_price (ticker) {
 	var alphavantage_key = 'B67FR48WBLNMCCHH';
-	var path = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker +
+	var path = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker +
 	'&apikey=' + alphavantage_key;
 	var settings = {
 		url: path,
@@ -73,32 +73,35 @@ function display_previous_day_of_week (date) {
 };
 
 function parse_stock_data (data) {
-	var meta_data = data['Meta Data'];
-	var markets_open = false;
-	var last_updated = '3. Last Refreshed';
-		last_updated = meta_data[last_updated];
+	stock_data = data['Global Quote'];
+	// var markets_open = false;
+	// console.log(meta_data);
+	var last_updated = '07. latest trading day';
+		last_updated = stock_data[last_updated];
 	console.log('As of ' + last_updated);
 
-	var last_updated_date = last_updated;
-	if ( last_updated.split(' ').length > 1 ) {
-		markets_open = true;
-		last_updated_date = last_updated.split(' ')[0];
-		var last_updated_time = last_updated.split(' ')[1];
-			last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
-	};
+	// var last_updated_date = last_updated;
+	// if ( last_updated.split(' ').length > 1 ) {
+	// 	markets_open = true;
+	// 	last_updated_date = last_updated.split(' ')[0];
+	// 	var last_updated_time = last_updated.split(' ')[1];
+	// 		last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
+	// };
 
-	stock_data = data['Time Series (Daily)'];
-	var todays_data = stock_data[last_updated_date];
+	// stock_data = data['Time Series (Daily)'];
+	// var todays_data = stock_data[last_updated_date];
 
-	var previous = Object.keys(stock_data)[1];
-	var yesterdays_data = stock_data[previous];
+	// var previous = Object.keys(stock_data)[1];
+	// var yesterdays_data = stock_data[previous];
 
-	var close = '4. close';
-	current_price = todays_data[close];
-	previous_closing_price = yesterdays_data[close];
+	var price = '05. price';
+	current_price = stock_data[price];
 
-	display_update_time(last_updated_date, last_updated_time, markets_open);
-	display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
+	var previous_close ='08. previous close';
+	previous_closing_price = stock_data[previous_close];
+
+	// display_update_time(last_updated_date, last_updated_time, markets_open);
+	// display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 	do_the_math(current_price, previous_closing_price);
 };
 
