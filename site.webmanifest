@@ -16,10 +16,5 @@
     "start_url": "index.html",
     "theme_color": "#2e343b",
     "background_color": "#2e343b",
-    "display": "standalone",
-    "scope": [
-        "/sailpoint/",
-        "/solarwinds/",
-        "/dynatrace"
-    ]
+    "display": "standalone"
 }
