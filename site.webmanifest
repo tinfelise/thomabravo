@@ -19,6 +19,7 @@
     "display": "standalone",
     "scope": [
         "/sailpoint/",
-        "/solarwinds/"
+        "/solarwinds/",
+        "/dynatrace"
     ]
 }
