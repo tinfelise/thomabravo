@@ -285,14 +285,35 @@ function do_the_math (current_price, price_yesterday) {
 	dilute_shares(options_build);
 	total_gains_MoM(transactions);
 	get_TB_shares_perc(current_shares, fdso);
+	check_for_MoM_slider();
 };
 
 function get_target_price (target_MoM, label, output) {
+	var target_price = calc_target_price(target_MoM);
 	label.value = target_MoM;
+	output.value = numeral(target_price).format('$0.00');
+};
+function calc_target_price (target_MoM) {
 	var equity = target_MoM * investment;
 	var trading_value = equity - realized;
 	var target_price = trading_value / current_shares;
-	output.value = numeral(target_price).format('$0.00');
+	return target_price;
+};
+
+function create_MoM_slider (min, max, increment) {
+	var starting_value = calc_target_price(min);
+		starting_value = numeral(starting_value).format('$0.00');
+	var html = '<p>Illustrative Share Price To Achieve MoM</p>';
+		html += "<form id='MoM_targets' oninput='get_target_price(MoM_range.value, target, price_required)'>";
+		html += "<span><output name='target' for='MoM_range'>" + min + "</output>x <span>MoM</span></span>";
+		html += "<input type='range' name='MoM_range' min='" + min + "' max='" + max + "' value='" + min + "' step='" + increment + "'>";
+		html += "<span><output name='price_required' for='MoM_range'>" + starting_value + "</output> <span>Target Price</span></span>"
+	$('#total_gain').append(html);
+};
+function check_for_MoM_slider () {
+	if (MoM_slider) {
+		create_MoM_slider (MoM_slider['min'], MoM_slider['max'], MoM_slider['increment']);
+	};
 };
 
 // Tests

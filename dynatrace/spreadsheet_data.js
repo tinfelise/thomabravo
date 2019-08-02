@@ -1,6 +1,12 @@
 var ticker = 'DT';
 var sound = 'For the love of money.m4a';
 
+var MoM_slider = {
+	'min': 4,
+	'max': 11,
+	'increment': .5
+};
+
 var options_build = [
 	{
 		'tranche': 1,

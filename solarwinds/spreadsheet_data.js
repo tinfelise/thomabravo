@@ -1,6 +1,12 @@
 var ticker = 'SWI';
 // var sound = 'sail.mp3';
 
+var MoM_slider = {
+	'min': 1.5,
+	'max': 3,
+	'increment': .25
+};
+
 var options_build = [
 	{
 		'tranche': 1,
