@@ -185,8 +185,7 @@ footer {
 	-o-transition: all .5s ease;
 	transition: all .5s ease;
 }
-section,
-footer {
+section {
 	visibility: hidden;
 	opacity: 0;
 	max-height:1em;
@@ -255,8 +254,7 @@ h3 span:last-of-type {
 	visibility: visible;
 	opacity: 1;
 }
-.loaded section,
-.loaded footer {
+.loaded section {
 	visibility: visible;
 	opacity: 1;
 	max-height:1000em;
@@ -415,7 +413,6 @@ h3 span:last-of-type {
 #MoM_targets {
 	display: flex;
 	flex-wrap: wrap;
-	width:100%;
 	padding:.5em 0 0;
 }
 #MoM_targets > p {
