@@ -411,15 +411,17 @@ h3 span:last-of-type {
 	font-size:.75em;
 	text-transform: uppercase;
 }
-#total_gain p {
-	text-align: center;
-	margin-bottom: 0;
-}
 
 #MoM_targets {
-	display:flex;
+	display: flex;
+	flex-wrap: wrap;
 	width:100%;
-	padding:.5em 0;
+	padding:.5em 0 0;
+}
+#MoM_targets > p {
+	text-align: center;
+	width: 100%;
+	margin-top: 0;
 }
 #MoM_targets > span {
 	width:20%;
@@ -488,10 +490,11 @@ footer {
 	}
 	section:last-of-type {
 		border-radius: 0;
+		padding-bottom: 0;
 	}
 	footer {
 		position: initial;
-		padding: 0 2rem 2rem;
+		padding: 2rem 2rem;
 	}
 	footer a,
 	footer button {

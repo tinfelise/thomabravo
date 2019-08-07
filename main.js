@@ -32,6 +32,7 @@ function get_stock_price (ticker) {
 };
 function reset () {
 	all_realizations = [];
+	$('#MoM_targets').remove();
 };
 function reload (clip) {
 	$('body').removeClass('loaded');
@@ -303,15 +304,15 @@ function calc_target_price (target_MoM) {
 function create_MoM_slider (min, max, increment) {
 	var starting_value = calc_target_price(min);
 		starting_value = numeral(starting_value).format('$0.00');
-	var html = '<p>Illustrative Share Price To Achieve MoM</p>';
-		html += "<form id='MoM_targets' oninput='get_target_price(MoM_range.value, target, price_required)'>";
+	var html = "<form id='MoM_targets' oninput='get_target_price(MoM_range.value, target, price_required)'>";
+		html += '<p>Illustrative Share Price To Achieve MoM</p>';
 		html += "<span><output name='target' for='MoM_range'>" + min + "</output>x <span>MoM</span></span>";
 		html += "<input type='range' name='MoM_range' min='" + min + "' max='" + max + "' value='" + min + "' step='" + increment + "'>";
 		html += "<span><output name='price_required' for='MoM_range'>" + starting_value + "</output> <span>Target Price</span></span>"
 	$('#total_gain').append(html);
 };
 function check_for_MoM_slider () {
-	if (MoM_slider) {
+	if ( typeof MoM_slider !== 'undefined') {
 		create_MoM_slider (MoM_slider['min'], MoM_slider['max'], MoM_slider['increment']);
 	};
 };
