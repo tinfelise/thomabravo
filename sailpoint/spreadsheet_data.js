@@ -4,33 +4,28 @@ var sound = 'sail.mp3';
 var options_build = [
 	{
 		'tranche': 1,
-		'strike': 0,
-		'shares': 1.316195
+		'strike': 12.78,
+		'shares': 3.096
 	},
 	{
 		'tranche': 2,
-		'strike': 6.45,
-		'shares': 2.937716
-	},
-	{
-		'tranche': 3,
-		'strike': 0.0517,
-		'shares': 0.740009
+		'strike': 0,
+		'shares': 1.985
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 87.788512,
+	'Basic Shares': 89.122643,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var revenues = {
-	'2018': 241.60,
-	'2019': 295.95
+	'2019': 280,
+	'2020': 325.73
 };
-var net_debt = 9.669-83.315-0.121;
+var net_debt = -93.049-6.303;
 
 var TB_preIPO_shares = 56.723354+0.00024;
 var transactions = [
