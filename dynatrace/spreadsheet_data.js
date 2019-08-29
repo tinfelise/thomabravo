@@ -91,9 +91,8 @@ var transactions = [
 	{
 		'event':'Purchase',
 		'date': '12/15/14',
-		'amount': -562
-		// 'amount': -562,
-		// 'shares': 0
+		'amount': -562,
+		'shares': 0
 	},
 	{
 		'event':'Transaction Fees',
