@@ -44,7 +44,7 @@ var uFCF = {
 	'2019': 147,
 	'2020': 186
 };
-var net_debt = 377;
+var net_debt = 370.078863;
 
 var TB_preIPO_shares = 194.425163;
 var transactions = [
