@@ -36,6 +36,10 @@ var share_count_build = {
 	'Greenshoe Shares': 4.870607
 };
 
+var revenues = {
+	'2019': 489,
+	'2020': 601
+};
 var ebitdas = {
 	'2019': 111,
 	'2020': 140
