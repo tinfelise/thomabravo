@@ -26,29 +26,29 @@ var options_build = [
 ];
 
 var basic_shares_build = {
-	'Common':238.566133954375,
-	'RSAs': 2.9834217
+	'Common':0,
+	'RSAs': 0
 };
 
 var share_count_build = {
-	'Basic Shares': basic_shares_build["Common"]+basic_shares_build["RSAs"],
-	'IPO Shares': 34,
-	'Greenshoe Shares': 4.870607
+	'Basic Shares': 280.539648,
+	'IPO Shares': 0,
+	'Greenshoe Shares': 0
 };
 
 var revenues = {
-	'2019': 489,
-	'2020': 601
+	'2019': 506,
+	'2020': 626
 };
 var ebitdas = {
-	'2019': 111,
-	'2020': 140
+	'2019': 124,
+	'2020': 154
 };
 var uFCF = {
-	'2019': 147,
-	'2020': 186
+	'2019': 166,
+	'2020': 193
 };
-var net_debt = 370.078863;
+var net_debt = 581.1-211.696;
 
 var TB_preIPO_shares = 194.425163;
 var transactions = [
