@@ -199,5 +199,11 @@ var transactions = [
 		'date': '12/5/19',
 		'amount': 561.655961773205,
 		'shares': -23.3588988
+	},
+	{
+		'event':'First Follow-On - Greenshoe',
+		'date': '12/16/19',
+		'amount': 87.4278659825964,
+		'shares': -3.63606692542934
 	}
 ];
