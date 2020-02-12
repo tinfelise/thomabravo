@@ -43,14 +43,14 @@ var share_count_build = {
 };
 
 var ebitdas = {
-	'2020': 503.29,
-	'2021': 563.02
+	'2020': 482.15,
+	'2021': 545.8
 };
 var uFCF = {
 	'2020': ebitdas[2020]*0.9,
 	'2021': ebitdas[2021]*0.9
 };
-var net_debt = 1896.062+19.9-221.06;
+var net_debt = 1893.406+19.9-173.372;
 
 var TB_preIPO_shares = 112.129322730121;
 var transactions = [
