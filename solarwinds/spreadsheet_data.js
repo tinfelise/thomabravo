@@ -15,8 +15,8 @@ var options_build = [
 	},
 	{
 		'tranche': 2,
-		'strike': 1.6,
-		'shares': 2.921925
+		'strike': 1.69,
+		'shares': 2.090725
 	},
 	{
 		'tranche': 3,
@@ -26,25 +26,25 @@ var options_build = [
 	{
 		'tranche': 4,
 		'strike': 0,
-		'shares': 6.216511
+		'shares': 6.621884
 	},
 	{
 		'tranche': 5,
 		'strike': 0,
-		'shares': 0.90159
+		'shares': 1.004026
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 311.180888,
+	'Basic Shares': 311.363356,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var ebitdas = {
-	'2020': 482.15,
-	'2021': 545.8
+	'2020': 482.24,
+	'2021': 545.84
 };
 var uFCF = {
 	'2020': ebitdas[2020]*0.9,
