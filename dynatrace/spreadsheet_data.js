@@ -205,5 +205,11 @@ var transactions = [
 		'date': '12/16/19',
 		'amount': 87.4278659825964,
 		'shares': -3.63606692542934
+	},
+	{
+		'event':'Second Follow-On',
+		'date': '2/20/20',
+		'amount': 714.644491263491,
+		'shares': -21.270072
 	}
 ];
