@@ -2,8 +2,8 @@ var ticker = 'DT';
 var sound = 'For the love of money.m4a';
 
 var MoM_slider = {
-	'min': 4,
-	'max': 11,
+	'min': 6,
+	'max': 10,
 	'increment': .5
 };
 
@@ -37,18 +37,18 @@ var share_count_build = {
 };
 
 var revenues = {
-	'2020': 639.19,
-	'2021': 792.78
+	'2020': 150.6+149+152.4+163.5,
+	'2021': 171.6+181+187.8+204.6
 };
 var ebitdas = {
-	'2020': 167.19,
-	'2021': 210.15
+	'2020': 38.4+42.4+38+40.9,
+	'2021': 42.1+43.2+51.8+57
 };
 var uFCF = {
-	'2020': 189.5,
-	'2021': 254.4
+	'2020': 63.3+25.7+24.6+33.5,
+	'2021': 95.4+40.2+41.6+56.7
 };
-var net_debt = 521-212;
+var net_debt = 551.1-(515.189-485.189)-213.17;
 
 var TB_preIPO_shares = 194.425163;
 var transactions = [
@@ -171,45 +171,90 @@ var transactions = [
 	},
 	{
 		'event':'Transaction Fees',
-		'date': '6/27/18',
+		'date': '6/28/18',
 		'amount': 1.77 
 	},
 	{
 		'event':'Transaction Fees',
-		'date': '9/27/18',
-		'amount': 1.77 
+		'date': '10/4/18',
+		'amount': 0.57 
 	},
 	{
 		'event':'Transaction Fees',
-		'date': '12/27/18',
-		'amount': 1.77 
+		'date': '10/10/18',
+		'amount': 1.06 
 	},
 	{
 		'event':'Transaction Fees',
-		'date': '3/27/19',
-		'amount': 1.77 
+		'date': '11/27/18',
+		'amount': 0.14
 	},
 	{
 		'event':'Transaction Fees',
-		'date': '6/27/19',
-		'amount': 1.77 
+		'date': '1/4/19',
+		'amount': 1.06 
 	},
 	{
-		'event':'First Follow-On',
-		'date': '12/5/19',
-		'amount': 561.655961773205,
+		'event':'Transaction Fees',
+		'date': '1/10/19',
+		'amount': 0.57
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '2/14/19',
+		'amount': 0.14
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '4/9/19',
+		'amount': 1.06
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '4/12/19',
+		'amount': 0.57
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '4/18/19',
+		'amount': 0.14
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '6/28/19',
+		'amount': 0.35
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '7/1/19',
+		'amount': 0.57
+	},
+	{
+		'event':'Realization',
+		'date': '12/10/19',
+		'amount': 561.66,
 		'shares': -23.3588988
 	},
 	{
-		'event':'First Follow-On - Greenshoe',
-		'date': '12/16/19',
-		'amount': 87.4278659825964,
+		'event':'Realization',
+		'date': '12/18/19',
+		'amount': 87.43,
 		'shares': -3.63606692542934
 	},
 	{
-		'event':'Second Follow-On',
-		'date': '2/20/20',
-		'amount': 714.644491263491,
+		'event':'Realization',
+		'date': '2/25/20',
+		'amount': 714.64,
 		'shares': -21.270072
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '3/30/20',
+		'amount': 0.06 
+	},
+	{
+		'event':'Transaction Fees',
+		'date': '4/16/20',
+		'amount': 0.02 
 	}
 ];
