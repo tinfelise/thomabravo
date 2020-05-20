@@ -3,7 +3,7 @@ var sound = 'For the love of money.m4a';
 
 var MoM_slider = {
 	'min': 6,
-	'max': 10,
+	'max': 15,
 	'increment': .5
 };
 
