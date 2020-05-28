@@ -10,18 +10,18 @@ var MoM_slider = {
 var options_build = [
 	{
 		'tranche': 1,
-		'strike': 16.17,
-		'shares': 7.229
+		'strike': 16.26,
+		'shares': 7.147
 	},
 	{
 		'tranche': 2,
 		'strike': 0,
-		'shares': 2.315
+		'shares': 1.984
 	},
 	{
 		'tranche': 3,
 		'strike': 0,
-		'shares': 3.214
+		'shares': 3.123
 	}
 ];
 
