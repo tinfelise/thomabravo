@@ -2,8 +2,8 @@ var ticker = 'DT';
 var sound = 'For the love of money.m4a';
 
 var MoM_slider = {
-	'min': 6,
-	'max': 15,
+	'min': 8,
+	'max': 12,
 	'increment': .5
 };
 
@@ -256,5 +256,21 @@ var transactions = [
 		'event':'Transaction Fees',
 		'date': '4/16/20',
 		'amount': 0.02 
+	},
+	{
+		'event':'Realization',
+		'date': '6/1/20',
+		'amount': 724.67592155
+	},
+	{
+		'event':'Realization',
+		'date': '6/5/20',
+		'amount': 29.668891*35*(1-(1.9/100)),
+		'shares': -29.668891
+	},
+	{
+		'event':'Realization - Future',
+		'date': '10/1/20',
+		'amount': 2.60901324
 	}
 ];
