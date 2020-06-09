@@ -318,7 +318,7 @@ function check_for_MoM_slider () {
 	};
 };
 function add_disclaimer () {
-	var html = "<p class='disclaimer'>" + disclaimer = '</p>';
+	var html = "<p class='disclaimer'>" + disclaimer + '</p>';
 	$('#total_gain').append(html);	
 };
 function check_for_disclaimer () {
