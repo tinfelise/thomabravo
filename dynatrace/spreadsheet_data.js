@@ -1,6 +1,6 @@
 var ticker = 'DT';
 var sound = 'For the love of money.m4a';
-var disclaimer = 'All return figures include proceeds from Compuware sale.'
+var disclaimer = 'All return figures include Compuware sale proceeds.'
 
 var MoM_slider = {
 	'min': 8,
