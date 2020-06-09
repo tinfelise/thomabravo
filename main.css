@@ -446,7 +446,9 @@ footer {
 }
 .disclaimer {
 	text-align:center;
-	font-size:.35em;
+	color: rgba(255, 255, 255, .5);
+	font-size: .75rem;
+	margin: 2em 0 0;
 }
 .fullscreen button,
 .fullscreen footer a {
@@ -458,7 +460,7 @@ footer {
 	html {
 		font-size:16px;
 		align-items: flex-start;
-		background: rgb(29, 42, 54);
+		/*background: rgb(29, 42, 54);*/
 	}
 	body {
 		margin:0;
@@ -492,6 +494,7 @@ footer {
 	footer {
 		position: initial;
 		padding: 2rem 2rem;
+		background: rgb(29, 42, 54);
 	}
 	footer a,
 	footer button {

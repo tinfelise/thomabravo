@@ -287,6 +287,7 @@ function do_the_math (current_price, price_yesterday) {
 	total_gains_MoM(transactions);
 	get_TB_shares_perc(current_shares, fdso);
 	check_for_MoM_slider();
+	check_for_disclaimer();
 };
 
 function get_target_price (target_MoM, label, output) {
@@ -314,6 +315,17 @@ function create_MoM_slider (min, max, increment) {
 function check_for_MoM_slider () {
 	if ( typeof MoM_slider !== 'undefined') {
 		create_MoM_slider (MoM_slider['min'], MoM_slider['max'], MoM_slider['increment']);
+	};
+};
+function add_disclaimer () {
+	var html = "<p class='disclaimer'>";
+		html += disclaimer;
+		html += '</p>'
+	$('#total_gain').append(html);	
+};
+function check_for_disclaimer () {
+	if ( typeof disclaimer != 'undefined') {
+		add_disclaimer ();
 	};
 };
 
