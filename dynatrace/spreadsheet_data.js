@@ -3,8 +3,8 @@ var sound = 'For the love of money.m4a';
 var disclaimer = 'All return figures include Compuware sale proceeds.'
 
 var MoM_slider = {
-	'min': 8,
-	'max': 12,
+	'min': 10,
+	'max': 17,
 	'increment': .5
 };
 
