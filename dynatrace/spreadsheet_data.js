@@ -282,7 +282,7 @@ var transactions = [
 	{
 		'event':'Realization',
 		'date': '8/7/20',
-		'amount': -21.412966*40.9,
+		'amount': 21.412966*40.9,
 		'shares': -21.412966
 	}
 ];
