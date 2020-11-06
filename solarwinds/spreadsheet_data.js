@@ -36,21 +36,21 @@ var options_build = [
 ];
 
 var share_count_build = {
-	'Basic Shares': 312.384795,
+	'Basic Shares': 314.042117,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var ebitdas = {
-	'2020': 473.81,
-	'2021': 521.32
+	'2021': 525.8,
+	'2022': 582.98
 };
 var uFCF = {
-	'2020': ebitdas[2020]*0.9,
-	'2021': ebitdas[2021]*0.9
+	'2021': ebitdas[2020]*0.9,
+	'2022': ebitdas[2021]*0.9
 };
-var net_debt = 1888.026+19.9-331.414;
+var net_debt = 1885.352+19.9-424.986;
 
 var TB_preIPO_shares = 112.129322730121;
 var transactions = [
