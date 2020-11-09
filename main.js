@@ -2,6 +2,8 @@ var finance = new Finance();
 var million = 1000000;
 
 var stock_data = {};
+var time_series_data = {};
+var time_series_dates = {};
 var current_price, previous_closing_price;
 
 var investment, realized, unrealized;
@@ -9,8 +11,88 @@ var all_realizations = [];
 
 var current_shares, fdso;
 
+var alphavantage_key = 'B67FR48WBLNMCCHH';
+var polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
+
+function get_market_status () {
+	$('#ticker').html(ticker);
+	var path = 'https://api.polygon.io/v1/marketstatus/now' +
+	'?apikey=' + polygon_key;
+	var settings = {
+		url: path,
+		beforeSend: function () {
+			console.log('Checking market status...')
+			console.log(path);
+		},
+		error: function () {
+			get_stock_price(ticker);
+		},
+		success: function (data) {
+			console.log('Markets are ' + data.market + '.');
+			choose_price(data.market);
+		}
+	};
+	$.ajax(settings)
+};
+function choose_price (market_status) {
+	if (market_status == 'open') {
+		get_last_trade();
+	} else if (market_status == 'closed') {
+		get_stock_price(ticker);
+	} else {
+		get_stock_price(ticker);
+	};
+};
+function get_closing_price(ticker, last_trade) {
+	var path = 'https://api.polygon.io/v2/aggs/ticker/' + ticker +
+	'/prev' + '?apikey=' + polygon_key;
+	var settings = {
+		url: path,
+		beforeSend: function () {
+			console.log('Fetching previous closing price...')
+			console.log(path);
+		},
+		error: function () {
+			no_data();
+		},
+		success: function (data) {
+			// console.log(data.results[0]);
+			console.log('Previously closed at $' + data.results[0].c + ' on ' + moment(data.results[0].t, 'x').format('LLL') + '.');
+			// parse_stock_data(data);
+			parse_real_time_data(data.results[0], last_trade);
+		}
+	};
+	$.ajax(settings)
+};
+function parse_real_time_data (closing_data, last_trade) {
+	console.log(closing_data);
+	console.log(last_trade);
+	var price = last_trade;
+	var previous_close = closing_data.c;
+	display_previous_day_of_week(closing_data.t, 'x');
+	do_the_math (price, previous_close);
+};
+function get_last_trade (ticker) {
+	var path = 'https://api.polygon.io/v1/last/stocks/' + ticker +
+	'?apikey=' + polygon_key;
+	var settings = {
+		url: path,
+		beforeSend: function () {
+			console.log('Fetching last trade from...')
+			console.log(path);
+		},
+		error: function () {
+			no_data();
+		},
+		success: function (data) {
+			// console.log(data.last);
+			console.log('Last traded at $' + data.last.price + '.');
+			get_closing_price(ticker, data.last.price);
+		}
+	};
+	$.ajax(settings)
+};
 function get_stock_price (ticker) {
-	var alphavantage_key = 'B67FR48WBLNMCCHH';
 	var path = 'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=' + ticker +
 	'&apikey=' + alphavantage_key;
 	var settings = {
@@ -18,8 +100,6 @@ function get_stock_price (ticker) {
 		beforeSend: function () {
 			console.log('Fetching stock data from...')
 			console.log(path);
-			$('#ticker').html(ticker);
-			// $('#AlphaVantage').attr('href', path);
 		},
 		error: function () {
 			no_data();
@@ -29,6 +109,31 @@ function get_stock_price (ticker) {
 		}
 	};
 	$.ajax(settings)
+};
+function get_time_series_data (ticker) {
+	var path = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + ticker +
+	'&outputsize=compact&apikey=' + alphavantage_key;
+	var settings = {
+		url: path,
+		beforeSend: function () {
+			console.log('Fetching historical stock data from...')
+			console.log(path);
+		},
+		error: function () {
+			get_market_status();
+		},
+		success: function (data) {
+			parse_time_series_data(data);
+		}
+	};
+	$.ajax(settings)
+};
+function parse_time_series_data (data) {
+	time_series_data = data['Time Series (Daily)'];
+	time_series_dates = Object.keys(time_series_data);
+	console.log(time_series_data);
+
+	get_market_status();
 };
 function reset () {
 	all_realizations = [];
@@ -64,36 +169,21 @@ function display_update_time (date, time, open) {
 	};
 	$('#updated').html(html);
 };
-function display_previous_day_of_week (date) {
-	var days_ago = moment(date).diff(moment(), 'days');
+function display_previous_day_of_week (date, format) {
+	var days_ago = moment(date, format).diff(moment(), 'days');
 	var weekday = 'yesterday';
 	if (days_ago != -1) {
-		weekday = moment(date).format('dddd');
+		weekday = moment(date, format).format('dddd');
 	};
 	$('#previous_weekday').html('from ' + weekday);
 };
 
 function parse_stock_data (data) {
 	stock_data = data['Global Quote'];
-	// var markets_open = false;
-	// console.log(meta_data);
+	
 	var last_updated = '07. latest trading day';
 		last_updated = stock_data[last_updated];
 	console.log('As of ' + last_updated);
-
-	// var last_updated_date = last_updated;
-	// if ( last_updated.split(' ').length > 1 ) {
-	// 	markets_open = true;
-	// 	last_updated_date = last_updated.split(' ')[0];
-	// 	var last_updated_time = last_updated.split(' ')[1];
-	// 		last_updated_time = last_updated_time + '-05:00'; // EST timezone offset
-	// };
-
-	// stock_data = data['Time Series (Daily)'];
-	// var todays_data = stock_data[last_updated_date];
-
-	// var previous = Object.keys(stock_data)[1];
-	// var yesterdays_data = stock_data[previous];
 
 	var price = '05. price';
 	current_price = stock_data[price];
@@ -102,7 +192,7 @@ function parse_stock_data (data) {
 	previous_closing_price = stock_data[previous_close];
 
 	// display_update_time(last_updated_date, last_updated_time, markets_open);
-	// display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
+	display_previous_day_of_week(time_series_dates[1],'YYYY-MM-DD');
 	do_the_math(current_price, previous_closing_price);
 };
 
@@ -360,7 +450,9 @@ function check_for_tests (obj) {
 		window[test].apply(null,input);
 	};
 	if (test != 'dummy_data') {
-		get_stock_price(ticker);
+		// get_stock_price(ticker);
+		// get_market_status();
+		get_time_series_data(ticker);
 	};
 };
 
