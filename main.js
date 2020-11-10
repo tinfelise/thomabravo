@@ -16,7 +16,8 @@ var polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
 
 function get_market_status () {
 	$('#ticker').html(ticker);
-	var path = 'https://api.polygon.io/v1/marketstatus/now' +
+	var allow_cors = 'https://cors-anywhere.herokuapp.com/'
+	var path = allow_cors + 'https://api.polygon.io/v1/marketstatus/now' +
 	'?apikey=' + polygon_key;
 	var settings = {
 		url: path,
