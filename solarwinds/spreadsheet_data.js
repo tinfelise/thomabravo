@@ -16,7 +16,7 @@ var options_build = [
 	{
 		'tranche': 2,
 		'strike': 1.69,
-		'shares': 2.090725
+		'shares': 1.996568
 	},
 	{
 		'tranche': 3,
@@ -26,12 +26,7 @@ var options_build = [
 	{
 		'tranche': 4,
 		'strike': 0,
-		'shares': 6.621884
-	},
-	{
-		'tranche': 5,
-		'strike': 0,
-		'shares': 1.004026
+		'shares': 13.329008
 	}
 ];
 
@@ -43,14 +38,14 @@ var share_count_build = {
 };
 
 var ebitdas = {
-	'2021': 525.8,
-	'2022': 582.98
+	'2021': 527.65,
+	'2022': 587.89
 };
 var uFCF = {
 	'2021': ebitdas[2021]*0.9,
 	'2022': ebitdas[2022]*0.9
 };
-var net_debt = 1885.352+19.9-424.986;
+var net_debt = 1935.275-424.986;
 
 var TB_preIPO_shares = 112.129322730121;
 var transactions = [
