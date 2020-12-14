@@ -11,18 +11,18 @@ var MoM_slider = {
 var options_build = [
 	{
 		'tranche': 1,
-		'strike': 20.05,
-		'shares': 9.046
+		'strike': 20.57,
+		'shares': 8.837
 	},
 	{
 		'tranche': 2,
 		'strike': 0,
-		'shares': 2.246
+		'shares': 1.04
 	},
 	{
 		'tranche': 3,
 		'strike': 0,
-		'shares': 4.037
+		'shares': 3.442
 	}
 ];
 
@@ -32,24 +32,20 @@ var basic_shares_build = {
 };
 
 var share_count_build = {
-	'Basic Shares': 281.070901,
+	'Basic Shares': 282.096515,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var revenues = {
-	'2020': 630.3,
-	'2021': 774.2
-};
-var ebitdas = {
-	'2020': 181.3,
-	'2021': 219.7
+	'2020': 647,
+	'2021': 793
 };
 var uFCF = {
-	'2020': 184.7212,
-	'2021': 227.3092
+	'2020': 166,
+	'2021': 235
 };
-var net_debt = 270.75;
+var net_debt = 491.925-248.437;
 
 var TB_preIPO_shares = 194.425163;
 var transactions = [
@@ -284,5 +280,11 @@ var transactions = [
 		'date': '8/7/20',
 		'amount': 21.412966*40.9,
 		'shares': -21.412966
+	},
+	{
+		'event':'Realization',
+		'date': '12/9/20',
+		'amount': 10.78*40.15,
+		'shares': -10.78
 	}
 ];
