@@ -120,5 +120,11 @@ var transactions = [
 		'date': '5/22/19',
 		'amount': 6.10887 * 17.42,
 		'shares': -6.10887
+	},
+	{
+		'event':'Private Placement',
+		'date': '12/9/20',
+		'amount': 128.3,
+		'shares': -5.839157
 	}
 ];
