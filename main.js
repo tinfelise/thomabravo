@@ -31,7 +31,8 @@ function get_market_status (ticker) {
 		success: function (data) {
 			console.log('Markets are ' + data.market + '.');
 			choose_price(data.market);
-		}
+		},
+		timeout: 3000
 	};
 	$.ajax(settings)
 };
