@@ -445,6 +445,10 @@ h3 span:last-of-type {
 	flex-grow: 1;
 }
 
+#returns_over_time {
+	margin-top: 2rem;
+}
+
 footer {
 	position: fixed;
     display: flex;

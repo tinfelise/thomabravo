@@ -14,7 +14,7 @@ var current_shares, fdso;
 var alphavantage_key = 'B67FR48WBLNMCCHH';
 var polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
 
-function get_market_status () {
+function get_market_status (ticker) {
 	$('#ticker').html(ticker);
 	var allow_cors = 'https://cors-anywhere.herokuapp.com/'
 	var path = allow_cors + 'https://api.polygon.io/v1/marketstatus/now' +
@@ -37,7 +37,7 @@ function get_market_status () {
 };
 function choose_price (market_status) {
 	if (market_status == 'open') {
-		get_last_trade();
+		get_last_trade(ticker);
 	} else if (market_status == 'closed') {
 		get_stock_price(ticker);
 	} else {
@@ -57,21 +57,17 @@ function get_closing_price(ticker, last_trade) {
 			no_data();
 		},
 		success: function (data) {
-			// console.log(data.results[0]);
 			console.log('Previously closed at $' + data.results[0].c + ' on ' + moment(data.results[0].t, 'x').format('LLL') + '.');
-			// parse_stock_data(data);
 			parse_real_time_data(data.results[0], last_trade);
 		}
 	};
 	$.ajax(settings)
 };
 function parse_real_time_data (closing_data, last_trade) {
-	console.log(closing_data);
-	console.log(last_trade);
-	var price = last_trade;
-	var previous_close = closing_data.c;
+	current_price = last_trade;
+	previous_closing_price = closing_data.c;
 	display_previous_day_of_week(closing_data.t, 'x');
-	do_the_math (price, previous_close);
+	do_the_math (current_price, previous_closing_price);
 };
 function get_last_trade (ticker) {
 	var path = 'https://api.polygon.io/v1/last/stocks/' + ticker +
@@ -86,7 +82,6 @@ function get_last_trade (ticker) {
 			no_data();
 		},
 		success: function (data) {
-			// console.log(data.last);
 			console.log('Last traded at $' + data.last.price + '.');
 			get_closing_price(ticker, data.last.price);
 		}
@@ -121,20 +116,20 @@ function get_time_series_data (ticker) {
 			console.log(path);
 		},
 		error: function () {
-			get_market_status();
+			get_market_status(ticker);
 		},
 		success: function (data) {
-			parse_time_series_data(data);
+			parse_time_series_data(ticker, data);
 		}
 	};
 	$.ajax(settings)
 };
-function parse_time_series_data (data) {
+function parse_time_series_data (ticker, data) {
 	time_series_data = data['Time Series (Daily)'];
 	time_series_dates = Object.keys(time_series_data);
 	console.log(time_series_data);
 
-	get_market_status();
+	get_market_status(ticker);
 };
 function reset () {
 	all_realizations = [];
@@ -143,7 +138,7 @@ function reset () {
 function reload (clip) {
 	$('body').removeClass('loaded');
 	reset();
-	get_stock_price(ticker);
+	get_market_status(ticker);
 	if (clip) {
 		play_sound(clip);
 	};
@@ -192,7 +187,6 @@ function parse_stock_data (data) {
 	var previous_close ='08. previous close';
 	previous_closing_price = stock_data[previous_close];
 
-	// display_update_time(last_updated_date, last_updated_time, markets_open);
 	display_previous_day_of_week(time_series_dates[1],'YYYY-MM-DD');
 	do_the_math(current_price, previous_closing_price);
 };
@@ -379,6 +373,7 @@ function do_the_math (current_price, price_yesterday) {
 	get_TB_shares_perc(current_shares, fdso);
 	check_for_MoM_slider();
 	check_for_disclaimer();
+	create_chart(time_series_data,time_series_dates);
 };
 
 function get_target_price (target_MoM, label, output) {
@@ -409,13 +404,84 @@ function check_for_MoM_slider () {
 	};
 };
 function add_disclaimer () {
-	var html = "<p class='disclaimer'>" + disclaimer + '</p>';
+	$('#returns_disclaimer').remove();
+	var html = "<p id='returns_disclaimer' class='disclaimer'>" + disclaimer + '</p>';
 	$('#total_gain').append(html);	
 };
 function check_for_disclaimer () {
 	if ( typeof disclaimer != 'undefined') {
 		add_disclaimer ();
 	};
+};
+function get_closing_prices (data, index) {
+	var closing_prices = [];
+	for (i in index) {
+		var point = data[index[i]];
+		var closing_price = point['4. close'];
+		closing_prices.push(closing_price);
+	};
+	return closing_prices;
+};
+function create_chart (dataset, data_labels) {
+	$('#returns_over_time').remove();
+	var html = '<canvas id="returns_over_time" width="400" height="400"></canvas>'
+	$('#total_gain').append(html);
+	
+	var ctx = $('#returns_over_time');
+	var chart = new Chart(ctx, {
+		type: 'line',
+		data: {
+			labels: data_labels,
+			datasets: [{
+				label: 'Stock Price',
+				data: get_closing_prices(dataset, data_labels),
+				borderColor: 'rgba(255, 255, 255, .75)',
+				backgroundColor: 'rgba(0,0,0,0)'
+			}]
+		},
+		options: {
+			legend: {
+				display: false
+			},
+			scales: {
+				xAxes: [{
+					type: 'time',
+					time: {
+					    unit: 'month'
+					},
+					ticks: {
+						fontColor: 'rgba(255, 255, 255, .5)',
+						fontFamily: "'Akkurat', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif",
+						fontSize: '16'
+					},
+					gridLines: {
+						display: false
+					}
+				}],
+				yAxes: [{
+				    ticks: {
+				        // Include a dollar sign in the ticks
+				        callback: function(value, index, values) {
+				            return '$' + value;
+				        },
+				        fontColor: 'rgba(255, 255, 255, .5)',
+				        fontSize: '16'
+				    },
+				    gridLines: {
+				        display: false
+				    }
+				}]
+	        },
+			tooltips: {
+				enabled: false
+			},
+			elements: {
+			    point:{
+			        radius: 0
+			    }
+			}
+		}
+	});
 };
 
 // Tests
@@ -451,8 +517,6 @@ function check_for_tests (obj) {
 		window[test].apply(null,input);
 	};
 	if (test != 'dummy_data') {
-		// get_stock_price(ticker);
-		// get_market_status();
 		get_time_series_data(ticker);
 	};
 };
