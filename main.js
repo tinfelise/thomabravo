@@ -16,7 +16,7 @@ var polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
 
 function get_market_status (ticker) {
 	$('#ticker').html(ticker);
-	var allow_cors = 'https://cors-anywhere.herokuapp.com/'
+	var allow_cors = 'https://cors-anywhere.herokuapp.com/';
 	var path = allow_cors + 'https://api.polygon.io/v1/marketstatus/now' +
 	'?apikey=' + polygon_key;
 	var settings = {
@@ -313,6 +313,11 @@ function get_revenue_multiples (enterprise_value) {
 	} else if (ebitdas) {
 		for (i in ebitdas) {
 			html += create_revenue_multiple (enterprise_value, ebitdas[i], i, 'EBITDA');
+		};
+	};
+	if (typeof ARRs !== 'undefined') {
+		for (i in ARRs) {
+			html += create_revenue_multiple (enterprise_value, ARRs[i], i, 'ARR');
 		};
 	};
 	if (typeof uFCF !== 'undefined') {
