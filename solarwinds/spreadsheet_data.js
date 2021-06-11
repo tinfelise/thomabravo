@@ -15,8 +15,8 @@ var options_build = [
 	},
 	{
 		'tranche': 2,
-		'strike': 1.69,
-		'shares': 1.996568
+		'strike': 1.56,
+		'shares': 1.254735
 	},
 	{
 		'tranche': 3,
@@ -26,26 +26,26 @@ var options_build = [
 	{
 		'tranche': 4,
 		'strike': 0,
-		'shares': 13.329008
+		'shares': 9.78655+0.306023
 	}
 ];
 
 var share_count_build = {
-	'Basic Shares': 314.042117,
+	'Basic Shares': 315.731293,
 	'Pref-Shares': 0,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var ebitdas = {
-	'2021': 527.65,
-	'2022': 587.89
+	'2021': 453.75,
+	'2022': 512.65
 };
 var uFCF = {
 	'2021': ebitdas[2021]*0.9,
 	'2022': ebitdas[2022]*0.9
 };
-var net_debt = 1935.275-424.986;
+var net_debt = 1925.325-374.352;
 
 var TB_preIPO_shares = 112.129322730121;
 var transactions = [
