@@ -363,6 +363,8 @@ h3 span:last-of-type {
 }
 #ownership > div {
 	line-height: 0;
+	width:100%;
+	padding-top:1.25rem;
 }
 #ownership .logo {
 	height:1rem;
