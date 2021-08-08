@@ -310,7 +310,8 @@ function get_revenue_multiples (enterprise_value) {
 		for (i in revenues) {
 			html += create_revenue_multiple (enterprise_value, revenues[i], i, 'Revenues');
 		};
-	} else if (ebitdas) {
+	};
+	if (typeof ebitdas !== 'undefined') {
 		for (i in ebitdas) {
 			html += create_revenue_multiple (enterprise_value, ebitdas[i], i, 'EBITDA');
 		};
