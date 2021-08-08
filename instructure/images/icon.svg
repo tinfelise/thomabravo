@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="21px" viewBox="0 0 19 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>logo</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="logo" transform="translate(0.499998, 0.500000)" fill-rule="nonzero">
+            <polygon id="polygon36" fill="#2A7BA0" points="17.6741664 14.9224998 8.83708322 19.8966664 0 14.9224998 8.83708322 9.94833321"></polygon>
+            <polygon id="polygon38" fill="#FBCC15" points="4.41854161 7.46124991 8.83708322 4.9741666 4.41854161 2.4870833 0 4.9741666"></polygon>
+            <polygon id="polygon40" fill="#F78F21" points="8.83708322 4.9741666 13.2556248 2.4870833 8.83708322 0 4.41854161 2.4870833"></polygon>
+            <polygon id="polygon42" fill="#E9262A" points="13.2556248 7.46124991 17.6741664 4.9741666 13.2556248 2.4870833 8.83708322 4.9741666"></polygon>
+        </g>
+    </g>
+</svg>
