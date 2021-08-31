@@ -16,7 +16,7 @@ var ebitdas = {
 	'2022': 973.5
 };
 var uFCF = {
-	'2021': ebitdas[2021] * .9
+	'2021': ebitdas[2021] * .9,
 	'2022': ebitdas[2022] * .9
 };
 var net_debt = 3991-1000-420;
