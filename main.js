@@ -356,6 +356,24 @@ function dilute_shares(options) {
 	};
 	get_market_cap(RSUs_Options);
 };
+function check_IPO_price (current_stock_price) {
+	if ( typeof IPO_price !== 'undefined') {
+		var IPO_change = (current_stock_price / IPO_price) - 1;
+		if (IPO_change >= 0) {
+			var html = '<div id="IPO_change">Up ';
+		} else {
+			var html = '<div id="IPO_change">Down ';
+		};
+		var html = '<div id="IPO_change">Up ';
+			html += numeral(IPO_change).format('%0,0.0');
+			html += ' from ';
+			html += numeral(IPO_price).format('$0,0');
+			html += ' initial listing';
+			html += '</div>';
+		$('#stockData > div:first-of-type').append(html);
+	};
+};
+
 
 function do_the_math (current_price, price_yesterday) {
 	var compared_to_yesterday = current_price - price_yesterday;
@@ -378,6 +396,7 @@ function do_the_math (current_price, price_yesterday) {
 	dilute_shares(options_build);
 	total_gains_MoM(transactions);
 	get_TB_shares_perc(current_shares, fdso);
+	check_IPO_price(current_price);
 	check_for_MoM_slider();
 	check_for_disclaimer();
 	create_chart(time_series_data,time_series_dates);

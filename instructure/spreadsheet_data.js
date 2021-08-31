@@ -1,6 +1,8 @@
 var ticker = 'INST';
 // var sound = 'sail.mp3';
 
+var IPO_price = 20;
+
 var MoM_slider = {
 	'min': 2,
 	'max': 6,

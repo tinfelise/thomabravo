@@ -1,6 +1,8 @@
 var ticker = 'SAIL';
 var sound = 'sail.mp3';
 
+var IPO_price = 12;
+
 var options_build = [
 	{
 		'tranche': 1,

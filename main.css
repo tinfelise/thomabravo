@@ -285,6 +285,12 @@ h3 span:last-of-type {
 	justify-content: center;
 	width: 100%;
 	align-items: center;
+	flex-flow: wrap;
+	margin: 2rem 0 1rem;
+}
+#current_price,
+#price_changes h3 {
+	margin: 0;
 }
 #current_price {}
 #price_changes {
@@ -304,6 +310,7 @@ h3 span:last-of-type {
 #previous_weekday {
 	color:inherit;
 }
+#IPO_change {}
 
 #market_cap,
 #enterprise_value,
