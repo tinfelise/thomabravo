@@ -2,45 +2,50 @@ var ticker = 'MCFE';
 var sound = 'Rollin.m4a';
 
 var share_count_build = {
-	'Basic Shares': 157.32499+267.065127,
+	'Basic Shares': 168.968217+265.376691,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var revenues = {
-	'2020': 2870.5,
-	'2021': 2955.4
+	'2021': 1798.5,
+	'2022': 1971.6 
 };
 var ebitdas = {
-	'2021': 1034.4,
-	'2022': 1113.3
+	'2021': 835.5,
+	'2022': 973.5
 };
 var uFCF = {
-	'2020': 909.8,
-	'2021': 1005
+	'2021': ebitdas[2021] * .9
+	'2022': ebitdas[2022] * .9
 };
-var net_debt = 4757-348;
+var net_debt = 3991-1000-420;
 
 var options_build = [
 	{
 		'tranche': 1,
 		'strike': 20.00,
-		'shares': 1.9
+		'shares': 1.3
 	},
 	{
 		'tranche': 2,
 		'strike': 0,
-		'shares': 5.7
+		'shares': 23.5
 	},
 	{
 		'tranche': 3,
 		'strike': 0,
-		'shares': 17.5
+		'shares': 0.3
 	},
 	{
 		'tranche': 4,
 		'strike': 0,
-		'shares': 20
+		'shares': 6.7
+	},
+	{
+		'tranche': 5,
+		'strike': 0,
+		'shares': 2.7
 	}
 ];
 
@@ -173,5 +178,10 @@ var transactions = [
 		'event':'Transaction Fees',
 		'date': '11/5/20',
 		'amount': 0.213
+	},
+	{
+		'event':'Dividend',
+		'date': '8/27/21',
+		'amount': 235.85667597
 	}
 ];
