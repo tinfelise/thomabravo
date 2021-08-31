@@ -4,9 +4,9 @@ var ticker = 'MLNK';
 var IPO_price = 26;
 
 var MoM_slider = {
-	'min': 4,
-	'max': 8,
-	'increment': .55
+	'min': 5.5,
+	'max': 10,
+	'increment': .5
 };
 
 var share_count_build = {
