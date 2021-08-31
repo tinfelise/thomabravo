@@ -49,7 +49,14 @@ var transactions = [
 	{
 		'event':'Purchase (TB Tranche I)',
 		'date': '5/31/18',
-		'amount': -200,
-		'shares': TB_preIPO_shares
+		'amount': -190,
+		'shares': 38.447344
+	},
+	{
+		'event':'Purchase (TB Tranche II)',
+		'date': '6/7/18',
+		'amount': -10,
+		'shares': 2.015902
 	}
 ];
+var TB_preIPO_shares = transactions[0].shares + transactions[1].shares
