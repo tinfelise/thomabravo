@@ -44,7 +44,6 @@ var options_build = [
 	}
 ];
 
-var TB_preIPO_shares = 40.463246;
 var transactions = [
 	{
 		'event':'Purchase (TB Tranche I)',
