@@ -1,7 +1,10 @@
 var ticker = 'MLNK';
 // var sound = 'sail.mp3';
 
-var IPO_price = 26;
+var IPO = {
+	'price': 26,
+	'date': '7/28/21'
+};
 
 var MoM_slider = {
 	'min': 5.5,

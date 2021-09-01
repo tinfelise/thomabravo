@@ -199,16 +199,19 @@ function percentage_change (current, previous) {
 	return percentage_change;
 };
 
+function return_date (format, date_string) {
+	var date = moment(date_string, format);
+	var year = moment(date).format('YYYY');
+	var month = moment(date).format('MM');
+	var day = moment(date).format('DD');
+	return new Date(year, month, day);
+};
 function get_IRR (realizations) {
 	var amounts = [];
 	var dates = [];
 	for (i in realizations) {
 		amounts[i] = realizations[i].amount * million;
-		var date = moment(realizations[i].date, 'MM/DD/YY');
-		var year = moment(date).format('YYYY');
-		var month = moment(date).format('MM');
-		var day = moment(date).format('DD');
-		dates[i] = new Date(year, month, day);
+		dates[i] = return_date('MM/DD/YY',realizations[i].date);
 	};
 	var XIRR = finance.XIRR(amounts, dates) / 100;
 	$('#IRR').html( numeral(XIRR).format('0,0[.]0%') + ' <span>IRR</span>' );
@@ -357,19 +360,25 @@ function dilute_shares(options) {
 	get_market_cap(RSUs_Options);
 };
 function check_IPO_price (current_stock_price) {
-	if ( typeof IPO_price !== 'undefined') {
-		var IPO_change = (current_stock_price / IPO_price) - 1;
+	if ( typeof IPO !== 'undefined') {
+		var IPO_change = (current_stock_price / IPO.price) - 1;
+
+		var amounts = [-IPO.price, +current_stock_price];
+		var dates = [return_date('M/D/YY',IPO.date),return_date()];
+		var XIRR = finance.XIRR(amounts, dates) / 100;
+		console.log(XIRR);
+		
 		if (IPO_change >= 0) {
 			var html = '<div id="IPO_change">Up ';
 		} else {
 			var html = '<div id="IPO_change">Down ';
 		};
-		var html = '<div id="IPO_change">Up ';
-			html += numeral(IPO_change).format('%0,0.0');
-			html += ' from ';
-			html += numeral(IPO_price).format('$0,0');
-			html += ' initial listing';
-			html += '</div>';
+		html += numeral(Math.abs(IPO_change)).format('%0,0.0');
+		html += ' from ';
+		html += numeral(IPO.price).format('$0,0');
+		html += ' initial listing (';
+		html += numeral(XIRR).format('%0,0.0');
+		html += ' IRR)</div>';
 		$('#stockData > div:first-of-type').append(html);
 	};
 };

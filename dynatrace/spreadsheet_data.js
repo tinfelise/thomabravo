@@ -2,7 +2,10 @@ var ticker = 'DT';
 var sound = 'For the love of money.m4a';
 var disclaimer = 'All return figures include Compuware sale proceeds.'
 
-var IPO_price = 16;
+var IPO = {
+	'price': 16,
+	'date': '8/1/19'
+};
 
 var MoM_slider = {
 	'min': 10,
