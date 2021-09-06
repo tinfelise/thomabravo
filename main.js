@@ -366,7 +366,6 @@ function check_IPO_price (current_stock_price) {
 		var amounts = [-IPO.price, +current_stock_price];
 		var dates = [return_date('M/D/YY',IPO.date),return_date()];
 		var XIRR = finance.XIRR(amounts, dates) / 100;
-		console.log(XIRR);
 		
 		if (IPO_change >= 0) {
 			var html = '<div id="IPO_change">Up ';
@@ -379,6 +378,7 @@ function check_IPO_price (current_stock_price) {
 		html += ' initial listing (';
 		html += numeral(XIRR).format('%0,0.0');
 		html += ' IRR)</div>';
+		$('#IPO_change').remove();
 		$('#stockData > div:first-of-type').append(html);
 	};
 };
