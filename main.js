@@ -614,4 +614,4 @@ function auto_refresh(seconds) {
 };
 function stop_refreshing() {
 	clearInterval(refresh_interval);
-}
+};
