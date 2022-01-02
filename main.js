@@ -108,7 +108,7 @@ function get_stock_price (ticker) {
 	$.ajax(settings)
 };
 function get_time_series_data (ticker) {
-	var path = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY_ADJUSTED&symbol=' + ticker +
+	var path = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker +
 	'&outputsize=compact&apikey=' + alphavantage_key;
 	var settings = {
 		url: path,
