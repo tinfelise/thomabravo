@@ -2,8 +2,8 @@ var finance = new Finance();
 var million = 1000000;
 
 var stock_data = {};
-var time_series_data = {};
-var time_series_dates = {};
+// var time_series_data = {};
+// var time_series_dates = {};
 // var current_price, previous_closing_price;
 
 var investment, realized, unrealized;
@@ -117,7 +117,7 @@ function get_time_series_data (ticker) {
 			console.log(path);
 		},
 		error: function () {
-			get_market_status(ticker);
+			console.log('No Time Series Data');
 		},
 		success: function (data) {
 			parse_time_series_data(ticker, data);
@@ -126,12 +126,13 @@ function get_time_series_data (ticker) {
 	$.ajax(settings)
 };
 function parse_time_series_data (ticker, data) {
-	time_series_data = data['Time Series (Daily)'];
-	time_series_dates = Object.keys(time_series_data);
+	var time_series_data = data['Time Series (Daily)'];
+	var time_series_dates = Object.keys(time_series_data);
 	console.log(time_series_data);
-
-	get_market_status(ticker);
+	display_previous_day_of_week(time_series_dates[1],'YYYY-MM-DD');
+	create_chart(time_series_data,time_series_dates);
 };
+
 function reset () {
 	all_realizations = [];
 	$('#MoM_targets').remove();
@@ -188,7 +189,7 @@ function parse_stock_data (data) {
 	var previous_close ='08. previous close';
 	var previous_closing_price = stock_data[previous_close];
 
-	display_previous_day_of_week(time_series_dates[1],'YYYY-MM-DD');
+	get_time_series_data(ticker);
 	do_the_math(current_price, previous_closing_price);
 };
 
@@ -411,7 +412,6 @@ function do_the_math (current_stock_price, price_yesterday) {
 	check_IPO_price(current_stock_price);
 	check_for_MoM_slider();
 	check_for_disclaimer();
-	create_chart(time_series_data,time_series_dates);
 };
 
 function get_target_price (target_MoM, label, output) {
@@ -555,7 +555,7 @@ function check_for_tests (obj) {
 		window[test].apply(null,input);
 	};
 	if (test != 'dummy_data') {
-		get_time_series_data(ticker);
+		get_market_status(ticker);
 	};
 };
 
