@@ -4,7 +4,7 @@ var million = 1000000;
 var stock_data = {};
 var time_series_data = {};
 var time_series_dates = {};
-var current_price, previous_closing_price;
+// var current_price, previous_closing_price;
 
 var investment, realized, unrealized;
 var all_realizations = [];
@@ -65,8 +65,8 @@ function get_closing_price(ticker, last_trade) {
 	$.ajax(settings)
 };
 function parse_real_time_data (closing_data, last_trade) {
-	current_price = last_trade;
-	previous_closing_price = closing_data.c;
+	var current_price = last_trade;
+	var previous_closing_price = closing_data.c;
 	display_previous_day_of_week(closing_data.t, 'x');
 	do_the_math (current_price, previous_closing_price);
 };
@@ -183,10 +183,10 @@ function parse_stock_data (data) {
 	console.log('As of ' + last_updated);
 
 	var price = '05. price';
-	current_price = stock_data[price];
+	var current_price = stock_data[price];
 
 	var previous_close ='08. previous close';
-	previous_closing_price = stock_data[previous_close];
+	var previous_closing_price = stock_data[previous_close];
 
 	display_previous_day_of_week(time_series_dates[1],'YYYY-MM-DD');
 	do_the_math(current_price, previous_closing_price);
@@ -255,13 +255,13 @@ function get_TB_shares_perc (TB_shares, total_shares) {
 	var perc_realized_html = numeral(perc_realized).format('0.0%') + ' <span>Realized</span>';
 	$('#TB_perc_shares_realized').html(perc_realized_html);
 };
-function get_TB_shares_value (shares) {
+function get_TB_shares_value (shares, current_stock_price) {
 	$('#TB_shares').html( numeral(shares).format('0.0a') + ' <span>Shares</span>' );
-	var TB_shares_value = shares * current_price;
+	var TB_shares_value = shares * current_stock_price;
 	$('#TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
 	calc_unrealized(TB_shares_value);
 };
-function sum_transactions (all_transactions) {
+function sum_transactions (all_transactions, current_stock_price) {
 	realized = 0;
 	investment = 0;
 	current_shares = 0;
@@ -336,28 +336,28 @@ function get_enterprise_value (market_cap) {
 	$('#enterprise_value').html(numeral(enterprise_value).format('($0.00a)') + ' <span>Enterprise Value</span>');
 	get_revenue_multiples(enterprise_value);
 };
-function get_market_cap (RSUs) {
+function get_market_cap (RSUs, current_stock_price) {
 	fdso = 0;
 	for (i in share_count_build) {
 		fdso += share_count_build[i];
 	};
 	fdso += RSUs;
-	var market_cap = fdso * current_price * million;
+	var market_cap = fdso * current_stock_price * million;
 	$('#market_cap').html(numeral(market_cap).format('($0.00a)') + ' <span>Market Cap</span>');
 	get_enterprise_value(market_cap);
 };
-function dilute_shares(options) {
+function dilute_shares(options, current_stock_price) {
 	var RSUs_Options = 0;
 	for (issuance in options) {
 		var strike_price = options[issuance].strike;
 		var shares = options[issuance].shares;
 		var diluted = 0;
-		if (current_price > strike_price) {
-			diluted = (current_price - strike_price)/current_price*shares;
+		if (current_stock_price > strike_price) {
+			diluted = (current_stock_price - strike_price)/current_stock_price*shares;
 		};
 		RSUs_Options += diluted;
 	};
-	get_market_cap(RSUs_Options);
+	get_market_cap(RSUs_Options, current_stock_price);
 };
 function check_IPO_price (current_stock_price) {
 	if ( typeof IPO !== 'undefined') {
@@ -383,29 +383,32 @@ function check_IPO_price (current_stock_price) {
 	};
 };
 
-
-function do_the_math (current_price, price_yesterday) {
-	var compared_to_yesterday = current_price - price_yesterday;
+function create_ticker_html (current_stock_price, price_yesterday, relative_to_yesterday) {
 	var stock_class = 'up';
 	var icon = 'fa-chart-line';
-	if (compared_to_yesterday < 0) {
+	if (relative_to_yesterday < 0) {
 		stock_class = 'down';
 		icon = 'fa-chart-area';
 	};
-	var compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
+	var compared_to_yesterday_perc = percentage_change(current_stock_price,price_yesterday);
 
 	$('body').addClass('loaded');
-	$('#current_price').html( numeral(current_price).format('$0,0.00') );
+	$('#current_price').html( numeral(current_stock_price).format('$0,0.00') );
 	$('#price_changes').addClass(stock_class);
 	$('#price_changes svg').remove();
 	$('#price_changes').prepend('<i class="fas ' + icon + '"></i>');		
-	$('#compared_to_yesterday').html( numeral(compared_to_yesterday).format('$0,0[.]00') );
+	$('#compared_to_yesterday').html( numeral(relative_to_yesterday).format('$0,0[.]00') );
 	$('#compared_to_yesterday_perc').html('(' + compared_to_yesterday_perc + ')');
+};
 
-	dilute_shares(options_build);
-	total_gains_MoM(transactions);
+function do_the_math (current_stock_price, price_yesterday) {
+	var compared_to_yesterday = current_stock_price - price_yesterday;
+	create_ticker_html(current_stock_price, price_yesterday, compared_to_yesterday);
+	
+	dilute_shares(options_build, current_stock_price);
+	total_gains_MoM(transactions, current_stock_price);
 	get_TB_shares_perc(current_shares, fdso);
-	check_IPO_price(current_price);
+	check_IPO_price(current_stock_price);
 	check_for_MoM_slider();
 	check_for_disclaimer();
 	create_chart(time_series_data,time_series_dates);
@@ -521,8 +524,8 @@ function create_chart (dataset, data_labels) {
 
 // Tests
 function dummy_data (tick, current, last, message) {
-	current_price = current;
-	previous_closing_price = last;
+	var current_price = current;
+	var previous_closing_price = last;
 	var today = moment().format('YYYY-MM-DD');
 	var time = moment().format('h:mmA');
 	var open = true;
