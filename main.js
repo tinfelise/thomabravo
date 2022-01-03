@@ -279,10 +279,10 @@ function sum_transactions (all_transactions, current_stock_price) {
 			current_shares += shares * million;
 		};
 	};
-	get_TB_shares_value(current_shares);
+	get_TB_shares_value(current_shares, current_stock_price);
 };
-function total_gains_MoM (realizations) {
-	sum_transactions(transactions);
+function total_gains_MoM (realizations, current_stock_price) {
+	sum_transactions(transactions, current_stock_price);
 	
 	var total_returns = realized + unrealized;
 	var total_MoM = calc_MoM(total_returns);
