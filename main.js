@@ -15,9 +15,8 @@ var alphavantage_key = 'B67FR48WBLNMCCHH';
 var polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
 
 function get_market_status (ticker) {
-	$('#ticker').html(ticker);
-	var allow_cors = 'https://cors-anywhere.herokuapp.com/';
-	var path = allow_cors + 'https://api.polygon.io/v1/marketstatus/now' +
+	ticker_html(ticker);
+	var path = 'https://api.polygon.io/v1/marketstatus/now' +
 	'?apikey=' + polygon_key;
 	var settings = {
 		url: path,
