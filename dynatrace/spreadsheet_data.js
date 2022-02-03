@@ -16,18 +16,18 @@ var MoM_slider = {
 var options_build = [
 	{
 		'tranche': 1,
-		'strike': 21.75,
-		'shares': 8.001
+		'strike': 21.87,
+		'shares': 7.094
 	},
 	{
 		'tranche': 2,
 		'strike': 0,
-		'shares': 0.468
+		'shares': 0.269
 	},
 	{
 		'tranche': 3,
 		'strike': 0,
-		'shares': 4.824
+		'shares': 5.029
 	}
 ];
 
@@ -37,24 +37,24 @@ var basic_shares_build = {
 };
 
 var share_count_build = {
-	'Basic Shares': 284.286347,
+	'Basic Shares': 285.744612,
 	'IPO Shares': 0,
 	'Greenshoe Shares': 0
 };
 
 var revenues = {
-	'2021': 859.2,
-	'2022': 1088.5
+	'2022': 1,104.2,
+	'2023': 1,372.8
 };
 var ARRs = {
-	'2021': 944.8,
-	'2022': 1196.3
+	'2022': 1,195.3,
+	'2023': 1,494.9
 };
 var uFCF = {
-	'2021': 293.1,
-	'2022': 317
+	'2022': 332.2 ,
+	'2023': 341.2
 };
-var net_debt = 371.125-387.218;
+var net_debt = 311.125-408.723;
 
 var TB_preIPO_shares = 194.425163;
 var transactions = [
