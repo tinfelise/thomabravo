@@ -328,6 +328,11 @@ function get_revenue_multiples (enterprise_value) {
 			html += create_revenue_multiple (enterprise_value, uFCF[i], i, 'uFCF');
 		};
 	};
+	if (typeof FCF !== 'undefined') {
+		for (i in FCF) {
+			html += create_revenue_multiple (enterprise_value, FCF[i], i, 'FCF');
+		};
+	};
 	$('#revenues_multiples').html(html);
 };
 function get_enterprise_value (market_cap) {
