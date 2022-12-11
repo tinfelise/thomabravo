@@ -165,9 +165,12 @@ function display_update_time (date, time, open) {
 };
 function display_previous_day_of_week (date, format) {
 	var days_ago = moment(date, format).diff(moment(), 'days');
-	var weekday = 'yesterday';
-	if (days_ago != -1) {
-		weekday = moment(date, format).format('dddd');
+	if ( isNaN(days_ago) == false ) {
+		var weekday = 'yesterday';
+		if (days_ago != -1) {
+			weekday = moment(date, format).format('dddd');
+		};
+		$('#previous_weekday').html('from ' + weekday);	
 	};
 	$('#previous_weekday').html('from ' + weekday);
 };
