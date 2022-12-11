@@ -606,7 +606,7 @@ function exitFullscreen() {
 	if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
 		$('html').removeClass('fullscreen');
 		stop_refreshing();
-	}
+	};
 };
 
 var refresh_interval;
