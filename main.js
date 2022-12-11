@@ -38,8 +38,6 @@ function get_market_status (ticker) {
 function choose_price (market_status) {
 	if (market_status == 'open') {
 		get_last_trade(ticker);
-	} else if (market_status == 'closed') {
-		get_stock_price(ticker);
 	} else {
 		get_stock_price(ticker);
 	};
