@@ -212,7 +212,6 @@ function display_previous_day_of_week (date, format) {
 		};
 		$('#previous_weekday').html('from ' + weekday);	
 	};
-	$('#previous_weekday').html('from ' + weekday);
 };
 
 function parse_stock_data (data) {
