@@ -14,6 +14,37 @@ var current_shares, fdso;
 var alphavantage_key = 'B67FR48WBLNMCCHH';
 var polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
 
+function get_polygon_stock_snapshot (ticker) { // accepts comma separated tickers
+	var path = 'https://api.polygon.io';
+	path += '/v2/snapshot/locale/us/markets/stocks/tickers/' + ticker + '?apikey=' + polygon_key;
+	var settings = {
+		url: path,
+		beforeSend: function () {
+			console.log('Fetching snapshot...')
+			console.log(path);
+		},
+		error: function () {
+			no_data();
+		},
+		success: function (data) {
+			parse_polygon_snapshot(data);
+		}
+	};
+	$.ajax(settings)
+};
+function parse_polygon_snapshot (snapshot) {
+	console.log(snapshot);
+	current_price = snapshot.ticker.day.c;
+	previous_closing_price = snapshot.ticker.prevDay.c;
+	var nano_to_milli = 1000000;
+	var last_updated = snapshot.ticker.updated;
+		last_updated = Math.round(last_updated / nano_to_milli);
+	// display_previous_day_of_week(last_updated, 'x');
+	$('#ticker').html(ticker);
+	display_updated_time_simple(last_updated, 'x');
+	do_the_math (current_price, previous_closing_price);
+};
+
 function get_market_status (ticker) {
 	$('#ticker').html(ticker);
 	var path = 'https://api.polygon.io/v1/marketstatus/now' +
@@ -136,7 +167,8 @@ function reset () {
 function reload (clip) {
 	$('body').removeClass('loaded');
 	reset();
-	get_market_status(ticker);
+	// get_market_status(ticker);
+	get_polygon_stock_snapshot(ticker);
 	if (clip) {
 		play_sound(clip);
 	};
@@ -161,6 +193,14 @@ function display_update_time (date, time, open) {
 		}
 		html += moment(date, 'YYYY-MM-DD').format('MMM. Do');
 	};
+	$('#updated').html(html);
+};
+function display_updated_time_simple (timestamp, format, market_status) {
+	var html = 'As of ';
+	if (market_status == 'closed') {
+		html += 'closing ';
+	};
+	html += moment(timestamp, format).format('MMM. Do h:mma z');
 	$('#updated').html(html);
 };
 function display_previous_day_of_week (date, format) {
@@ -413,7 +453,7 @@ function do_the_math (current_price, price_yesterday) {
 	check_IPO_price(current_price);
 	check_for_MoM_slider();
 	check_for_disclaimer();
-	create_chart(time_series_data,time_series_dates);
+	// create_chart(time_series_data,time_series_dates);
 };
 
 function get_target_price (target_MoM, label, output) {
@@ -557,7 +597,8 @@ function check_for_tests (obj) {
 		window[test].apply(null,input);
 	};
 	if (test != 'dummy_data') {
-		get_time_series_data(ticker);
+		// get_time_series_data(ticker);
+		get_polygon_stock_snapshot(ticker);
 	};
 };
 
