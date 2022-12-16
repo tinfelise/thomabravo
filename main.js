@@ -68,7 +68,7 @@ function parse_real_time_data (closing_data, last_trade) {
 	do_the_math (current_price, previous_closing_price);
 };
 function get_last_trade (ticker) {
-	var path = 'https://api.polygon.io/v1/last/stocks/' + ticker +
+	var path = 'https://api.polygon.io/v2/last/trade/' + ticker +
 	'?apikey=' + polygon_key;
 	var settings = {
 		url: path,
@@ -80,8 +80,8 @@ function get_last_trade (ticker) {
 			no_data();
 		},
 		success: function (data) {
-			console.log('Last traded at $' + data.last.price + '.');
-			get_closing_price(ticker, data.last.price);
+			console.log('Last traded at $' + data.results.p + '.');
+			get_closing_price(ticker, data.results.p);
 		}
 	};
 	$.ajax(settings)
