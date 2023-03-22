@@ -42,19 +42,31 @@ var share_count_build = {
 	'Greenshoe Shares': 0
 };
 
-var revenues = {
-	'2022': 1084,
-	'2023': 1270
-};
-var ARRs = {
-	'2022': 1100,
-	'2023': 1350
-};
-var FCF = {
-	'2022': 318,
-	'2023': 350
-};
-var net_debt = 214.947-563.43;
+var revenue_multiples = [
+	{
+		'type': 'ARR',
+		'years': {
+			'2023': 1219,
+			'2024': 1451
+		}
+	},
+	{
+		'type': 'Cash EBITDA',
+		'years': {
+			'2023': 425,
+			'2024': 498
+		}
+	},
+	{
+		'type': 'FCF',
+		'years': {
+			'2023': 282,
+			'2024': 342
+		}
+	}
+];
+
+var net_debt = -400;
 
 var TB_preIPO_shares = 194.425163;
 var transactions = [
@@ -295,5 +307,11 @@ var transactions = [
 		'date': '12/9/20',
 		'amount': 10.78*40.15,
 		'shares': -10.78
+	},
+	{
+		'event':'Realization',
+		'date': '2/7/23',
+		'amount': 14.7735*45.15,
+		'shares': -14.7735
 	}
 ];

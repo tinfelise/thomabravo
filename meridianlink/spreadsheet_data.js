@@ -18,14 +18,22 @@ var share_count_build = {
 	'Greenshoe Shares': 0
 };
 
-var revenues = {
-	'2021': 252.4,
-	'2022': 281.2
-};
-var ebitdas = {
-	'2021': 109.7,
-	'2022': 114.8
-};
+var revenue_multiples = [
+	{
+		'type': 'Revenues',
+		'years': {
+			'2021': 252.4,
+			'2022': 281.2
+		}
+	},
+	{
+		'type': 'EBITDA',
+		'years': {
+			'2021': 109.7,
+			'2022': 114.8
+		}
+	}
+];
 
 var net_debt = 361;
 

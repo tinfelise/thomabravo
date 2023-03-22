@@ -41,10 +41,23 @@ var ebitdas = {
 	'2021': 453.75,
 	'2022': 512.65
 };
-var uFCF = {
-	'2021': ebitdas[2021]*0.9,
-	'2022': ebitdas[2022]*0.9
-};
+var revenue_multiples = [
+	{
+		'type': 'EBITDA',
+		'years': {
+			'2021': ebitdas[2021],
+			'2022': ebitdas[2022]
+		}
+	},
+	{
+		'type': 'uFCF',
+		'years': {
+			'2021': ebitdas[2021]*0.9,
+			'2022': ebitdas[2022]*0.9
+		}
+	}
+];
+
 var net_debt = 1925.325-374.352;
 
 var TB_preIPO_shares = 112.129322730121;

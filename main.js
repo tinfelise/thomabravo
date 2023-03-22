@@ -45,6 +45,30 @@ function parse_polygon_snapshot (snapshot) {
 	do_the_math (current_price, previous_closing_price);
 };
 
+function get_stock_close_by_date (ticker, date) {
+	var path = 'https://api.polygon.io';
+	path += '/v1/open-close/' + ticker + '/' + date + '?apikey=' + polygon_key;
+	var settings = {
+		url: path,
+		beforeSend: function () {
+			console.log('Fetching close on ' + moment(date, 'x').format('M/D/YYYY') );
+			console.log(path);
+		},
+		error: function () {
+			no_data();
+		},
+		success: function (data) {
+			parse_close_by_date(data, date);
+		}
+	};
+	$.ajax(settings)
+};
+function parse_close_by_date (data, date) {
+	var close = data.close;
+	var date = date;
+	console.log(close + ' ' + date);
+};
+
 function get_market_status (ticker) {
 	$('#ticker').html(ticker);
 	var path = 'https://api.polygon.io/v1/marketstatus/now' +
@@ -345,32 +369,11 @@ function create_revenue_multiple (enterprise_value, amount, year, type) {
 		+ '</h3>';
 	return output;
 };
-function get_revenue_multiples (enterprise_value) {
+function get_revenue_multiples (enterprise_value, all_multiples) {
 	var html = '';
-	// why doesn'ts if (revenues) work?!?
-	if (typeof revenues !== 'undefined') {
-		for (i in revenues) {
-			html += create_revenue_multiple (enterprise_value, revenues[i], i, 'Revenues');
-		};
-	};
-	if (typeof ebitdas !== 'undefined') {
-		for (i in ebitdas) {
-			html += create_revenue_multiple (enterprise_value, ebitdas[i], i, 'EBITDA');
-		};
-	};
-	if (typeof ARRs !== 'undefined') {
-		for (i in ARRs) {
-			html += create_revenue_multiple (enterprise_value, ARRs[i], i, 'ARR');
-		};
-	};
-	if (typeof uFCF !== 'undefined') {
-		for (i in uFCF) {
-			html += create_revenue_multiple (enterprise_value, uFCF[i], i, 'uFCF');
-		};
-	};
-	if (typeof FCF !== 'undefined') {
-		for (i in FCF) {
-			html += create_revenue_multiple (enterprise_value, FCF[i], i, 'FCF');
+	for (multiple in all_multiples) {
+		for (year in all_multiples[multiple].years) {
+			html += create_revenue_multiple (enterprise_value, all_multiples[multiple].years[year], year, all_multiples[multiple].type);
 		};
 	};
 	$('#revenues_multiples').html(html);
@@ -378,7 +381,7 @@ function get_revenue_multiples (enterprise_value) {
 function get_enterprise_value (market_cap) {
 	var enterprise_value = market_cap + (net_debt * million);
 	$('#enterprise_value').html(numeral(enterprise_value).format('($0.00a)') + ' <span>Enterprise Value</span>');
-	get_revenue_multiples(enterprise_value);
+	get_revenue_multiples(enterprise_value, revenue_multiples);
 };
 function get_market_cap (RSUs) {
 	fdso = 0;

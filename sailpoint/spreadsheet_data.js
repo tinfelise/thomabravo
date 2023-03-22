@@ -23,10 +23,15 @@ var share_count_build = {
 	'Greenshoe Shares': 0
 };
 
-var revenues = {
-	'2019': 280,
-	'2020': 325.73
-};
+var revenue_multiples = [
+	{
+		'type': 'Revenues',
+		'years': {
+			'2019': 280,
+			'2020': 325.73
+		}
+	}
+];
 var net_debt = -93.049-6.303;
 
 var TB_preIPO_shares = 56.723354+0.00024;

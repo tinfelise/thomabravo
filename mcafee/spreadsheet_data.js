@@ -7,18 +7,34 @@ var share_count_build = {
 	'Greenshoe Shares': 0
 };
 
-var revenues = {
-	'2021': 1798.5,
-	'2022': 1971.6 
-};
 var ebitdas = {
 	'2021': 835.5,
 	'2022': 973.5
 };
-var uFCF = {
-	'2021': ebitdas[2021] * .9,
-	'2022': ebitdas[2022] * .9
-};
+var revenue_multiples = [
+	{
+		'type': 'Revenues',
+		'years': {
+			'2021': 1798.5,
+			'2022': 1971.6
+		}
+	},
+	{
+		'type': 'EBITDA',
+		'years': {
+			'2021': ebitdas[2021],
+			'2022': ebitdas[2022]
+		}
+	},
+	{
+		'type': 'uFCF',
+		'years': {
+			'2021': ebitdas[2021] * .9,
+			'2022': ebitdas[2022] * .9
+		}
+	}
+];
+
 var net_debt = 3991-1000-420;
 
 var options_build = [
