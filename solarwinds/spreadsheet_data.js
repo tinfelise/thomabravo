@@ -4,7 +4,7 @@ var ticker = 'SWI';
 var MoM_slider = {
 	'min': 1.5,
 	'max': 3,
-	'increment': .25
+	'increment': 0.25
 };
 
 var options_build = [

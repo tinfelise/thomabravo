@@ -9,7 +9,7 @@ var IPO = {
 var MoM_slider = {
 	'min': 5.5,
 	'max': 10,
-	'increment': .5
+	'increment': 0.5
 };
 
 var share_count_build = {

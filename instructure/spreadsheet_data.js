@@ -9,7 +9,7 @@ var IPO = {
 var MoM_slider = {
 	'min': 2,
 	'max': 6,
-	'increment': .25
+	'increment': 0.25
 };
 
 var options_build = [
