@@ -278,7 +278,7 @@ var transactions = [
 	{
 		'event':'Realization',
 		'date': '6/1/20',
-		'amount': 724.67592155
+		'amount': 724.67592155+10
 	},
 	{
 		'event':'Realization',
@@ -322,8 +322,38 @@ var transactions = [
 	},
 	{
 		'event':'Realization',
-		'date': '11/7/23',
-		'amount': 455,
+		'date': '11/8/23',
+		'amount': 455.234901,
 		'shares': -9.811097
+	},
+	{
+		'event':'Realization',
+		'date': '11/17/23',
+		'amount': 119.532757,
+		'shares': -2.576137
+	},
+	{
+		'event':'Realization',
+		'date': '11/17/23',
+		'amount': 500,
+		'shares': -10
+	},
+	{
+		'event':'Realization',
+		'date': '11/21/23',
+		'amount': 75,
+		'shares': -1.5
+	},
+	{
+		'event':'Realization',
+		'date': '12/1/23',
+		'amount': 131.85835,
+		'shares': -2.637167
+	},
+	{
+		'event':'Realization',
+		'date': '12/1/23',
+		'amount': 19.77865,
+		'shares': -0.395573
 	}
 ];
