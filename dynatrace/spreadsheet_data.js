@@ -355,5 +355,17 @@ var transactions = [
 		'date': '12/1/23',
 		'amount': 19.77865,
 		'shares': -0.395573
+	},
+	{
+		'event':'Realization',
+		'date': '2/12/24',
+		'amount': 749,
+		'shares': -14.242929
+	},
+	{
+		'event':'Realization',
+		'date': '2/12/24',
+		'amount': 150,
+		'shares': -2.847726
 	}
 ];
