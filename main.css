@@ -458,6 +458,34 @@ h3 span:last-of-type {
 	margin-top: 2rem;
 }
 
+#news a {
+	display: flex;
+	flex-wrap: wrap;
+	white-space: wrap;
+	border-bottom: 1px solid;
+}
+#news a:last-of-type {
+	border-bottom: none;
+}
+#news h3,
+#news span {
+	width: 100%;
+}
+#news h3 {
+	font-size: 1rem;
+	/* margin: 0 0 0.5rem 0; */
+}
+#news span,
+#news p {
+	font-size: .75rem;
+}
+#news p {
+	flex: 1;
+}
+#news img {
+	width: 100px
+}
+
 footer {
 	position: fixed;
     display: flex;
