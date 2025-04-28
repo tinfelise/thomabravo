@@ -42,18 +42,14 @@ function parse_polygon_news (news, ticker) {
 		const IPODateUTC = moment(data.IPO.date, 'MM/DD/YY').utc().toISOString();
 		for (i in news.results) {
 			var article = news.results[i];
-				console.log(article.published_utc);
-				if (article.published_utc >= IPODateUTC) {
-					create_article(article, ticker);
-				};
+			if (article.published_utc >= IPODateUTC) {
+				create_article(article, ticker);
+			};
 		};
 	};
 };
 function create_article (article, ticker) {
 	var html = '<a href="' + article.article_url + '" target="_blank">';
-	// if (article.publisher.logo_url) {
-	// 	html += '<img src="' + article.publisher.logo_url + '" alt="' + article.publisher.name + '">';
-	// };
 	html +='<h3>' + article.title + '</h3>';
 	html += '<span>' + article.author + ' | ' + article.publisher.name + ' | ' + moment(article.published_utc).format("MMM D, 'YY") + '</span>';
 	if (article.insights) {
