@@ -17,7 +17,7 @@ var polygon_path = 'https://api.polygon.io';
 
 function get_polygon_news (ticker, count) {
 	var path = polygon_path + '/v2/reference/news?ticker=' + ticker;
-		path += '&limit=' + count + '&sort=published_utc&order=asc' + '&apikey=' + polygon_key;
+		path += '&limit=' + count + '&sort=published_utc&order=desc' + '&apikey=' + polygon_key;
 	var settings = {
 		url: path,
 		beforeSend: function () {
@@ -38,9 +38,14 @@ function parse_polygon_news (news, ticker) {
 	if (news.results.length > 0) {
 		var html = '<h2>News</h2>';
 		$('#news').append(html);
+		
+		const IPODateUTC = moment(data.IPO.date, 'MM/DD/YY').utc().toISOString();
 		for (i in news.results) {
 			var article = news.results[i];
-			create_article(article, ticker);
+				console.log(article.published_utc);
+				if (article.published_utc >= IPODateUTC) {
+					create_article(article, ticker);
+				};
 		};
 	};
 };
@@ -50,7 +55,7 @@ function create_article (article, ticker) {
 	// 	html += '<img src="' + article.publisher.logo_url + '" alt="' + article.publisher.name + '">';
 	// };
 	html +='<h3>' + article.title + '</h3>';
-	html += '<span>' + article.author + ' | ' + article.publisher.name + '</span>';
+	html += '<span>' + article.author + ' | ' + article.publisher.name + ' | ' + moment(article.published_utc).format("MMM D, 'YY") + '</span>';
 	if (article.insights) {
 		for (ins in article.insights) {
 			var insight = article.insights[ins];
