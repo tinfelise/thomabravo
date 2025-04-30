@@ -1,4 +1,5 @@
-import { PE } from './finance.js';
+import { PE } from '../src/finance.js';
+import { UI } from '../src/ui.js';
 
 const finance = new Finance();
 const million = 1000000;

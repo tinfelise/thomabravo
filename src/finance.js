@@ -1,6 +1,5 @@
 const million = 1000000;
-
-export const PE = {
+export const PE = {    
     get_current_shares (shares) {
         let total_shares = 0; // do I want to make this a global variable? needed for MOM slider
         for (let i in shares) {
