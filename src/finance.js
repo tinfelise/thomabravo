@@ -1,4 +1,4 @@
-const million = 1000000;
+import { constants } from './constants.js';
 export const PE = {    
     get_current_shares (shares) {
         let total_shares = 0; // do I want to make this a global variable? needed for MOM slider
@@ -14,7 +14,7 @@ export const PE = {
         $('#TB_perc_stake').html(stake_html);
     
         if (TB_preIPO_shares) {
-            const perc_realized = 1 - ( TB_shares/ (TB_preIPO_shares * million) );
+            const perc_realized = 1 - ( TB_shares/ (TB_preIPO_shares * constants.million) );
             const perc_realized_html = numeral(perc_realized).format('0.0%') + ' <span>Realized</span>';
             $('#TB_perc_shares_realized').html(perc_realized_html);
         };

@@ -1,16 +1,16 @@
-import { PE } from '../src/finance.js';
-import { UI } from '../src/ui.js';
+import { PE } from './src/finance.js';
+import { UI } from './src/ui.js';
+import { constants } from './src/constants.js';
 
 const finance = new Finance();
-const million = 1000000;
 
-var stock_data = {};
-var time_series_data = {};
-var time_series_dates = {};
+let stock_data = {};
+let time_series_data = {};
+let time_series_dates = {};
 let current_price, previous_closing_price;
 
 let investment, realized, unrealized;
-var all_realizations = [];
+let all_realizations = [];
 
 let refresh_interval;
 
@@ -71,7 +71,7 @@ function parse_polygon_snapshot (snapshot, ticker, market_status) {
 	current_price = snapshot.ticker.day.c;
 	previous_closing_price = snapshot.ticker.prevDay.c;
 	let last_updated = snapshot.ticker.updated;
-		last_updated = Math.round(last_updated / million);
+		last_updated = Math.round(last_updated / constants.million);
 	$('#ticker').html(ticker);
 	display_updated_time(last_updated, 'x', market_status);
 	do_the_math (current_price, previous_closing_price);
@@ -179,7 +179,7 @@ function get_IRR (realizations) {
 	var amounts = [];
 	var dates = [];
 	for (i in realizations) {
-		amounts[i] = realizations[i].amount * million;
+		amounts[i] = realizations[i].amount * constants.million;
 		dates[i] = return_date('MM/DD/YY',realizations[i].date);
 	};
 	var XIRR = finance.XIRR(amounts, dates) / 100;
@@ -222,14 +222,14 @@ function sum_transactions (all_transactions) {
 	for (i in all_transactions) {
 		var value = all_transactions[i].amount
 		if (value > 0) {
-			realized += value * million;
+			realized += value * constants.million;
 		} else {
-			investment += -value * million;
+			investment += -value * constants.million;
 		};
 
 		var shares = all_transactions[i].shares;
 		if (shares) {
-			current_shares += shares * million;
+			current_shares += shares * constants.million;
 		};
 	};
 	get_TB_shares_value(current_shares);
@@ -244,7 +244,7 @@ function calc_unrealized(share_value) {
 	var IPO_mark = {
 		'event': 'IPO Mark',
 		'date': moment().format('MM/DD/YY'),
-		'amount': (share_value / million)
+		'amount': (share_value / constants.million)
 	};
 	add_new_realizations(transactions);
 	add_new_realizations([IPO_mark]);
@@ -260,11 +260,11 @@ function add_new_realizations (array) {
 
 // Valuation Metrics & Revenue Multiples
 function get_market_cap (price, fdso) {
-	const market_cap = fdso * price * million;
+	const market_cap = fdso * price * constants.million;
 	return market_cap;
 };
 function get_enterprise_value (market_cap, net_debt) {
-	const enterprise_value = market_cap + (net_debt * million);
+	const enterprise_value = market_cap + (net_debt * constants.million);
 	return enterprise_value;
 };
 function display_valuation_metrics (price, fdso, net_debt, multiples) {
@@ -284,7 +284,7 @@ function get_revenue_multiples (enterprise_value, all_multiples) {
 	$('#revenues_multiples').html(html);
 };
 function create_revenue_multiple (enterprise_value, amount, year, type) {
-	const multiple = enterprise_value / (amount * million);
+	const multiple = enterprise_value / (amount * constants.million);
 	const output = '<h3 class="multiple">'
 		+ numeral(multiple).format('0.00') + 'x'
 		+ ' <span>' + year + ' ' + type +'</span>'
@@ -321,7 +321,7 @@ function do_the_math (current_price, price_yesterday) {
 };
 
 function get_money_types(transactions) {
-    const money_types = [...new Set(transactions.map(t => t.money))];\
+    const money_types = [...new Set(transactions.map(t => t.money))];
 
 	if (money_types.length > 1) {
 		console.log('Multiple money types found.');
@@ -476,7 +476,7 @@ function parse_time_series_data (ticker, data) {
 		time_series_data = data['Time Series (Daily)'];
 		time_series_dates = Object.keys(time_series_data);
 		console.log(time_series_data);
-		create_chart(time_series_data,time_series_dates);
+		UI.create_chart(time_series_data,time_series_dates);
 	} else {
 		console.log(data);
 	};
@@ -489,67 +489,6 @@ function get_closing_prices (data, index) {
 		closing_prices.push(closing_price);
 	};
 	return closing_prices;
-};
-function create_chart (dataset, data_labels) {
-	$('#returns_over_time').remove();
-	var html = '<canvas id="returns_over_time" width="400" height="400"></canvas>'
-	$('#total_gain').append(html);
-	
-	var ctx = $('#returns_over_time');
-	var chart = new Chart(ctx, {
-		type: 'line',
-		data: {
-			labels: data_labels,
-			datasets: [{
-				label: 'Stock Price',
-				data: get_closing_prices(dataset, data_labels),
-				borderColor: 'rgba(255, 255, 255, .75)',
-				backgroundColor: 'rgba(0,0,0,0)'
-			}]
-		},
-		options: {
-			legend: {
-				display: false
-			},
-			scales: {
-				xAxes: [{
-					type: 'time',
-					time: {
-					    unit: 'month'
-					},
-					ticks: {
-						fontColor: 'rgba(255, 255, 255, .5)',
-						fontFamily: "'Akkurat', -apple-system, BlinkMacSystemFont, Helvetica, sans-serif",
-						fontSize: '16'
-					},
-					gridLines: {
-						display: false
-					}
-				}],
-				yAxes: [{
-				    ticks: {
-				        // Include a dollar sign in the ticks
-				        callback: function(value, index, values) {
-				            return '$' + value;
-				        },
-				        fontColor: 'rgba(255, 255, 255, .5)',
-				        fontSize: '16'
-				    },
-				    gridLines: {
-				        display: false
-				    }
-				}]
-	        },
-			tooltips: {
-				enabled: false
-			},
-			elements: {
-			    point:{
-			        radius: 0
-			    }
-			}
-		}
-	});
 };
 
 // News
@@ -662,23 +601,6 @@ function parseURLs() {
 };
 
 // UI Events
-function reset () {
-	all_realizations = [];
-	$('#MoM_targets').remove();
-};
-function reload (clip) {
-	$('body').removeClass('loaded');
-	reset();
-	get_market_status(data.ticker);
-	if (clip) {
-		play_sound(clip);
-	};
-};
-function play_sound(clip) {
-	var audioElement = document.createElement('audio');
-	audioElement.setAttribute('src', clip);
-	audioElement.play();
-};
 
 function toggleFullScreen() {
 	var doc = window.document;
@@ -706,7 +628,7 @@ function exitFullscreen() {
 
 function auto_refresh(seconds) {
 	var time = seconds * 1000;
-	refresh_interval = setInterval(reload, time); 
+	refresh_interval = setInterval(UI.reload, time); 
 };
 function stop_refreshing() {
 	clearInterval(refresh_interval);
@@ -717,9 +639,11 @@ function bindUIEvents() {
 	document.addEventListener('mozfullscreenchange', exitFullscreen, false);
 	document.addEventListener('fullscreenchange', exitFullscreen, false);
 	document.addEventListener('MSFullscreenChange', exitFullscreen, false);
-	document.getElementById('reload').addEventListener('click', () => reload(data.sound));
+	document.getElementById('reload').addEventListener('click', () => UI.reload(data.sound));
 	document.getElementById('present').addEventListener('click', toggleFullScreen);
 	window.PE = PE;
+	window.UI = UI;
+	window.constants = constants;
 	window.get_last_trade = get_last_trade;
 };
 
@@ -728,3 +652,5 @@ function initApp() {
 	bindUIEvents();
 };
 initApp();
+
+export { get_closing_prices, get_market_status };
