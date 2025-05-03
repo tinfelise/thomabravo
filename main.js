@@ -199,9 +199,9 @@ function reload (clip) {
 };
 
 function no_data () {
-	console.log('AlphaVantage did not return data.');
-	$('main').addClass('loaded');
-	$('#stockData .data').html('<h1>Data unavailable</h1><span>Please try again later</span>');
+	console.log('Polygon did not return data.');
+	$('body').addClass('loaded');
+	$('#stockData .data').html('<h1>Data Unavailable</h1><span>Please try again later.</span>');
 };
 
 function display_update_time (date, time, open) {

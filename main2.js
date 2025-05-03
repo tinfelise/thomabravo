@@ -12,6 +12,8 @@ let current_price, previous_closing_price;
 let investment, realized, unrealized;
 let all_realizations = [];
 
+let AppState = [];
+
 let refresh_interval;
 
 // var current_shares;
@@ -73,7 +75,7 @@ function parse_polygon_snapshot (snapshot, ticker, market_status) {
 	let last_updated = snapshot.ticker.updated;
 		last_updated = Math.round(last_updated / constants.million);
 	$('#ticker').html(ticker);
-	display_updated_time(last_updated, 'x', market_status);
+	UI.display_updated_time(last_updated, 'x', market_status);
 	do_the_math (current_price, previous_closing_price);
 };
 
@@ -119,7 +121,7 @@ function parse_real_time_data (closing_data, last_trade) {
 	current_price = last_trade;
 	previous_closing_price = closing_data.c;
 	// display_updated_time(closing_data.t, 'x', 'open'); //not working because previous day of week is not correct
-	display_previous_day_of_week(closing_data.t, 'x');
+	UI.display_previous_day_of_week(closing_data.t, 'x');
 	do_the_math (current_price, previous_closing_price);
 };
 function no_data () {
@@ -143,24 +145,6 @@ function no_data () {
 // 	};
 // 	$('#updated').html(html);
 // };
-function display_updated_time (timestamp, format, market_status) {
-	var html = 'As Of ';
-	if (market_status == 'closed') { // can also add extended hours
-		html += 'Closing ';
-	};
-	html += moment(timestamp, format).format('MMM.\u00A0Do\u00A0h:mma\u00A0z');
-	$('#updated').html(html);
-};
-function display_previous_day_of_week (date, format) {
-	var days_ago = moment(date, format).diff(moment(), 'days');
-	if ( isNaN(days_ago) == false ) {
-		var weekday = 'yesterday';
-		if (days_ago != -1) {
-			weekday = moment(date, format).format('dddd');
-		};
-		$('#previous_weekday').html('from ' + weekday);	
-	};
-};
 
 function percentage_change (current, previous) {
 	const diff = current - previous;
@@ -180,10 +164,10 @@ function get_IRR (realizations) {
 	var dates = [];
 	for (i in realizations) {
 		amounts[i] = realizations[i].amount * constants.million;
-		dates[i] = return_date('MM/DD/YY',realizations[i].date);
+		dates[i] = constants.return_date('MM/DD/YY',realizations[i].date);
 	};
 	var XIRR = finance.XIRR(amounts, dates) / 100;
-	$('#IRR').html( numeral(XIRR).format('0,0[.]0%') + ' <span>IRR</span>' );
+	$('.IRR').html( numeral(XIRR).format('0,0[.]0%') + ' <span>IRR</span>' );
 };
 function order_events (events, format) {
 	events = events.sort(function (a, b) {
@@ -204,16 +188,16 @@ function total_gains_MoM (realizations) {
 	const total_MoM = calc_MoM(total_returns);
 	const total_gain = total_returns - investment;
 
-	$('#realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
-	$('#realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
+	$('.realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
+	$('.realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-	$('#unrealized').html('<h2>' + numeral(unrealized).format('$0,0.0a') + '</h2>');
-	$('#unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
+	$('.unrealized').html('<h2>' + numeral(unrealized).format('$0,0.0a') + '</h2>');
+	$('.unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-	$('#total_returns').html('<h2>' + numeral(total_returns).format('$0,0.0a') + '</h2>');
-	$('#total_returns').append('<div class="MoM"><span>' + numeral( calc_MoM(total_returns) ).format('0[.]00') + 'x</span> MoM</div>');
+	$('.total_returns').html('<h2>' + numeral(total_returns).format('$0,0.0a') + '</h2>');
+	$('.total_returns').append('<div class="MoM"><span>' + numeral( calc_MoM(total_returns) ).format('0[.]00') + 'x</span> MoM</div>');
 
-	$('#total_gain label').html( numeral(total_gain).format('$0,0.0a') );
+	$('.total_gain label').html( numeral(total_gain).format('$0,0.0a') );
 };
 function sum_transactions (all_transactions) {
 	realized = 0;
@@ -236,7 +220,7 @@ function sum_transactions (all_transactions) {
 };
 function get_TB_shares_value (shares) {
 	const TB_shares_value = shares * current_price;
-	$('#TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
+	$('.TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
 	calc_unrealized(TB_shares_value);
 };
 function calc_unrealized(share_value) {
@@ -309,52 +293,31 @@ function create_revenue_multiple (enterprise_value, amount, year, type) {
 function do_the_math (current_price, price_yesterday) {
 	const compared_to_yesterday = current_price - price_yesterday;
 	const compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
-	display_current_price(current_price, compared_to_yesterday, compared_to_yesterday_perc);
+	UI.display_current_price(current_price, compared_to_yesterday, compared_to_yesterday_perc);
 	check_IPO_price(current_price); 
 	display_valuation_metrics(current_price, data.FDSO, data.net_debt, data.multiples);
 	// below should be broken out by ownership group
-	get_money_types(data.transactions);
-	display_ownership_metrics(data.current_shares);
-	// total_gains_MoM(data.transactions); 
-	// check_for_MoM_slider(); 
+	const money_types = get_money_types(data.transactions);
+	const ownership_metrics = PE.get_ownership_metrics(current_price, data);
+	AppState.push(ownership_metrics);
+	UI.add_thoma_section(ownership_metrics.group, ownership_metrics);
+	if (money_types.length > 1) {
+		for (let type in money_types) {
+			const group = money_types[type];
+			const subgroup_metrics = PE.get_ownership_metrics(current_price, data, group);
+			AppState.push(subgroup_metrics);
+			UI.add_thoma_section(subgroup_metrics.group, subgroup_metrics);
+		};
+	};
 	check_for_disclaimer();
 };
 
 function get_money_types(transactions) {
-    const money_types = [...new Set(transactions.map(t => t.money))];
-
+    const money_types = [...new Set(transactions.map(t => t.group))];
 	if (money_types.length > 1) {
-		console.log('Multiple money types found.');
+		UI.add_group_nav(money_types);
 	};
     return money_types;
-};
-
-function display_ownership_metrics (shares) {
-	PE.get_current_shares(shares); 
-	const shares_value = PE.get_shares_value(shares, current_price);
-	display_shares_value(shares_value);
-	// calc_unrealized(TB_shares_value);
-	// TB_perc_shares_realized
-	// IRR
-}
-function display_shares_value (shares_value) {
-	$('#TB_shares_value').html( numeral(shares_value).format('$0.0a') + ' <span>Value</span>' );
-}
-
-function display_current_price (price, daily_change, percent_change) {
-	let stock_class = 'up';
-	let icon = 'fa-chart-line';
-	if (daily_change < 0) {
-		stock_class = 'down';
-		icon = 'fa-chart-area';
-	};
-	$('body').addClass('loaded');
-	$('#current_price').html( numeral(price).format('$0,0.00') );
-	$('#price_changes').addClass(stock_class);
-	$('#price_changes svg').remove();
-	$('#price_changes').prepend('<i class="fas ' + icon + '"></i>');
-	$('#compared_to_yesterday').html( numeral(daily_change).format('$0,0[.]00') );
-	$('#compared_to_yesterday_perc').html('(' + percent_change + ')');
 };
 
 // IPO Price Comparison
@@ -368,62 +331,19 @@ function get_IPO_price (IPO, current_stock_price) {
 	const amounts = [-IPO.price, +current_price];
 	const dates = [return_date('M/D/YY',IPO.date),return_date()];
 	const XIRR = finance.XIRR(amounts, dates) / 100;
-	display_IPO_price(IPO.price, IPO_change, XIRR);
-};
-function display_IPO_price (price, change, IRR) {
-	let html = '<div id="IPO_change">';
-	if (change >= 0) {
-		html += 'Up ';
-	} else {
-		html += 'Down ';
-	};
-	html += numeral(Math.abs(change)).format('%0,0.0');
-	html += ' From ';
-	html += numeral(price).format('$0,0');
-	html += ' Initial Listing (';
-	html += numeral(IRR).format('%0,0.0');
-	html += ' IRR)</div>';
-	$('#IPO_change').remove();
-	$('#stockData > div:first-of-type').append(html);
+	UI.display_IPO_price(IPO.price, IPO_change, XIRR);
 };
 
-// MoM Target Price
-function check_for_MoM_slider () {
-	if ( typeof data.MoM_slider !== 'undefined') {
-		create_MoM_slider (data.MoM_slider['min'], data.MoM_slider['max'], data.MoM_slider['increment']);
-	};
-};
-function create_MoM_slider (min, max, increment) {
-	var starting_value = calc_target_price(min);
-		starting_value = numeral(starting_value).format('$0.00');
-	var html = "<form id='MoM_targets' oninput='get_target_price(MoM_range.value, target, price_required)'>";
-		html += '<p>Illustrative Share Price To Achieve MoM</p>';
-		html += "<span><output name='target' for='MoM_range'>" + min + "</output>x <span>MoM</span></span>";
-		html += "<input type='range' name='MoM_range' min='" + min + "' max='" + max + "' value='" + min + "' step='" + increment + "'>";
-		html += "<span><output name='price_required' for='MoM_range'>" + starting_value + "</output> <span>Target Price</span></span>"
-	$('#total_gain').append(html);
-};
-function calc_target_price (target_MoM) {
-	var equity = target_MoM * investment;
-	var trading_value = equity - realized;
-	var target_price = trading_value / current_shares;
-	return target_price;
-};
-function get_target_price (target_MoM, label, output) {
-	var target_price = calc_target_price(target_MoM);
-	label.value = target_MoM;
-	output.value = numeral(target_price).format('$0.00');
-};
+// function get_target_price (target_MoM, label, output) {
+// 	var target_price = calc_target_price(target_MoM);
+// 	label.value = target_MoM;
+// 	output.value = numeral(target_price).format('$0.00');
+// };
 
 // Disclaimer
-function add_disclaimer (disclaimer) {
-	$('#returns_disclaimer').remove();
-	var html = "<p id='returns_disclaimer' class='disclaimer'>" + disclaimer + '</p>';
-	$('#total_gain').append(html);	
-};
 function check_for_disclaimer () {
 	if ( typeof data.disclaimer != 'undefined') {
-		add_disclaimer (data.disclaimer);
+		UI.add_disclaimer (data.disclaimer);
 	};
 };
 
@@ -520,30 +440,10 @@ function parse_polygon_news (news, ticker) {
 		for (let i in news.results) {
 			const article = news.results[i];
 			if (article.published_utc >= IPODateUTC) {
-				create_article(article, ticker);
+				UI.create_article(article, ticker);
 			};
 		};
 	};
-};
-function create_article (article, ticker) {
-	var html = '<a href="' + article.article_url + '" target="_blank">';
-	html +='<h3>' + article.title + '</h3>';
-	html += '<span>' + article.author + ' | ' + article.publisher.name + ' | ' + moment(article.published_utc).format("MMM D, 'YY") + '</span>';
-	if (article.insights) {
-		for (let ins in article.insights) {
-			const insight = article.insights[ins];
-			if (insight.ticker == ticker && insight.sentiment != 'neutral') {
-				let sentiment = 'bear.svg';
-				if (insight.sentiment == 'positive') {
-					sentiment = 'bull.svg';
-				};
-				html += '<img src="../images/' + sentiment + '" alt="' + insight.sentiment + '">';
-				html += '<p>' + insight.sentiment_reasoning + '</p>';
-			};
-		};
-	};
-	html += '</a>';
-	$('#news').append(html);
 };
 
 // Tests
@@ -558,13 +458,12 @@ function dummy_data (tick, current, last, message) {
 	$('#ticker').html(tick);
 	$('header button').hide();
 	// display_update_time(today, time, open);
-	display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
+	UI.display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
 	do_the_math(current_price, previous_closing_price);
 	if (message) {
 		$('html').append('<div class="disclaimer">' + decodeURIComponent(message) + '</div>');
 	};
 };
-
 function check_for_tests (obj) {
 	var test = obj.test;
 	if (test) {
@@ -579,12 +478,12 @@ function check_for_tests (obj) {
 		window[test].apply(null,input);
 	};
 	if (test != 'dummy_data') {
+		UI.add_loader();
 		get_market_status(data.ticker);
 		get_time_series_data(data.ticker);
 		get_polygon_news(data.ticker, 100);
 	};
 };
-
 function parseURLs() {
 	let currentURL = window.location.href;
 		currentURL = currentURL.split('?')[1];
@@ -601,31 +500,6 @@ function parseURLs() {
 };
 
 // UI Events
-
-function toggleFullScreen() {
-	var doc = window.document;
-	var docEl = doc.documentElement;
-
-	var requestFullScreen = docEl.requestFullscreen || docEl.mozRequestFullScreen || docEl.webkitRequestFullScreen || docEl.msRequestFullscreen;
-	var cancelFullScreen = doc.exitFullscreen || doc.mozCancelFullScreen || doc.webkitExitFullscreen || doc.msExitFullscreen;
-
-	if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
-		requestFullScreen.call(docEl);
-		$('html').addClass('fullscreen');
-		auto_refresh(60);
-	}
-	else {
-		cancelFullScreen.call(doc);
-	}
-};
-
-function exitFullscreen() {
-	if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
-		$('html').removeClass('fullscreen');
-		stop_refreshing();
-	};
-};
-
 function auto_refresh(seconds) {
 	var time = seconds * 1000;
 	refresh_interval = setInterval(UI.reload, time); 
@@ -635,16 +509,36 @@ function stop_refreshing() {
 };
   
 function bindUIEvents() {
-	document.addEventListener('webkitfullscreenchange', exitFullscreen, false);
-	document.addEventListener('mozfullscreenchange', exitFullscreen, false);
-	document.addEventListener('fullscreenchange', exitFullscreen, false);
-	document.addEventListener('MSFullscreenChange', exitFullscreen, false);
+	document.addEventListener('webkitfullscreenchange', UI.exitFullscreen, false);
+	document.addEventListener('mozfullscreenchange', UI.exitFullscreen, false);
+	document.addEventListener('fullscreenchange', UI.exitFullscreen, false);
+	document.addEventListener('MSFullscreenChange', UI.exitFullscreen, false);
 	document.getElementById('reload').addEventListener('click', () => UI.reload(data.sound));
-	document.getElementById('present').addEventListener('click', toggleFullScreen);
+	document.getElementById('present').addEventListener('click', UI.toggleFullScreen);
+	bindMoM_slider();
 	window.PE = PE;
 	window.UI = UI;
 	window.constants = constants;
 	window.get_last_trade = get_last_trade;
+};
+function bindMoM_slider() {
+	document.getElementById('thoma').addEventListener('input', (e) => {
+		if (e.target && e.target.name === 'MoM_range') {
+			console.log('MoM_range', e.target.value);
+			const target_price = PE.calc_target_price(
+				e.target.value,
+				data.investment,
+				data.realized,
+				data.current_shares
+			);
+			// Update the output elements
+			const form = e.target.closest('form');
+			const targetOutput = form.querySelector('output[name="target"]');
+			const priceOutput = form.querySelector('output[name="price_required"]');
+			targetOutput.value = e.target.value;
+			priceOutput.value = numeral(target_price).format('$0.00');
+		}
+	});
 };
 
 function initApp() {
