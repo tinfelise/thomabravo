@@ -4,13 +4,13 @@ import { constants } from './src/constants.js';
 
 const finance = new Finance();
 
-let stock_data = {};
+// let stock_data = {};
 let time_series_data = {};
 let time_series_dates = {};
 let current_price, previous_closing_price;
 
-let investment, realized, unrealized;
-let all_realizations = [];
+// let investment, realized, unrealized;
+// let all_realizations = [];
 
 let AppState = [];
 
@@ -152,95 +152,88 @@ function percentage_change (current, previous) {
 	return numeral(percentage_change).format('0.0%');
 };
 
-function return_date (format, date_string) {
-	var date = moment(date_string, format);
-	var year = moment(date).format('YYYY');
-	var month = moment(date).format('MM');
-	var day = moment(date).format('DD');
-	return new Date(year, month, day);
-};
-function get_IRR (realizations) {
-	var amounts = [];
-	var dates = [];
-	for (i in realizations) {
-		amounts[i] = realizations[i].amount * constants.million;
-		dates[i] = constants.return_date('MM/DD/YY',realizations[i].date);
-	};
-	var XIRR = finance.XIRR(amounts, dates) / 100;
-	$('.IRR').html( numeral(XIRR).format('0,0[.]0%') + ' <span>IRR</span>' );
-};
-function order_events (events, format) {
-	events = events.sort(function (a, b) {
-    	return moment(a.date, format).format('x')
-    		.localeCompare(
-    			moment(b.date, format).format('x')
-			);
-	});
-};
-function calc_MoM (gains) {
-	return gains / investment;
-};
+// function get_IRR (realizations) {
+// 	var amounts = [];
+// 	var dates = [];
+// 	for (i in realizations) {
+// 		amounts[i] = realizations[i].amount * constants.million;
+// 		dates[i] = constants.return_date('MM/DD/YY',realizations[i].date);
+// 	};
+// 	var XIRR = finance.XIRR(amounts, dates) / 100;
+// 	$('.IRR').html( numeral(XIRR).format('0,0[.]0%') + ' <span>IRR</span>' );
+// };
+// function order_events (events, format) {
+// 	events = events.sort(function (a, b) {
+//     	return moment(a.date, format).format('x')
+//     		.localeCompare(
+//     			moment(b.date, format).format('x')
+// 			);
+// 	});
+// };
+// function calc_MoM (gains) {
+// 	return gains / investment;
+// };
 
-function total_gains_MoM (realizations) {
-	sum_transactions(transactions);
+// function total_gains_MoM (realizations) {
+// 	sum_transactions(transactions);
 	
-	const total_returns = realized + unrealized;
-	const total_MoM = calc_MoM(total_returns);
-	const total_gain = total_returns - investment;
+// 	const total_returns = realized + unrealized;
+// 	const total_MoM = calc_MoM(total_returns);
+// 	const total_gain = total_returns - investment;
 
-	$('.realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
-	$('.realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
+// 	$('.realized').html('<h2>' + numeral(realized).format('$0,0.0a') + '</h2>');
+// 	$('.realized').append('<div class="MoM"><span>' + numeral( calc_MoM(realized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-	$('.unrealized').html('<h2>' + numeral(unrealized).format('$0,0.0a') + '</h2>');
-	$('.unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
+// 	$('.unrealized').html('<h2>' + numeral(unrealized).format('$0,0.0a') + '</h2>');
+// 	$('.unrealized').append('<div class="MoM"><span>' + numeral( calc_MoM(unrealized) ).format('0[.]00') + 'x</span> MoM</div>');
 
-	$('.total_returns').html('<h2>' + numeral(total_returns).format('$0,0.0a') + '</h2>');
-	$('.total_returns').append('<div class="MoM"><span>' + numeral( calc_MoM(total_returns) ).format('0[.]00') + 'x</span> MoM</div>');
+// 	$('.total_returns').html('<h2>' + numeral(total_returns).format('$0,0.0a') + '</h2>');
+// 	$('.total_returns').append('<div class="MoM"><span>' + numeral( calc_MoM(total_returns) ).format('0[.]00') + 'x</span> MoM</div>');
 
-	$('.total_gain label').html( numeral(total_gain).format('$0,0.0a') );
-};
-function sum_transactions (all_transactions) {
-	realized = 0;
-	investment = 0;
-	current_shares = 0;
-	for (i in all_transactions) {
-		var value = all_transactions[i].amount
-		if (value > 0) {
-			realized += value * constants.million;
-		} else {
-			investment += -value * constants.million;
-		};
+// 	$('.total_gain label').html( numeral(total_gain).format('$0,0.0a') );
+// };
+// function sum_transactions (all_transactions) {
+// 	realized = 0;
+// 	investment = 0;
+// 	current_shares = 0;
+// 	for (i in all_transactions) {
+// 		var value = all_transactions[i].amount
+// 		if (value > 0) {
+// 			realized += value * constants.million;
+// 		} else {
+// 			investment += -value * constants.million;
+// 		};
 
-		var shares = all_transactions[i].shares;
-		if (shares) {
-			current_shares += shares * constants.million;
-		};
-	};
-	get_TB_shares_value(current_shares);
-};
-function get_TB_shares_value (shares) {
-	const TB_shares_value = shares * current_price;
-	$('.TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
-	calc_unrealized(TB_shares_value);
-};
-function calc_unrealized(share_value) {
-	unrealized = share_value;
-	var IPO_mark = {
-		'event': 'IPO Mark',
-		'date': moment().format('MM/DD/YY'),
-		'amount': (share_value / constants.million)
-	};
-	add_new_realizations(transactions);
-	add_new_realizations([IPO_mark]);
-	order_events(all_realizations, 'MM/DD/YY');
-	get_IRR(all_realizations);
-};
-function add_new_realizations (array) {
-	for (obj in array) {
-		all_realizations.push(array[obj]);
-	};
-	order_events(all_realizations, 'MM/DD/YY');
-};
+// 		var shares = all_transactions[i].shares;
+// 		if (shares) {
+// 			current_shares += shares * constants.million;
+// 		};
+// 	};
+// 	get_TB_shares_value(current_shares);
+// };
+// function get_TB_shares_value (shares) {
+// 	const TB_shares_value = shares * current_price;
+// 	$('.TB_shares_value').html( numeral(TB_shares_value).format('$0.0a') + ' <span>Value</span>' );
+// 	calc_unrealized(TB_shares_value);
+// };
+// function calc_unrealized(share_value) {
+// 	unrealized = share_value;
+// 	var IPO_mark = {
+// 		'event': 'IPO Mark',
+// 		'date': moment().format('MM/DD/YY'),
+// 		'amount': (share_value / constants.million)
+// 	};
+// 	add_new_realizations(transactions);
+// 	add_new_realizations([IPO_mark]);
+// 	order_events(all_realizations, 'MM/DD/YY');
+// 	get_IRR(all_realizations);
+// };
+// function add_new_realizations (array) {
+// 	for (obj in array) {
+// 		all_realizations.push(array[obj]);
+// 	};
+// 	order_events(all_realizations, 'MM/DD/YY');
+// };
 
 // Valuation Metrics & Revenue Multiples
 function get_market_cap (price, fdso) {
@@ -326,7 +319,7 @@ function check_IPO_price (current_stock_price) {
 function get_IPO_price (IPO, current_stock_price) {
 	const IPO_change = (current_stock_price / IPO.price) - 1;
 	const amounts = [-IPO.price, +current_price];
-	const dates = [return_date('M/D/YY',IPO.date),return_date()];
+	const dates = [constants.return_date('M/D/YY',IPO.date),constants.return_date()];
 	const XIRR = finance.XIRR(amounts, dates) / 100;
 	UI.display_IPO_price(IPO.price, IPO_change, XIRR);
 };
