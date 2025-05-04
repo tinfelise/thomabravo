@@ -1,7 +1,7 @@
 import { PE } from './src/finance.js';
 import { UI } from './src/ui.js';
 import { constants } from './src/constants.js';
-
+import { PolygonAPI, AlphaVantageAPI } from './src/api.js';
 const finance = new Finance();
 
 // let stock_data = {};
