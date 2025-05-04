@@ -139,13 +139,25 @@ export const UI = {
         </form>`;
     },
     add_group_nav (money_types) {
-        let navHtml = `<a href='#all'>All</a>`;
+        let navHtml = `<input type="radio" name="investor_group" id="All_group" value="All">
+                        <label for="All_group">All</label>`;
         for (let type in money_types) {
             const group = money_types[type];
-            navHtml += `<a href='#${group}'>${group}</a>`;
+            navHtml += `<input type="radio" name="investor_group" id="${group}_group" value="${group}">
+                        <label for="${group}_group">${group}</label>`;
         }
         navHtml = `<nav>${navHtml}</nav>`;
         $('#thoma > div').append(navHtml);
+
+        // Add event handler for radio buttons
+        $('input[name="investor_group"]').on('change', function() {
+            const selectedValue = $(this).val();
+            $('#thoma > section').hide();
+            $(`#thoma > section#${selectedValue}`).show();
+        });
+
+        // Set initial state
+        $('input[name="investor_group"][value="All"]').prop('checked', true);
     },
     add_disclaimer (disclaimer) {
         $('.returns_disclaimer').remove();

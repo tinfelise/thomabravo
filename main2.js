@@ -308,16 +308,13 @@ function do_the_math (current_price, price_yesterday) {
 			AppState.push(subgroup_metrics);
 			UI.add_thoma_section(subgroup_metrics.group, subgroup_metrics);
 		};
+		UI.add_group_nav(money_types);
 	};
 	check_for_disclaimer();
 };
 
 function get_money_types(transactions) {
-    const money_types = [...new Set(transactions.map(t => t.group))];
-	if (money_types.length > 1) {
-		UI.add_group_nav(money_types);
-	};
-    return money_types;
+    return [...new Set(transactions.map(t => t.group))];
 };
 
 // IPO Price Comparison

@@ -365,14 +365,31 @@ h3 span:last-of-type {
 	display: block;
 	height: 1rem;
 }
-#thoma nav a {
-	padding-left: .75rem;
+#thoma nav input {
+	/* padding-left: .75rem; */
+}
+#thoma nav input[type="radio"] {
+	position: absolute;
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+#thoma nav input[type="radio"]:checked + label {
+	color: #17d980;
+	border-bottom: 2px solid #17d980;
+}
+#thoma nav input[type="radio"] + label {
+	display: inline-block;
+	margin-left: .75rem;
+}
+#thoma nav input[type="radio"] + label:hover {
+	color: #17d980;
+}
+#thoma nav input[type="radio"]:active + label {
+	color: #17d980;
 }
 #thoma > section {
-	display: none; /* temporary */
-}
-#thoma > section:first-of-type {
-	display: block; /* temporary */
+	/* display: none; */
 }
 #thoma h3 span:last-of-type {
 	color: rgba(255, 255, 255, .5);
