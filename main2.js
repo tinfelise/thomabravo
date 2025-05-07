@@ -1,4 +1,4 @@
-import { PE } from './src/finance.js';
+import { PE, stock } from './src/finance.js';
 import { UI } from './src/ui.js';
 import { constants } from './src/constants.js';
 import { PolygonAPI, AlphaVantageAPI } from './src/api.js';
@@ -247,26 +247,38 @@ function get_enterprise_value (market_cap, net_debt) {
 function display_valuation_metrics (price, fdso, net_debt, multiples) {
 	const market_cap_value = get_market_cap(price, fdso);
 	const enterprise_value = get_enterprise_value(market_cap_value, net_debt);
+	const revenue_multiples = stock.calculate_revenue_multiples(enterprise_value, multiples);
 	$('#market_cap').html(numeral(market_cap_value).format('($0.00a)') + ' <span>Market Cap</span>');
 	$('#enterprise_value').html(numeral(enterprise_value).format('($0.00a)') + ' <span>Enterprise Value</span>');
-	get_revenue_multiples(enterprise_value, multiples);
+	$('#revenues_multiples').html(display_revenue_multiples(revenue_multiples));
 };
-function get_revenue_multiples (enterprise_value, all_multiples) {
+// function calculate_revenue_multiples (enterprise_value, all_multiples) {
+// 	const multiples = [];
+// 	for (let multiple in all_multiples) {
+// 		for (let year in all_multiples[multiple].years) {
+// 			const amount = all_multiples[multiple].years[year];
+// 			const multiple_value = enterprise_value / (amount * constants.million);
+// 			const type = all_multiples[multiple].type;
+// 			const name = `${year} ${type}`;
+// 			multiples.push({
+// 				multiple: multiple_value,
+// 				name: name
+// 			});
+// 		};
+// 	};
+// 	return multiples;
+// };
+function display_revenue_multiples (multiples) {
 	let html = '';
-	for (let multiple in all_multiples) {
-		for (let year in all_multiples[multiple].years) {
-			html += create_revenue_multiple (enterprise_value, all_multiples[multiple].years[year], year, all_multiples[multiple].type);
-		};
+	for (let i in multiples) {
+		const multiple = multiples[i];
+		html += create_revenue_multiple (multiple.multiple, multiple.name);
 	};
-	$('#revenues_multiples').html(html);
+	return html;
 };
-function create_revenue_multiple (enterprise_value, amount, year, type) {
-	const multiple = enterprise_value / (amount * constants.million);
-	const output = '<h3 class="multiple">'
-		+ numeral(multiple).format('0.00') + 'x'
-		+ ' <span>' + year + ' ' + type +'</span>'
-		+ '</h3>';
-	return output;
+function create_revenue_multiple (multiple_value, name) {
+	const multiple_html = `<h3 class="multiple">${numeral(multiple_value).format('0.00')}x <span>${name}</span></h3>`;
+	return multiple_html;
 };
 
 // function dilute_shares(options) {
@@ -283,7 +295,7 @@ function create_revenue_multiple (enterprise_value, amount, year, type) {
 // 	get_market_cap(RSUs_Options);
 // };
 
-function do_the_math (current_price, price_yesterday) {
+async function do_the_math (current_price, price_yesterday) {
 	const compared_to_yesterday = current_price - price_yesterday;
 	const compared_to_yesterday_perc = percentage_change(current_price,price_yesterday);
 	UI.display_current_price(current_price, compared_to_yesterday, compared_to_yesterday_perc);
@@ -303,6 +315,7 @@ function do_the_math (current_price, price_yesterday) {
 		};
 		UI.add_group_nav(money_types);
 	};
+	await check_for_comps();
 	check_for_disclaimer();
 };
 
@@ -329,6 +342,49 @@ function get_IPO_price (IPO, current_stock_price) {
 // 	label.value = target_MoM;
 // 	output.value = numeral(target_price).format('$0.00');
 // };
+
+// Comps
+async function check_for_comps () {
+	if (typeof data.comps !== 'undefined') {
+		const comparable_companies = await get_comps(data.comps);
+		UI.create_comps_section(comparable_companies);
+		console.log('Comparable Companies:', comparable_companies);
+	}
+};
+async function get_comps (comps) {
+	const comparable_companies = [];
+	try {
+		const snapshotPromises = comps.map(comp => {
+			console.log('Getting snapshot for:', comp.ticker);
+			return PolygonAPI.getSnapshot(comp.ticker).then(data => ({
+				snapshot: data,
+				comp: comp
+			}));
+		});
+		const comp_data = await Promise.all(snapshotPromises);
+		comparable_companies.push(...parse_comp_data(comp_data));
+		return comparable_companies;
+	} catch (error) {
+		console.error('Error fetching comp data:', error);
+	}
+};
+function parse_comp_data (comp_data) {
+	return comp_data.map(({ snapshot, comp }) => {
+		const parsed_data = {};
+		parsed_data.name = comp.name;
+		parsed_data.ticker = comp.ticker;
+		parsed_data.logo = comp.logo;
+		parsed_data.multiples = comp.multiples;
+		parsed_data.current_price = snapshot.ticker.day.c;
+		parsed_data.previous_closing_price = snapshot.ticker.prevDay.c;
+		parsed_data.last_updated = snapshot.ticker.updated;
+		parsed_data.daily_change = snapshot.ticker.todaysChange;
+		parsed_data.daily_change_perc = snapshot.ticker.todaysChangePerc / 100;
+		parsed_data.market_cap = get_market_cap(parsed_data.current_price, comp.FDSO);
+		parsed_data.enterprise_value = get_enterprise_value(parsed_data.market_cap, comp.net_debt);
+		return parsed_data;
+	});
+}
 
 // Disclaimer
 function check_for_disclaimer () {
@@ -437,7 +493,7 @@ function parse_polygon_news (news, ticker) {
 };
 
 // Tests
-function dummy_data (tick, current, last, message) {
+async function dummy_data (tick, current, last, message) {
 	current_price = current;
 	previous_closing_price = last;
 	var today = moment().format('YYYY-MM-DD');
@@ -449,7 +505,7 @@ function dummy_data (tick, current, last, message) {
 	$('header button').hide();
 	// display_update_time(today, time, open);
 	UI.display_previous_day_of_week(moment(previous, 'YYYY-MM-DD'));
-	do_the_math(current_price, previous_closing_price);
+	await do_the_math(current_price, previous_closing_price);
 	if (message) {
 		$('html').append('<div class="disclaimer">' + decodeURIComponent(message) + '</div>');
 	};

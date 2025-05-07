@@ -1,4 +1,5 @@
 import { get_closing_prices, get_market_status } from '../main2.js';
+import { stock } from './finance.js';
 
 export const UI = {
     // stock data
@@ -138,6 +139,18 @@ export const UI = {
             <span><output name='price_required' for='MoM_range'>${starting_value}</output> <span>Target Price</span></span>
         </form>`;
     },
+    display_revenue_multiples (multiples) {
+        let html = '';
+        for (let i in multiples) {
+            const multiple = multiples[i];
+            html += this.create_revenue_multiple (multiple.multiple, multiple.name);
+        };
+        return html;
+    },
+    create_revenue_multiple (multiple_value, name) {
+        return `<h3 class="multiple">${numeral(multiple_value).format('0.00')}x <span>${name}</span></h3>`;
+    },
+
     add_group_nav (money_types) {
         let navHtml = `<input type="radio" name="investor_group" id="All_group" value="All">
                         <label for="All_group">All</label>`;
@@ -148,6 +161,10 @@ export const UI = {
         }
         navHtml = `<nav>${navHtml}</nav>`;
         $('#thoma > div').append(navHtml);
+
+        // Hide all sections except "All" initially
+        $('#thoma > section').hide();
+        $('#thoma > section#All').show();
 
         // Add event handler for radio buttons
         $('input[name="investor_group"]').on('change', function() {
@@ -165,11 +182,55 @@ export const UI = {
         $('.total_gain').append(html);	
     },
 
+    // comps
+    create_comps_section (comps) {
+        let compsHtml = ``;
+        for (let comp of comps) {
+            let logo = comp.logo ? `<img src="${comp.logo}" alt="${comp.name}" class="logo"> <span>Comparison</span>` : `<h3>${comp.name} <span>${comp.ticker}</span></h3>`;
+            let change = comp.daily_change >= 0 ? 'up' : 'down';
+            const comp_multiples = stock.calculate_revenue_multiples(comp.enterprise_value, comp.multiples);
+            compsHtml += `
+                <div class='comp'>
+                    <div>${logo}</div>
+                    <button class="close">Close</button>
+                    <h2>
+                        ${numeral(comp.current_price).format('$0,0.00')}
+                        <span class='change ${comp.daily_change >= 0 ? 'up' : 'down'}'>
+                            ${numeral(comp.daily_change).format('$0,0.00')} (${numeral(comp.daily_change_perc).format('0.0%')})
+                        </span>
+                    </h2>
+                    <div class='metrics'>
+                        <h3>${numeral(comp.market_cap).format('$0.0a')} <span>Market Cap</span></h3>
+                        <h3>${numeral(comp.enterprise_value).format('$0.0a')} <span>Enterprise Value</span></h3>
+                        ${this.display_revenue_multiples(comp_multiples)}
+                    </div>
+                </div>`;
+        }
+        compsHtml = `<section id='comps' class='hide'>${compsHtml}</section>`;
+        $('main').append(compsHtml);
+        $('main').append(this.create_comps_button(comps));
+        $('#open_comps').on('click', function() {
+            $('#comps').toggleClass('hide');
+            $('#thoma').toggleClass('hide');
+        });
+        $('#comps .close').on('click', function() {
+            $('#comps').toggleClass('hide');
+            $('#thoma').toggleClass('hide');
+        });
+    },
+    create_comps_button (comps) {
+        let comparison = comps[0].ticker;
+        if (comps.length > 1) {
+            comparison = comps.length + ' Comps';
+        };
+        return `<button id="open_comps" class="cta">Compare ${comparison}</button>`;
+    },
+
     // chart
     create_chart (dataset, data_labels) {
         $('#returns_over_time').remove();
         let chartHtml = '<canvas id="returns_over_time" width="400" height="400"></canvas>';
-        $('#thoma > section').append(chartHtml);
+        $('main').append(chartHtml); // TODO: decide where to put this
         
         var ctx = document.getElementById('returns_over_time');
         var chart = new Chart(ctx, {

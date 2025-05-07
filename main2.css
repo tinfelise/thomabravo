@@ -315,7 +315,8 @@ h3 span:last-of-type {
 
 #market_cap,
 #enterprise_value,
-#revenues_multiples .multiple {
+#revenues_multiples .multiple,
+#comps .metrics h3 {
 	display:inline-block;
 	width:50%;
 	padding: 0 1em;
@@ -326,7 +327,8 @@ h3 span:last-of-type {
 	margin-bottom:1em;
 }
 #market_cap,
-#revenues_multiples .multiple:nth-of-type(odd) {
+#revenues_multiples .multiple:nth-of-type(odd),
+#comps .metrics h3:nth-of-type(odd) {
 	border-right:1px solid rgba(0,0,0,.25);
 }
 #revenues_multiples .multiple:last-of-type {
@@ -336,14 +338,17 @@ h3 span:last-of-type {
 	flex-grow: 1;
 }
 
-#thoma {
+#thoma,
+#comps {
 	background: rgb(29, 42, 54);
 	color:rgba(255, 255, 255, .75);
 	padding-top: 2em;
 	position: relative;
 	overflow: hidden;
+	border-radius: 0 0 .25rem .25rem;
 }
-#thoma::before {
+#thoma::before,
+#comps::before {
 	content: '';
 	display: block;
 	width: 0;
@@ -546,6 +551,92 @@ footer {
 	display:none;
 }
 
+.cta {
+	position: fixed;
+	bottom: 2.5%;
+	left: 50%;
+	transform: translateX(-50%);
+	padding: .5rem 1rem;
+	background-color: #17d980;
+	color: #fff;
+	border-radius: 10rem;
+	z-index: 1000;
+	box-shadow: 0px 0px 1em 0px rgba(0,0,0,0.2);
+}
+.cta:hover {
+	background-color: #64d488;
+	color: #fff;
+}
+.cta:active {
+	background-color: #64d488;
+	color: #fff;
+}
+
+.hide {
+	display: none !important;
+}
+
+#comps {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	text-align: center;
+}
+#thoma.hide ~ #open_comps {
+	display: none;
+}
+#comps::before {
+    content: '';
+    display: block;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 2em 700px 0 0;
+    border-color: #fff rgb(29, 42, 54) transparent transparent;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.comp {
+	padding-top: 1rem;
+	padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+}
+.comp:last-child {
+	padding-bottom: 0;
+    border-bottom: none;
+}
+.comp > div:first-child {
+	display: flex;
+	align-items: center;
+}
+.comp .logo {
+    height: 2rem;
+    margin-right: .25rem;
+}
+.comp .close {
+    margin-left: 1rem;
+}
+.comp .metrics {
+    display: flex;
+	flex-wrap: wrap;
+}
+#comps .metrics h3:nth-of-type(odd) {
+	border-right: 1px solid rgba(255, 255, 255, .5);
+}
+.comp .metrics h3 span:last-of-type {
+	color: rgba(255, 255, 255, .5);
+}
+.comp .change {
+    font-size: .875em;
+    margin-top: .25rem;
+}
+.comp .change.up {
+    color: #17d980;
+}
+.comp .change.down {
+    color: #ff5661;
+}
 
 @media only screen and (max-width: 700px) {
 	html {

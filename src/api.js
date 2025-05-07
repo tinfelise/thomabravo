@@ -1,12 +1,20 @@
 function fetchPolygon(endpoint, onSuccess, onError) {
     const polygon_path = 'https://api.polygon.io';
     const polygon_key = 'A96sRRl_tmn0UPaiPC2Q2JRep2P62UJ4';
-    $.ajax({
-        url: `${polygon_path}${endpoint}?apikey=${polygon_key}`,
-        beforeSend: () => console.log(`Fetching ${endpoint}`),
-        success: onSuccess || defaultSuccessHandler,
-        error: onError || defaultErrorHandler,
-        timeout: 3000,
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            url: `${polygon_path}${endpoint}?apikey=${polygon_key}`,
+            beforeSend: () => console.log(`Fetching ${endpoint}`),
+            success: (data) => {
+                if (onSuccess) onSuccess(data);
+                resolve(data);
+            },
+            error: (error) => {
+                if (onError) onError(error);
+                reject(error);
+            },
+            timeout: 3000
+        });
     });
 };
   
@@ -17,6 +25,7 @@ function fetchAlphaVantage(params, onSuccess, onError) {
         beforeSend: () => console.log('Fetching AlphaVantage data...'),
         success: onSuccess || defaultSuccessHandler,
         error: onError || defaultErrorHandler,
+        timeout: 3000
     });
 };
 
@@ -31,25 +40,25 @@ function defaultErrorHandler() {
 };
 
 export const PolygonAPI = {
-    getMarketStatus(successCallback) {
-        fetchPolygon('/v1/marketstatus/now', successCallback);
+    async getMarketStatus(successCallback) {
+        return await fetchPolygon('/v1/marketstatus/now', successCallback);
     },
-    getSnapshot(ticker, successCallback) {
-      fetchPolygon(`/v2/snapshot/locale/us/markets/stocks/tickers/${ticker}`, successCallback);
+    async getSnapshot(ticker, successCallback) {
+      return await fetchPolygon(`/v2/snapshot/locale/us/markets/stocks/tickers/${ticker}`, successCallback);
     },
-    getLastTrade(ticker, successCallback) {
-      fetchPolygon(`/v2/last/trade/${ticker}`, successCallback);
+    async getLastTrade(ticker, successCallback) {
+        return await fetchPolygon(`/v2/last/trade/${ticker}`, successCallback);
     },
-    getAggregates(ticker, start, end, successCallback) {
-      fetchPolygon(`/v2/aggs/ticker/${ticker}/range/1/day/${start}/${end}`, successCallback);
+    async getAggregates(ticker, start, end, successCallback) {
+        return await fetchPolygon(`/v2/aggs/ticker/${ticker}/range/1/day/${start}/${end}`, successCallback);
     },
-    getNews(ticker, successCallback) {
-        fetchPolygon(`/v2/reference/news?ticker=${ticker}`, successCallback);
+    async getNews(ticker, successCallback) {
+        return await fetchPolygon(`/v2/reference/news?ticker=${ticker}`, successCallback);
     }
 };
 
 export const AlphaVantageAPI = {
-    getTimeSeriesData(ticker, successCallback) {
-        fetchAlphaVantage(`function=TIME_SERIES_DAILY&symbol=${ticker}`, successCallback);
+    async getTimeSeriesData(ticker, successCallback) {
+        return await fetchAlphaVantage(`function=TIME_SERIES_DAILY&symbol=${ticker}`, successCallback);
     }
 };

@@ -1,5 +1,23 @@
 import { constants } from './constants.js';
 const finance = new Finance();
+export const stock = {
+    calculate_revenue_multiples (enterprise_value, all_multiples) {
+        const multiples = [];
+        for (let multiple in all_multiples) {
+            for (let year in all_multiples[multiple].years) {
+                const amount = all_multiples[multiple].years[year];
+                const multiple_value = enterprise_value / (amount * constants.million);
+                const type = all_multiples[multiple].type;
+                const name = `${year} ${type}`;
+                multiples.push({
+                    multiple: multiple_value,
+                    name: name
+                });
+            };
+        };
+        return multiples;
+    }
+};
 export const PE = {    
     get_ownership_metrics (current_price, data, group) {
         const ownership = {};
