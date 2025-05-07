@@ -200,6 +200,7 @@ const data = {
 		{
 			'name': 'Cyberark',
 			'ticker': 'CYBR',
+			'logo': './images/cyberark.png',
 			'FDSO': 52.1484258739284,
 			'net_debt': -676.121,
 			'multiples': [
