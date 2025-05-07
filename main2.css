@@ -498,6 +498,7 @@ h3 span:last-of-type {
 }
 
 #returns_over_time {
+	display: none !important; /* temporary */
 	margin-top: 2rem;
 }
 
