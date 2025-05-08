@@ -132,7 +132,7 @@ export const UI = {
     },
     create_MoM_slider (slider_metrics, starting_MoM) {
         const starting_value = numeral(starting_MoM).format('$0.00');
-        return `<form id='MoM_targets'>
+        return `<form class='MoM_targets'>
             <p>Illustrative Share Price To Achieve MoM</p>
             <span><output name='target' for='MoM_range'>${slider_metrics.min}</output>x <span>MoM</span></span>
             <input type='range' name='MoM_range' min='${slider_metrics.min}' max='${slider_metrics.max}' value='${slider_metrics.min}' step='${slider_metrics.increment}'>

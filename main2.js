@@ -570,19 +570,27 @@ function bindUIEvents() {
 function bindMoM_slider() {
 	document.getElementById('thoma').addEventListener('input', (e) => {
 		if (e.target && e.target.name === 'MoM_range') {
-			console.log('MoM_range', e.target.value);
-			const target_price = PE.calc_target_price(
-				e.target.value,
-				data.investment,
-				data.realized,
-				data.current_shares
-			);
-			// Update the output elements
-			const form = e.target.closest('form');
-			const targetOutput = form.querySelector('output[name="target"]');
-			const priceOutput = form.querySelector('output[name="price_required"]');
-			targetOutput.value = e.target.value;
-			priceOutput.value = numeral(target_price).format('$0.00');
+			// Get the currently visible section ID
+			const visibleSection = document.querySelector('#thoma > section:not([style*="display: none"])');
+			const groupId = visibleSection ? visibleSection.id : 'All';
+			
+			// Find the metrics for this group in AppState
+			const metrics = AppState.find(state => state.group === groupId);
+			console.log('metrics', metrics);
+			if (metrics) {
+				const target_price = PE.calc_target_price(
+					e.target.value,
+					metrics.investment,
+					metrics.realized,
+					metrics.shares
+				);
+				// Update the output elements
+				const form = e.target.closest('form');
+				const targetOutput = form.querySelector('output[name="target"]');
+				const priceOutput = form.querySelector('output[name="price_required"]');
+				targetOutput.value = e.target.value;
+				priceOutput.value = numeral(target_price).format('$0.00');
+			}
 		}
 	});
 };
@@ -593,4 +601,4 @@ function initApp() {
 };
 initApp();
 
-export { get_closing_prices, get_market_status };
+export { get_closing_prices, get_market_status, AppState };

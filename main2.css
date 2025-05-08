@@ -471,27 +471,27 @@ h3 span:last-of-type {
 	text-transform: uppercase;
 }
 
-#MoM_targets {
+.MoM_targets {
 	display: flex;
 	flex-wrap: wrap;
 	padding:.5em 0 0;
 }
-#MoM_targets > p {
+.MoM_targets > p {
 	text-align: center;
 	width: 100%;
 	margin-top: 0;
 }
-#MoM_targets > span {
+.MoM_targets > span {
 	width:20%;
 }
-#MoM_targets > span:first-of-type {
+.MoM_targets > span:first-of-type {
 	text-align: right;
 }
-#MoM_targets > span span {
+.MoM_targets > span span {
 	display:block;
 	color: rgba(255, 255, 255, .5);
 }
-#MoM_targets input {
+.MoM_targets input {
 	margin:0 1rem;
 	width: unset;
 	flex-grow: 1;
@@ -667,7 +667,7 @@ footer {
 	#stockData > div:first-of-type {
 		align-items:center;
 	}
-	#MoM_targets > span {
+	.MoM_targets > span {
 		width: unset;
 	}
 	main > section:last-of-type {
