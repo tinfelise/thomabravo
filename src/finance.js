@@ -106,7 +106,6 @@ export const PE = {
         return gain / investment;
     },
     calc_target_price (target_MoM, investment, realized, current_shares) {
-        console.log('calc_target_price', target_MoM, investment, realized, current_shares);
         const equity = target_MoM * investment;
         const trading_value = equity - realized;
         const target_price = trading_value / current_shares;
