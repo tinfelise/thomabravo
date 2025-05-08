@@ -670,6 +670,10 @@ footer {
 	.MoM_targets > span {
 		width: unset;
 	}
+	#thoma,
+	#comps {
+		border-radius: 0;
+	}
 	main > section:last-of-type {
 		border-radius: 0;
 		padding-bottom: 0;
