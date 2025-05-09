@@ -160,6 +160,7 @@ export const UI = {
                         <label for="${group}_group">${group}</label>`;
         }
         navHtml = `<nav>${navHtml}</nav>`;
+        $('#thoma nav').remove();
         $('#thoma > div').append(navHtml);
 
         // Hide all sections except "All" initially
