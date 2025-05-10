@@ -17,5 +17,9 @@ export const constants = {
     },
     addToArray(array, newItem) {
         return [...array, newItem];
+    },
+    percentage_change (current, previous) {
+        const diff = current - previous;
+        return diff/previous;
     }
 };

@@ -3,6 +3,7 @@ import { stock } from './finance.js';
 
 export const UI = {
     // stock data
+    refresh_interval: null,
     display_updated_time (timestamp, format, market_status) {
         var html = 'As Of ';
         if (market_status == 'closed') { // can also add extended hours
@@ -34,7 +35,7 @@ export const UI = {
         $('#price_changes svg').remove();
         $('#price_changes').prepend('<i class="fas ' + icon + '"></i>');
         $('#compared_to_yesterday').html( numeral(daily_change).format('$0,0[.]00') );
-        $('#compared_to_yesterday_perc').html('(' + percent_change + ')');
+        $('#compared_to_yesterday_perc').html('(' + numeral(percent_change).format('0.0%') + ')');
     },
     display_IPO_price (price, change, IRR) {
         let IPO_price_html = '<div id="IPO_change">';
@@ -317,10 +318,10 @@ export const UI = {
 
     reload (clip) {
         $('body').removeClass('loaded');
-        this.reset();
+        UI.reset();
         get_market_status(data.ticker);
         if (clip) {
-            this.play_sound(clip);
+            UI.play_sound(clip);
         }
     },
     reset () {
@@ -353,16 +354,24 @@ export const UI = {
         if(!doc.fullscreenElement && !doc.mozFullScreenElement && !doc.webkitFullscreenElement && !doc.msFullscreenElement) {
             requestFullScreen.call(docEl);
             $('html').addClass('fullscreen');
-            auto_refresh(60);
+            UI.auto_refresh(60);
         }
         else {
             cancelFullScreen.call(doc);
         }
     },
+    auto_refresh(seconds) {
+        console.log('auto_refresh', seconds);
+        const time = seconds * 1000;
+        UI.refresh_interval = setInterval(UI.reload, time); 
+    },
+    stop_refreshing() {
+        clearInterval(UI.refresh_interval);
+    },
     exitFullscreen() {
         if (!document.webkitIsFullScreen && !document.mozFullScreen && !document.msFullscreenElement) {
             $('html').removeClass('fullscreen');
-            stop_refreshing();
+            UI.stop_refreshing();
         };
     }
-};
+}

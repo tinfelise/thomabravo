@@ -16,6 +16,14 @@ export const stock = {
             };
         };
         return multiples;
+    },
+    get_market_cap (price, fdso) {
+        const market_cap = fdso * price * constants.million;
+        return market_cap;
+    },
+    get_enterprise_value (market_cap, net_debt) {
+        const enterprise_value = market_cap + (net_debt * constants.million);
+        return enterprise_value;
     }
 };
 export const PE = {    
@@ -47,6 +55,9 @@ export const PE = {
             ownership.MoM_starting_price = this.calc_target_price(data.MoM_slider.min, ownership.investment, ownership.realized, ownership.shares);
         }
         return ownership;
+    },
+    get_money_types(transactions) {
+        return [...new Set(transactions.map(t => t.group))]; // why is this returning Old instead of Old Money?
     },
     filter_transactions_by_group(transactions, group) {
         if (group) {
