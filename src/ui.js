@@ -56,12 +56,15 @@ export const UI = {
 
     // thoma
     add_thoma_section (group, metrics) {
-        const groupId = group.replace(/\s+/g, '_');
+        const groupId = UI.remove_group_name_spaces(group);
         let html = `<section id="${groupId}">`;
         html += this.create_ownership_section(metrics);
         html += this.create_returns_section(metrics);
         html += '</section>';
         $('#thoma').append(html);
+    },
+    remove_group_name_spaces (group_name) {
+        return group_name.replace(/\s+/g, '_');
     },
     create_ownership_section (metrics) {
         let ownershipHtml = '';
@@ -158,7 +161,7 @@ export const UI = {
                         <label for="All_group">All</label>`;
         for (let type in money_types) {
             const group = money_types[type];
-            const groupId = group.replace(/\s+/g, '_');
+            const groupId = UI.remove_group_name_spaces(group);
             navHtml += `<input type="radio" name="investor_group" id="${groupId}_group" value="${group}">
                         <label for="${groupId}_group">${group}</label>`;
         }
@@ -173,7 +176,7 @@ export const UI = {
         // Add event handler for radio buttons
         $('input[name="investor_group"]').on('change', function() {
             const selectedValue = $(this).val();
-            const selectedId = selectedValue.replace(/\s+/g, '_');
+            const selectedId = UI.remove_group_name_spaces(selectedValue);
             $('#thoma > section').hide();
             $(`#thoma > section#${selectedId}`).show();
         });
