@@ -215,6 +215,8 @@ export const UI = {
                 </div>`;
         }
         compsHtml = `<section id='comps' class='hide'>${compsHtml}</section>`;
+        $('#comps').remove();
+        $('#open_comps').remove();
         $('main').append(compsHtml);
         $('main').append(this.create_comps_button(comps));
         $('#open_comps').on('click', function() {
