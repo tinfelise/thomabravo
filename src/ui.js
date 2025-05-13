@@ -141,8 +141,7 @@ export const UI = {
     },
     display_revenue_multiples (multiples) {
         let html = '';
-        for (let i in multiples) {
-            const multiple = multiples[i];
+        for (let multiple of multiples) {
             html += this.create_revenue_multiple (multiple.multiple, multiple.name);
         };
         return html;

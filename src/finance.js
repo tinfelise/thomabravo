@@ -3,11 +3,11 @@ const finance = new Finance();
 export const stock = {
     calculate_revenue_multiples (enterprise_value, all_multiples) {
         const multiples = [];
-        for (let multiple in all_multiples) {
-            for (let year in all_multiples[multiple].years) {
-                const amount = all_multiples[multiple].years[year];
+        for (const multiple of all_multiples) {
+            for (const year in multiple.years) {
+                const amount = multiple.years[year];
                 const multiple_value = enterprise_value / (amount * constants.million);
-                const type = all_multiples[multiple].type;
+                const type = multiple.type;
                 const name = `${year} ${type}`;
                 multiples.push({
                     multiple: multiple_value,
@@ -68,18 +68,18 @@ export const PE = {
     },
     sum_transactions (transactions) {
         let realized = 0, investment = 0, current_shares = 0;
-        for (let i in transactions) {
-            const value = transactions[i].amount;
+        for (const transaction of transactions) {
+            const value = transaction.amount;
             if (value > 0) {
                 realized += value * constants.million;
             } else {
                 investment += -value * constants.million;
-            }
+            };
     
-            const shares = transactions[i].shares;
+            const shares = transaction.shares;
             if (shares) {
                 current_shares += shares * constants.million;
-            }
+            };
         }
         return { realized, investment, current_shares };
     },
@@ -103,8 +103,8 @@ export const PE = {
         return all_transactions;
     },
     add_new_realizations (array) {
-        for (obj in array) {
-            all_transactions.push(array[obj]);
+        for (const obj of array) {
+            all_transactions.push(obj);
         };
         constants.order_events(all_transactions, 'MM/DD/YY');
     },
@@ -129,17 +129,17 @@ export const PE = {
     get_IRR (realizations) {
         var amounts = [];
         var dates = [];
-        for (let i in realizations) {
-            amounts[i] = realizations[i].amount * constants.million;
-            dates[i] = constants.return_date('MM/DD/YY',realizations[i].date);
+        for (const realization of realizations) {
+            amounts.push(realization.amount * constants.million);
+            dates.push(constants.return_date('MM/DD/YY',realization.date));
         };
         var XIRR = finance.XIRR(amounts, dates) / 100;
         return XIRR;
     },
     get_current_shares (shares) {
         let total_shares = 0; // do I want to make this a global variable? needed for MOM slider
-        for (let i in shares) {
-            total_shares += shares[i].shares;
+        for (const share of shares) {
+            total_shares += share.shares;
         };
         $('.TB_shares').html( numeral(total_shares).format('0.0a') + ' <span>Shares</span>' );
         PE.get_TB_shares_perc(total_shares, data.FDSO); 
