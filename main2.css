@@ -205,7 +205,7 @@ section {
 	flex-wrap:wrap;
 }
 section:last-of-type {
-	padding-bottom:2rem;
+	padding-bottom: 0;
 	border-radius: 0 0 .25rem .25rem;
 }
 h1,
@@ -343,7 +343,8 @@ h3 span:last-of-type {
 #comps {
 	background: rgb(29, 42, 54);
 	color:rgba(255, 255, 255, .75);
-	padding-top: 2em;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
 	position: relative;
 	overflow: hidden;
 	border-radius: 0 0 .25rem .25rem;
@@ -395,7 +396,7 @@ h3 span:last-of-type {
 	color: #17d980;
 }
 #thoma > section {
-	/* display: none; */
+	padding-bottom: 0;
 }
 #thoma h3 span:last-of-type {
 	color: rgba(255, 255, 255, .5);
