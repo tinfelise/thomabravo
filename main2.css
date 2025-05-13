@@ -277,6 +277,7 @@ h3 span:last-of-type {
 	display: flex;
 	flex-wrap: wrap;
 	align-items: baseline;
+	text-align: center;
 }
 #stockData div > span {
 	white-space: nowrap;

@@ -38,18 +38,13 @@ export const UI = {
         $('#compared_to_yesterday_perc').html('(' + numeral(percent_change).format('0.0%') + ')');
     },
     display_IPO_price (price, change, IRR) {
-        let IPO_price_html = '<div id="IPO_change">';
-        if (change >= 0) {
-            IPO_price_html += 'Up ';
-        } else {
-            IPO_price_html += 'Down ';
-        };
-        IPO_price_html += numeral(Math.abs(change)).format('%0,0.0');
-        IPO_price_html += ' From ';
-        IPO_price_html += numeral(price).format('$0,0');
-        IPO_price_html += ' Initial Listing (';
-        IPO_price_html += numeral(IRR).format('%0,0.0');
-        IPO_price_html += ' IRR)</div>';
+        let direction = change >= 0 ? 'Up' : 'Down';
+        const IPO_price_html = `
+            <div id="IPO_change">
+                ${direction} ${numeral(Math.abs(change)).format('%0,0.0')} 
+                From ${numeral(price).format('$0,0')} Initial Listing 
+                (${numeral(IRR).format('%0,0.0')} IRR)
+            </div>`;
         $('#IPO_change').remove();
         $('#stockData > div:first-of-type').append(IPO_price_html);
     },
