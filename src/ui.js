@@ -192,6 +192,7 @@ export const UI = {
         for (let comp of comps) {
             const logo = comp.logo ? `<img src="${comp.logo}" alt="${comp.name}" class="logo"> <span>Comparison</span>` : `<h3>${comp.name} <span>${comp.ticker}</span></h3>`;
             const direction = comp.daily_change >= 0 ? 'up' : 'down';
+            const sign = comp.daily_change >= 0 ? '+' : '-';
             const comp_multiples = stock.calculate_revenue_multiples(comp.enterprise_value, comp.multiples);
             compsHtml += `
                 <div class='comp'>
@@ -200,7 +201,7 @@ export const UI = {
                     <h2>
                         ${numeral(comp.current_price).format('$0,0.00')}
                         <span class='change ${direction}'>
-                            ${numeral(comp.daily_change).format('$0,0.00')} (${numeral(comp.daily_change_perc).format('0.0%')})
+                            ${sign}${numeral(Math.abs(comp.daily_change)).format('$0,0.00')} (${numeral(comp.daily_change_perc).format('0.0%')})
                         </span>
                     </h2>
                     <div class='metrics'>
