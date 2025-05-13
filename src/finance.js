@@ -57,7 +57,7 @@ export const PE = {
         return ownership;
     },
     get_money_types(transactions) {
-        return [...new Set(transactions.map(t => t.group))]; // why is this returning Old instead of Old Money?
+        return [...new Set(transactions.map(t => t.group))];
     },
     filter_transactions_by_group(transactions, group) {
         if (group) {

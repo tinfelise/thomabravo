@@ -122,22 +122,24 @@ export const UI = {
     },
     create_total_gain_section (total_gains, MoM_targets, starting_MoM) {
         const total_gain = numeral(total_gains).format('$0.0a');
-        return `<section class="total_gain">
-            <h2>
-                <label>${total_gain}</label>
-                <span>Total Gain</span>
-            </h2>
-            ${MoM_targets ? this.create_MoM_slider(MoM_targets, starting_MoM) : ''}
-        </section>`;
+        return `
+            <section class="total_gain">
+                <h2>
+                    <label>${total_gain}</label>
+                    <span>Total Gain</span>
+                </h2>
+                ${MoM_targets ? this.create_MoM_slider(MoM_targets, starting_MoM) : ''}
+            </section>`;
     },
     create_MoM_slider (slider_metrics, starting_MoM) {
         const starting_value = numeral(starting_MoM).format('$0.00');
-        return `<form class='MoM_targets'>
-            <p>Illustrative Share Price To Achieve MoM</p>
-            <span><output name='target' for='MoM_range'>${slider_metrics.min}</output>x <span>MoM</span></span>
-            <input type='range' name='MoM_range' min='${slider_metrics.min}' max='${slider_metrics.max}' value='${slider_metrics.min}' step='${slider_metrics.increment}'>
-            <span><output name='price_required' for='MoM_range'>${starting_value}</output> <span>Target Price</span></span>
-        </form>`;
+        return `
+            <form class='MoM_targets'>
+                <p>Illustrative Share Price To Achieve MoM</p>
+                <span><output name='target' for='MoM_range'>${slider_metrics.min}</output>x <span>MoM</span></span>
+                <input type='range' name='MoM_range' min='${slider_metrics.min}' max='${slider_metrics.max}' value='${slider_metrics.min}' step='${slider_metrics.increment}'>
+                <span><output name='price_required' for='MoM_range'>${starting_value}</output> <span>Target Price</span></span>
+            </form>`;
     },
     display_revenue_multiples (multiples) {
         let html = '';
@@ -188,8 +190,8 @@ export const UI = {
     create_comps_section (comps) {
         let compsHtml = ``;
         for (let comp of comps) {
-            let logo = comp.logo ? `<img src="${comp.logo}" alt="${comp.name}" class="logo"> <span>Comparison</span>` : `<h3>${comp.name} <span>${comp.ticker}</span></h3>`;
-            let change = comp.daily_change >= 0 ? 'up' : 'down';
+            const logo = comp.logo ? `<img src="${comp.logo}" alt="${comp.name}" class="logo"> <span>Comparison</span>` : `<h3>${comp.name} <span>${comp.ticker}</span></h3>`;
+            const direction = comp.daily_change >= 0 ? 'up' : 'down';
             const comp_multiples = stock.calculate_revenue_multiples(comp.enterprise_value, comp.multiples);
             compsHtml += `
                 <div class='comp'>
@@ -197,7 +199,7 @@ export const UI = {
                     <button class="close">Close</button>
                     <h2>
                         ${numeral(comp.current_price).format('$0,0.00')}
-                        <span class='change ${comp.daily_change >= 0 ? 'up' : 'down'}'>
+                        <span class='change ${direction}'>
                             ${numeral(comp.daily_change).format('$0,0.00')} (${numeral(comp.daily_change_perc).format('0.0%')})
                         </span>
                     </h2>
