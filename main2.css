@@ -340,13 +340,18 @@ h3 span:last-of-type {
 }
 
 #thoma,
+#comps,
+#thoma > section {
+	overflow: hidden;
+	transition: visibility 1s ease, opacity 1s ease;
+}
+#thoma,
 #comps {
 	background: rgb(29, 42, 54);
 	color:rgba(255, 255, 255, .75);
 	padding-top: 2rem;
 	padding-bottom: 2rem;
 	position: relative;
-	overflow: hidden;
 	border-radius: 0 0 .25rem .25rem;
 }
 #thoma::before,
@@ -576,7 +581,12 @@ footer {
 }
 
 .hide {
-	display: none !important;
+	/* display: none !important; */
+	visibility: hidden !important;
+	opacity: 0 !important;
+	max-height: 0 !important;
+	pointer-events: none !important;
+	padding: 0 !important;
 }
 
 #comps {}
@@ -710,7 +720,6 @@ footer {
 		}
 	}
 }
-
 
 
 

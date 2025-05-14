@@ -165,16 +165,16 @@ export const UI = {
         $('#thoma nav').remove();
         $('#thoma > div').append(navHtml);
 
-        // Hide all sections except "All" initially
-        $('#thoma > section').hide();
-        $('#thoma > section#All').show();
+        // Initially hide all sections except "All"
+        $('#thoma > section').addClass('hide');
+        $('#thoma > section#All').removeClass('hide');
 
         // Add event handler for radio buttons
         $('input[name="investor_group"]').on('change', function() {
             const selectedValue = $(this).val();
             const selectedId = UI.remove_group_name_spaces(selectedValue);
-            $('#thoma > section').hide();
-            $(`#thoma > section#${selectedId}`).show();
+            $('#thoma > section').addClass('hide');
+            $(`#thoma > section#${selectedId}`).removeClass('hide');
         });
 
         // Set initial state
