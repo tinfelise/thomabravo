@@ -1,4 +1,4 @@
-import { get_closing_prices, get_market_status } from '../main2.js';
+import { get_market_status } from '../main2.js';
 import { stock } from './finance.js';
 
 export const UI = {
