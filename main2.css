@@ -386,13 +386,15 @@ h3 span:last-of-type {
 	width: 0;
 	height: 0;
 }
-#thoma nav input[type="radio"]:checked + label {
-	color: #17d980;
-	border-bottom: 2px solid #17d980;
-}
 #thoma nav input[type="radio"] + label {
 	display: inline-block;
 	margin-left: .75rem;
+	padding-bottom: .15rem;
+	border-bottom: 2px solid transparent;
+}
+#thoma nav input[type="radio"]:checked + label {
+	color: #17d980;
+	border-bottom: 2px solid #17d980;
 }
 #thoma nav input[type="radio"] + label:hover {
 	color: #17d980;
