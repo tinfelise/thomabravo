@@ -243,6 +243,8 @@ export const UI = {
         // Attach to DOM (so Chart.js can render)
         document.body.appendChild(canvas);
 
+        const chart_color = '#e8e9eb'; // original: rgba(29, 42, 54, .1)
+
         const ctx = canvas.getContext('2d');
         const chart = new Chart(ctx, {
             type: 'line',
@@ -251,8 +253,10 @@ export const UI = {
                 datasets: [{
                     // label: 'Stock Price',
                     data: dataset,
-                    borderColor: 'rgba(29, 42, 54, .1)',
-                    backgroundColor: 'rgba(0,0,0,0)'
+                    // borderColor: 'rgba(29, 42, 54, .1)',
+                    // backgroundColor: 'rgba(0,0,0,0)',
+                    borderColor: 'rgba(0,0,0,0)',
+                    backgroundColor: chart_color
                 }]
             },
             options: {
@@ -305,6 +309,17 @@ export const UI = {
         setTimeout(() => {
             const dataURL = canvas.toDataURL();
             document.getElementById('stockData').style.backgroundImage = `url(${dataURL})`;
+            // Add background color to #thoma::before
+            const thomaElement = document.querySelector('#thoma');
+            if (thomaElement) {
+                const style = document.createElement('style');
+                style.textContent = `
+                    #thoma::before {
+                        border-top-color: ${chart_color};
+                    }
+                `;
+                document.head.appendChild(style);
+            }
             // Remove the canvas from the DOM
             document.body.removeChild(canvas);
         }, 100);
