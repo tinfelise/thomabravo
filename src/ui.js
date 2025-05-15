@@ -309,19 +309,19 @@ export const UI = {
         setTimeout(() => {
             const dataURL = canvas.toDataURL();
             document.getElementById('stockData').style.backgroundImage = `url(${dataURL})`;
-            // Add background color to #thoma::before
-            const thomaElement = document.querySelector('#thoma');
-            if (thomaElement) {
-                const style = document.createElement('style');
-                style.textContent = `
-                    #thoma::before {
-                        border-top-color: ${chart_color};
-                    }
-                `;
-                document.head.appendChild(style);
-            }
+            
             // Remove the canvas from the DOM
             document.body.removeChild(canvas);
+
+            // Add background color to #thoma::before
+            const style = document.createElement('style');
+            style.textContent = `
+                #thoma::before,
+                #comps::before {
+                    border-top-color: ${chart_color};
+                }
+            `;
+            document.head.appendChild(style);
         }, 100);
     },
 
