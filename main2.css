@@ -278,6 +278,9 @@ h3 span:last-of-type {
 	flex-wrap: wrap;
 	align-items: baseline;
 	text-align: center;
+	background-position: bottom;
+	background-size: cover;
+	background-repeat: no-repeat;
 }
 #stockData .price_container > span {
 	white-space: nowrap;
@@ -504,11 +507,6 @@ h3 span:last-of-type {
 	margin:0 1rem;
 	width: unset;
 	flex-grow: 1;
-}
-
-#returns_over_time {
-	display: none !important; /* temporary */
-	margin-top: 2rem;
 }
 
 #news {

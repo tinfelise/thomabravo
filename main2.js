@@ -187,6 +187,8 @@ async function do_the_math (current_price, price_yesterday) {
 	};
 	await check_for_comps();
 	check_for_disclaimer();
+	const chartData = await get_chart_data_to_date(data.IPO.date);
+	UI.create_chart(chartData.closing_prices, chartData.dates);
 };
 
 
@@ -257,67 +259,19 @@ function check_for_disclaimer () {
 };
 
 // Chart
-function get_chart_date_range () {
-	var start_date = moment(data.IPO.date, 'MM/DD/YY').format('YYYY-MM-DD');
+async function get_chart_data_to_date (start_date) {
+	var start_date = moment(start_date, 'MM/DD/YY').format('YYYY-MM-DD');
 	var end_date = moment().format('YYYY-MM-DD');
-	get_polygon_aggregates(data.ticker, start_date, end_date);
-};
-function get_polygon_aggregates (ticker, start_date, end_date) {
-	var path = polygon_path + '/v2/aggs/ticker/' + ticker +
-	'/range/1/day/' + start_date + '/' + end_date + '?apikey=' + polygon_key;
-	var settings = {
-		url: path,
-		beforeSend: function () {
-			console.log('Fetching historical stock data from...')
-			console.log(path);
-		},
-		error: function () {
-			console.log('Error fetching historical stock data.');
-		},
-		success: function (data) {
-			parse_polygon_aggregates(ticker, data);
-		}
-	};
-	$.ajax(settings)
-};
-function parse_polygon_aggregates (ticker, data) {
-	console.log(data);
-};
-
-function get_time_series_data (ticker) {
-	var path = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=' + ticker +
-	'&outputsize=compact&apikey=' + alphavantage_key;
-	var settings = {
-		url: path,
-		beforeSend: function () {
-			console.log('Fetching historical stock data from...')
-			console.log(path);
-		},
-		error: function () {},
-		success: function (data) {
-			parse_time_series_data(ticker, data);
-		}
-	};
-	$.ajax(settings)
-};
-function parse_time_series_data (ticker, data) {
-	if (data['Time Series (Daily)'] != undefined) {
-		time_series_data = data['Time Series (Daily)'];
-		time_series_dates = Object.keys(time_series_data);
-		console.log(time_series_data);
-		UI.create_chart(time_series_data,time_series_dates);
-	} else {
-		console.log(data);
-	};
-};
-function get_closing_prices (data, index) {
-	var closing_prices = [];
-	for (let i in index) {
-		const point = data[index[i]];
-		const closing_price = point['4. close'];
-		closing_prices.push(closing_price);
-	};
-	return closing_prices;
+	try {
+		const response = await PolygonAPI.getAggregates(data.ticker, start_date, end_date);
+		const aggregates = response.results || [];
+		const closing_prices = aggregates.map(aggregate => aggregate.c);
+		const dates = aggregates.map(aggregate => aggregate.t);
+		console.log('Aggregates:', aggregates);
+		return { closing_prices, dates };
+	} catch (error) {
+		console.error('Error fetching chart data:', error);
+	}
 };
 
 // News

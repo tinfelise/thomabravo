@@ -235,19 +235,23 @@ export const UI = {
 
     // chart
     create_chart (dataset, data_labels) {
-        $('#returns_over_time').remove();
-        let chartHtml = '<canvas id="returns_over_time" width="400" height="400"></canvas>';
-        $('main').append(chartHtml); // TODO: decide where to put this
-        
-        var ctx = document.getElementById('returns_over_time');
-        var chart = new Chart(ctx, {
+        const canvas = document.createElement('canvas');
+        canvas.width = 400;
+        canvas.height = 400;
+        canvas.style.display = 'none'; // Hide it
+
+        // Attach to DOM (so Chart.js can render)
+        document.body.appendChild(canvas);
+
+        const ctx = canvas.getContext('2d');
+        const chart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: data_labels,
                 datasets: [{
-                    label: 'Stock Price',
-                    data: get_closing_prices(dataset, data_labels),
-                    borderColor: 'rgba(255, 255, 255, .75)',
+                    // label: 'Stock Price',
+                    data: dataset,
+                    borderColor: 'rgba(29, 42, 54, .1)',
                     backgroundColor: 'rgba(0,0,0,0)'
                 }]
             },
@@ -257,6 +261,7 @@ export const UI = {
                 },
                 scales: {
                     xAxes: [{
+                        display: false,
                         type: 'time',
                         time: {
                             unit: 'month'
@@ -271,6 +276,7 @@ export const UI = {
                         }
                     }],
                     yAxes: [{
+                        display: false,
                         ticks: {
                             // Include a dollar sign in the ticks
                             callback: function(value, index, values) {
@@ -294,6 +300,14 @@ export const UI = {
                 }
             }
         });
+
+        // Wait for Chart.js to finish rendering
+        setTimeout(() => {
+            const dataURL = canvas.toDataURL();
+            document.getElementById('stockData').style.backgroundImage = `url(${dataURL})`;
+            // Remove the canvas from the DOM
+            document.body.removeChild(canvas);
+        }, 100);
     },
 
     // news
