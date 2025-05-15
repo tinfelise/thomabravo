@@ -343,8 +343,7 @@ function check_for_tests (obj) {
 	if (test != 'dummy_data') {
 		UI.add_loader();
 		get_market_status(data.ticker);
-		get_time_series_data(data.ticker);
-		get_polygon_news(data.ticker, 100);
+		// get_polygon_news(data.ticker, 100);
 	};
 };
 function parseURLs() {
