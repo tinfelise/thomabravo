@@ -593,18 +593,6 @@ footer {
 #thoma.hide ~ #open_comps {
 	display: none;
 }
-#comps::before {
-    content: '';
-    display: block;
-    width: 0;
-    height: 0;
-    border-style: solid;
-    border-width: 2em 700px 0 0;
-    border-color: #fff rgb(29, 42, 54) transparent transparent;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
 #comps .comp {
 	display: flex;
 	flex-wrap: wrap;
