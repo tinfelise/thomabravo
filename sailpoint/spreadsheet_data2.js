@@ -3,8 +3,8 @@ const data = {
 	"name": 'SailPoint',
 	"sound": 'sail.mp3',
 	"logo": 'sailpoint-logo.png',
-	"FDSO": 573.93698,
-	"net_debt": 300,
+	"FDSO": 573.936982,
+	"net_debt": -300,
 	// "current_shares": [
 	// 	{
 	// 		'type': 'Old Money',
@@ -28,15 +28,15 @@ const data = {
 		{
 			'type': 'Revenues',
 			'years': {
-				'2026': 1029,
-				'2027': 1236
+				"FY '26": 1029,
+				"FY '27": 1236
 			}
 		},
 		{
 			'type': 'ARR',
 			'years': {
-				'2026': 1075,
-				'2027': 1315 
+				"FY '26": 1075,
+				"FY '27": 1315 
 			}
 		}
 	],
