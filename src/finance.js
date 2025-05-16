@@ -29,11 +29,7 @@ export const stock = {
 export const PE = {    
     get_ownership_metrics (current_price, data, group) {
         const ownership = {};
-        if (group) {
-            ownership.group = group;
-        } else {
-            ownership.group = 'All';
-        }
+        ownership.group = group || 'All';
         const transactions = this.filter_transactions_by_group(data.transactions, group);
         const { realized, investment, current_shares } = this.sum_transactions(transactions);
         ownership.shares = current_shares;
@@ -45,7 +41,6 @@ export const PE = {
         ownership.IPO_shares = this.get_shares_at_IPO(transactions);
         ownership.perc_realized = this.get_perc_realized(ownership.shares, ownership.IPO_shares);
         ownership.perc_stake = this.get_perc_stake(ownership.shares, data.FDSO);
-        // ownership.perc_shares_realized = this.get_perc_shares_realized(ownership.shares, data.FDSO);
         const transactions_and_target = this.add_unrealized(ownership.shares_value, transactions);
         const { total_returns, total_gain } = this.sum_returns(ownership.realized, ownership.shares_value, ownership.investment);
         ownership.total_returns = total_returns;
@@ -138,13 +133,13 @@ export const PE = {
         return target_price;
     },
     get_IRR (realizations) {
-        var amounts = [];
-        var dates = [];
+        const amounts = [];
+        const dates = [];
         for (const realization of realizations) {
             amounts.push(realization.amount * constants.million);
             dates.push(constants.return_date('MM/DD/YY',realization.date));
         };
-        var XIRR = finance.XIRR(amounts, dates) / 100;
+        const XIRR = finance.XIRR(amounts, dates) / 100;
         return XIRR;
     },
     get_current_shares (shares) {
