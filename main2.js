@@ -418,3 +418,4 @@ function initApp() {
 initApp();
 
 export { get_market_status, AppState };
+window.AppState = AppState;
