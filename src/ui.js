@@ -75,9 +75,9 @@ export const UI = {
             const shares_value = numeral(metrics.shares_value).format('$0.0a');
             ownershipHtml += `<h3 class='TB_shares_value'>${shares_value} <span>Value</span></h3>`;
         }
-        if (metrics.perc_shares_realized) {
-            const perc_shares_realized = numeral(metrics.perc_shares_realized).format('0,0[.]0%');
-            ownershipHtml += `<h3 class='TB_perc_shares_realized'>${perc_shares_realized} <span>Realized</span></h3>`;
+        if (metrics.perc_realized) {
+            const perc_realized = numeral(metrics.perc_realized).format('0,0[.]0%');
+            ownershipHtml += `<h3 class='TB_perc_realized'>${perc_realized} <span>Realized</span></h3>`;
         }
         if (metrics.IRR) {
             const IRR = numeral(metrics.IRR).format('0,0[.]0%');

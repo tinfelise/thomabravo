@@ -42,6 +42,8 @@ export const PE = {
         ownership.realized_MoM = this.calc_MoM(ownership.realized, ownership.investment);
         ownership.shares_value = this.get_shares_value(ownership.shares, current_price); // also unrealized gains
         ownership.unrealized_MoM = this.calc_MoM(ownership.shares_value, ownership.investment);
+        ownership.IPO_shares = this.get_shares_at_IPO(transactions);
+        ownership.perc_realized = this.get_perc_realized(ownership.shares, ownership.IPO_shares);
         ownership.perc_stake = this.get_perc_stake(ownership.shares, data.FDSO);
         // ownership.perc_shares_realized = this.get_perc_shares_realized(ownership.shares, data.FDSO);
         const transactions_and_target = this.add_unrealized(ownership.shares_value, transactions);
@@ -82,6 +84,15 @@ export const PE = {
             };
         }
         return { realized, investment, current_shares };
+    },
+    get_shares_at_IPO (transactions) {
+        const shares_at_IPO = transactions.filter(transaction => transaction.event === '@ IPO');
+        const shares = shares_at_IPO.reduce((sum, transaction) => sum + transaction.shares, 0);
+        return shares * constants.million;
+    },
+    get_perc_realized (current_shares, shares_at_IPO) {
+        const perc_realized = 1 - ( current_shares / shares_at_IPO );
+        return perc_realized;
     },
     get_shares_value (shares, current_price) {
         const shares_value = shares * current_price;
