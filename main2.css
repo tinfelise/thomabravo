@@ -547,9 +547,23 @@ footer {
 	position: fixed;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 	left: 1rem;
 	right: 1rem;
 	bottom: 1rem;
+}
+footer > a {
+    margin-right: auto;
+}
+footer #mute_button {}
+footer #mute_button i {
+	transition: color 0.2s ease;
+}
+footer #mute_button.muted i {
+	color: #ff5661;
+}
+footer #present {
+	margin-left: 1rem;
 }
 .disclaimer {
 	text-align:center;

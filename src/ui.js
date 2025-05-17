@@ -4,6 +4,34 @@ import { stock } from './finance.js';
 export const UI = {
     // stock data
     refresh_interval: null,
+    is_muted: false,
+
+    init() {
+        // Check cookie for mute state
+        const muteCookie = document.cookie.split('; ').find(row => row.startsWith('muted='));
+        this.is_muted = muteCookie ? muteCookie.split('=')[1] === 'true' : false;
+        
+        // Add mute button to header
+        const muteButton = document.createElement('button');
+        muteButton.id = 'mute_button';
+        muteButton.innerHTML = `<i class="fas ${this.is_muted ? 'fa-volume-mute' : 'fa-volume-up'}"></i>`;
+        muteButton.className = this.is_muted ? 'muted' : '';
+        muteButton.onclick = () => this.toggle_mute();
+        document.querySelector('footer').insertBefore(muteButton, document.querySelector('footer button#present'));
+    },
+
+    toggle_mute() {
+        this.is_muted = !this.is_muted;
+        const muteButton = document.getElementById('mute_button');
+        muteButton.innerHTML = `<i class="fas ${this.is_muted ? 'fa-volume-mute' : 'fa-volume-up'}"></i>`;
+        muteButton.className = this.is_muted ? 'muted' : '';
+        
+        // Set cookie to expire in 1 year
+        const expiryDate = new Date();
+        expiryDate.setFullYear(expiryDate.getFullYear() + 1);
+        document.cookie = `muted=${this.is_muted}; expires=${expiryDate.toUTCString()}; path=/`;
+    },
+
     display_updated_time (timestamp, format, market_status) {
         var html = 'As Of ';
         if (market_status == 'closed') { // can also add extended hours
@@ -362,6 +390,7 @@ export const UI = {
         // $('#MoM_targets').remove();
     },
     play_sound(clip) {
+        if (this.is_muted) return;
         var audioElement = document.createElement('audio');
         audioElement.setAttribute('src', clip);
         audioElement.play();

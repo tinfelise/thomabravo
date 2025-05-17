@@ -413,6 +413,7 @@ function bindMoM_slider() {
 
 function initApp() {
 	parseURLs();
+	UI.init();
 	bindUIEvents();
 };
 initApp();
